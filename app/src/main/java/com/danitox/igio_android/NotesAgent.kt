@@ -7,7 +7,11 @@ import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.Sort
 import io.realm.annotations.PrimaryKey
+import khronos.beginningOfDay
+import khronos.days
+import khronos.toString
 import java.text.AttributedString
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -20,6 +24,16 @@ open class Note : RealmObject() {
 
     fun getBodyWordsCount() : Int {
         return body.replace("\n", " ").split(" ").size
+    }
+
+    fun getReadbleDate() : String {
+        if (this.date.beginningOfDay.time == Date().beginningOfDay.time) {
+            return "Oggi"
+        } else if (this.date.beginningOfDay.time == 1.days.ago.beginningOfDay.time) {
+            return "Ieri"
+        } else {
+            return this.date.toString("dd/MM/yyyy")
+        }
     }
 }
 

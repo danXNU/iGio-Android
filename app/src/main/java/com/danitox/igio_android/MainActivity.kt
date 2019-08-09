@@ -15,6 +15,7 @@ import android.widget.BaseAdapter
 import android.widget.ListView
 import android.widget.TextView
 import io.realm.Realm
+import khronos.toString
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.note_row.view.*
 
@@ -143,6 +144,7 @@ private class NotesAdapter: RecyclerView.Adapter<NotesViewHolder>() {
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val note = agent.allNotes[position]
         holder.view.mainLabel.text = note.title
+        holder.view.dateLabel.text = note.getReadbleDate()
         holder.view.paroleCountLabel.text = note.getBodyWordsCount().toString().plus(" parole")
         holder.noteID = note.id
         holder.clickAction = this.clickAction
