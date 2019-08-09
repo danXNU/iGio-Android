@@ -22,7 +22,12 @@
 
         <activity
                 android:name=".NoteEditorActivity"
-                android:label="Editor">
+                android:label="Editor"
+                android:launchMode="singleTop">
+        <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"
+        />
         </activity>
 
 

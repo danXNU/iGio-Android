@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.widget.Toolbar
 import io.realm.Realm
 import kotlinx.android.synthetic.main.note_editor.*
 
@@ -21,6 +22,7 @@ class NoteEditorActivity : AppCompatActivity() {
         setContentView(R.layout.note_editor)
 
         this.editorView.text = Editable.Factory.getInstance().newEditable(this.note?.body)
+
 
     }
 
