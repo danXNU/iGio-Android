@@ -5,6 +5,7 @@ import android.renderscript.ScriptGroup
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
+import io.realm.Sort
 import io.realm.annotations.PrimaryKey
 import java.text.AttributedString
 import java.util.*
@@ -50,7 +51,7 @@ class NotesAgent() {
     }
 
     fun fullFetch() {
-        this.allNotes = realm.where(Note::class.java).findAll().toMutableList()
+        this.allNotes = realm.where(Note::class.java).findAll().sort("date", Sort.DESCENDING).toMutableList()
     }
 
     fun remove(note: Note) {
