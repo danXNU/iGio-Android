@@ -1,6 +1,7 @@
 package com.danitox.igio_android
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -28,6 +29,12 @@ class MainActivity : AppCompatActivity() {
         val listView = findViewById<ListView>(R.id.main_listView)
         listView.adapter = listAdapter
 
+        listAdapter.clickAction = {
+            val intent = Intent(this, NoteEditorActivity::class.java)
+
+            listView.context.startActivity(intent)
+        }
+
         listAdapter.agent.errorHandler = { error ->
             Log.e("Tox", "Il NoteAgent ha ricevuto un errore ${error.localizedMessage}")
         }
@@ -45,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val agent: NotesAgent = NotesAgent()
         var dataLoaded: (() -> Unit)? = null
+        var clickAction: (() -> Unit)? = null
 
         init {
             this.dataLoaded = {
@@ -101,6 +109,10 @@ class MainActivity : AppCompatActivity() {
 
             holder.mainLabel.text = note.title
             holder.countLabel.text = "${note.title.length} lettere"
+
+            row.setOnClickListener {
+                clickAction?.invoke()
+            }
 
             return row
         }
