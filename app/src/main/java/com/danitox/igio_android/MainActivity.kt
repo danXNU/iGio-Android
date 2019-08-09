@@ -143,7 +143,7 @@ private class NotesAdapter: RecyclerView.Adapter<NotesViewHolder>() {
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val note = agent.allNotes[position]
         holder.view.mainLabel.text = note.title
-        holder.view.paroleCountLabel.text = note.body.length.toString().plus(" parole")
+        holder.view.paroleCountLabel.text = note.getBodyWordsCount().toString().plus(" parole")
         holder.noteID = note.id
         holder.clickAction = this.clickAction
     }

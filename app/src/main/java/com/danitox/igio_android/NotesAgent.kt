@@ -17,6 +17,9 @@ open class Note : RealmObject() {
     var title: String = ""
     var body: String = ""
 
+    fun getBodyWordsCount() : Int {
+        return body.replace("\n", " ").split(" ").size
+    }
 }
 
 class NotesAgent() {
