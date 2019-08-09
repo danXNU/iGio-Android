@@ -5,6 +5,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,17 +25,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         setContentView(R.layout.activity_main)
 
-        val listView = findViewById<ListView>(R.id.main_listView)
-        listView.adapter = listAdapter
+        tableView.layoutManager = LinearLayoutManager(this)
+        tableView.adapter = listAdapter
+
+        val divider = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
+        tableView.addItemDecoration(divider)
 
         listAdapter.clickAction = { noteID ->
             val intent = Intent(this, NoteEditorActivity::class.java)
             intent.putExtra("noteID", noteID)
-            listView.context.startActivity(intent)
+            this.startActivity(intent)
         }
 
         listAdapter.agent.errorHandler = { error ->
@@ -43,8 +47,6 @@ class MainActivity : AppCompatActivity() {
             Log.e("Tox", "Note fetchate!")
             listAdapter.notifyDataSetChanged()
         }
-
-        listAdapter.updateData()
 
         this.add_button.setOnClickListener {
             val newNote = this.listAdapter.getNewNote()
@@ -58,74 +60,65 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        
+        println("onResume!")
         listAdapter.updateData()
     }
+}
 
-    private class NotesAdapter: BaseAdapter() {
+class NotesViewHolder(val view: View, var noteID: String? = null, var clickAction: ((String) -> Unit)? = null): RecyclerView.ViewHolder(view) {
 
-        val agent: NotesAgent = NotesAgent()
-        var dataLoaded: (() -> Unit)? = null
-        var clickAction: ((String) -> Unit)? = null
-
-        fun updateData() {
-            agent.fullFetch()
-            dataLoaded?.invoke()
+    init {
+        view.setOnClickListener {
+            clickAction?.invoke(noteID!!)
         }
-
-        fun getNewNote() : Note {
-            return agent.createNewNote()
-        }
-
-        fun getTestNote() : Note {
-            return agent.createTestNote()
-        }
-
-        fun remove(note: Note) {
-            agent.remove(note)
-        }
-
-        override fun getCount(): Int {
-            return this.agent.allNotes.size
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getItem(position: Int): Any {
-            return "TEST STRING"
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-
-            val row: View
-
-            if (convertView == null) {
-                val inflater = LayoutInflater.from(parent!!.context)
-                row = inflater.inflate(R.layout.note_row, parent, false)
-
-                row.tag = ViewHolder(row.mainLabel, row.paroleCountLabel)
-            } else {
-                row = convertView
-            }
+    }
+}
 
 
-            val note = this.agent.allNotes[position]
-            val holder = row.tag as ViewHolder
+private class NotesAdapter: RecyclerView.Adapter<NotesViewHolder>() {
 
-            holder.mainLabel.text = note.title
-            holder.countLabel.text = "${note.body.length} lettere"
+    val agent: NotesAgent = NotesAgent()
+    var dataLoaded: (() -> Unit)? = null
+    var clickAction: ((String) -> Unit)? = null
 
-            row.setOnClickListener {
-                clickAction?.invoke(note.id)
-            }
+    init {
+        println("NotesAdapter inizializzato. Spero sia solo questa volta :)")
+    }
 
-            return row
-        }
+    fun updateData() {
+        agent.fullFetch()
+        dataLoaded?.invoke()
+    }
 
-        private class ViewHolder(val mainLabel: TextView, val countLabel: TextView)
+    fun getNewNote() : Note {
+        return agent.createNewNote()
+    }
 
+    fun getTestNote() : Note {
+        return agent.createTestNote()
+    }
+
+    fun remove(note: Note) {
+        agent.remove(note)
+    }
+
+    override fun getItemCount(): Int {
+        println("${agent.allNotes.size} notes\n")
+        return agent.allNotes.size
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
+        val layoutInflater = LayoutInflater.from(parent?.context)
+        val cell = layoutInflater.inflate(R.layout.note_row, parent, false)
+        return NotesViewHolder(cell)
+    }
+
+    override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
+        val note = agent.allNotes[position]
+        holder.view.mainLabel.text = note.title
+        holder.view.paroleCountLabel.text = note.body.length.toString().plus(" parole")
+        holder.noteID = note.id
+        holder.clickAction = this.clickAction
     }
 
 }

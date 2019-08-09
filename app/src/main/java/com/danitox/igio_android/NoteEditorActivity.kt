@@ -24,9 +24,9 @@ class NoteEditorActivity : AppCompatActivity() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
+    override fun onPause() {
+        super.onPause()
+        println("onPause!")
         saveNote()
     }
 
