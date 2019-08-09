@@ -22,16 +22,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Realm.init(this)
+
 
         setContentView(R.layout.activity_main)
 
         val listView = findViewById<ListView>(R.id.main_listView)
         listView.adapter = listAdapter
 
-        listAdapter.clickAction = {
+        listAdapter.clickAction = { noteID ->
             val intent = Intent(this, NoteEditorActivity::class.java)
-
+            intent.putExtra("noteID", noteID)
             listView.context.startActivity(intent)
         }
 
@@ -39,27 +39,34 @@ class MainActivity : AppCompatActivity() {
             Log.e("Tox", "Il NoteAgent ha ricevuto un errore ${error.localizedMessage}")
         }
 
+        listAdapter.dataLoaded = {
+            Log.e("Tox", "Note fetchate!")
+            listAdapter.notifyDataSetChanged()
+        }
+
         listAdapter.updateData()
 
         this.add_button.setOnClickListener {
-            this.listAdapter.getTestNote()
-            this.listAdapter.updateData()
-            Log.i("Tox", "Called!!!")
+            val newNote = this.listAdapter.getNewNote()
+
+            val intent = Intent(this, NoteEditorActivity::class.java)
+            intent.putExtra("noteID", newNote.id)
+            this.startActivity(intent)
         }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        
+        listAdapter.updateData()
     }
 
     private class NotesAdapter: BaseAdapter() {
 
         val agent: NotesAgent = NotesAgent()
         var dataLoaded: (() -> Unit)? = null
-        var clickAction: (() -> Unit)? = null
-
-        init {
-            this.dataLoaded = {
-                Log.e("Tox", "Note fetchate!")
-                notifyDataSetChanged()
-            }
-        }
+        var clickAction: ((String) -> Unit)? = null
 
         fun updateData() {
             agent.fullFetch()
@@ -108,10 +115,10 @@ class MainActivity : AppCompatActivity() {
             val holder = row.tag as ViewHolder
 
             holder.mainLabel.text = note.title
-            holder.countLabel.text = "${note.title.length} lettere"
+            holder.countLabel.text = "${note.body.length} lettere"
 
             row.setOnClickListener {
-                clickAction?.invoke()
+                clickAction?.invoke(note.id)
             }
 
             return row

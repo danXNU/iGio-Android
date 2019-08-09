@@ -24,7 +24,7 @@ class NotesAgent() {
     var errorHandler: ((Error) -> Unit)? = null
     private var realm: Realm = Realm.getDefaultInstance()
 
-    var allNotes: MutableList<Note> = mutableListOf()
+    var allNotes: List<Note> = listOf()
 
     fun createNewNote() : Note {
         realm.beginTransaction()
@@ -47,7 +47,7 @@ class NotesAgent() {
     }
 
     fun fullFetch() {
-        this.allNotes = realm.where(Note::class.java).findAll().toMutableList()
+        this.allNotes = realm.where(Note::class.java).findAll().toList()
     }
 
     fun remove(note: Note) {
