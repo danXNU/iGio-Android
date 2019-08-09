@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = listAdapter
 
-        val divider = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
+        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         tableView.addItemDecoration(divider)
 
         listAdapter.clickAction = { noteID ->
