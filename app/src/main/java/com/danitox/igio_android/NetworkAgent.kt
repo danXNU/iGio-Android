@@ -6,11 +6,11 @@ import okhttp3.*
 import java.io.IOException
 import java.io.Serializable
 
-class NetworkAgent<Response: Serializable> {
+class NetworkAgent<Response>(val classType: Class<Response>) {
 
     //TODO: create un public enum con tutti i link (es: mainUrl) per facilitare la modifica in futuro
 
-    fun executeNetworkRequest(request: ToxNetworkRequest, asd: Class<Response>, responseCompletion: (Response?, String?) -> Unit) {
+    fun executeNetworkRequest(request: ToxNetworkRequest, responseCompletion: (Response?, String?) -> Unit) {
         val pathComponent = request.requestType.value
         var urlString = "http://192.168.1.5/iGio-Server/".plus(pathComponent).plus(".php")
 
@@ -32,7 +32,7 @@ class NetworkAgent<Response: Serializable> {
                 val gson = GsonBuilder().create()
 
                 try {
-                    val response = gson.fromJson(body, asd)
+                    val response = gson.fromJson(body, classType!!)
                     responseCompletion(response, null)
                 } catch (exc: JsonParseException) {
                     responseCompletion(null, exc.localizedMessage.plus("\nRAW_RESPONSE: $body"))

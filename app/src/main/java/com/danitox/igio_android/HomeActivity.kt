@@ -25,14 +25,15 @@ class HomeActivity: AppCompatActivity() {
             val request = ToxNetworkRequest()
             request.requestType = RequestType.localizedSites
 
-            val agent = NetworkAgent<String>()
-            agent.executeNetworkRequest(request, String::class.java) { response, error ->
+            val agent = NetworkAgent(LocalizedList::class.java)
+            agent.executeNetworkRequest(request) { response, error ->
                 if (error != null) {
                     Log.e("Network", error)
                 }
 
                 if (response != null) {
                     println("Ho ottenuto il response correttamente")
+                    println("Esempio di sito ottenuto: ${response.siti.first().name}")
                 }
 
             }
