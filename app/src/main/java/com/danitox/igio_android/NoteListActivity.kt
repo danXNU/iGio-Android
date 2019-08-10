@@ -131,7 +131,6 @@ private class NotesAdapter: RecyclerView.Adapter<NotesViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        println("${agent.allNotes.size} notes\n")
         return agent.allNotes.size
     }
 

@@ -39,6 +39,19 @@ open class SitoWeb : RealmObject() {
 
     var location: Location? = null
 
+    fun updateContents(codable: SitoObject) {
+        this.categoria = codable.type.value
+        this.nome = codable.name
+        this.descrizione = codable.descrizione
+        this.order = codable.order
+        this._scuolaType = codable.scuolaType.value
+        this.urlString = codable.urlString
+
+        if (codable.locationID != null) {
+            this.location = realm.where(Location::class.java).equalTo("id", codable.locationID).findFirst()
+        }
+    }
+
 }
 
 class SitoObject {
@@ -50,16 +63,28 @@ class SitoObject {
     var scuolaType: ScuolaType = ScuolaType.none
 
     var locationID: Int? = null
+
+    var descrizione: String = ""
+    var order: Int = -1
 }
 
-enum class ScuolaType(value: Int) {
+//TODO: testare se gson riesce a creare un Enum a partire da un valore. Es: enum Location { case dicoesi = 1 }. JSON: { "test" : 1 } --> json["test"] == Location.diocesi
+class LocationCodable {
+    var id : Int = -1
+    var name: String = ""
+    var type: LocationType = LocationType.diocesi
+
+    var isSelected: Boolean = false
+}
+
+enum class ScuolaType(val value: Int) {
     none(0),
     medie(1),
     biennio(2),
     triennio(3)
 }
 
-enum class SitoCategoria(value: Int){
+enum class SitoCategoria(val value: Int){
     none(0),
     materiali(1),
     preghiere(2),
@@ -71,4 +96,16 @@ enum class SitoCategoria(value: Int){
 
 class LocalizedList {
     var siti: MutableList<SitoObject> = mutableListOf()
+}
+
+//Helper utilizzato per bypassare il limite di Kotlin di avere delle funzioni statiche
+class SitoWebHelper {
+    fun createSitoFromCodable(codable: SitoObject) : SitoWeb {
+        val newSite = SitoWeb()
+        newSite.id = codable.id
+
+        newSite.updateContents(codable)
+
+        return newSite
+    }
 }
