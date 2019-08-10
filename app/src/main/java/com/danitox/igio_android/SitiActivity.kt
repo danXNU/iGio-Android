@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.sito_row.view.*
 
 class SitiActivity : AppCompatActivity() {
 
@@ -16,18 +17,40 @@ class SitiActivity : AppCompatActivity() {
     }
 }
 
-class SitiAdapter: RecyclerView.Adapter<SitiViewHolder>() {
+class SitiAdapter(sitiCategorie: MutableList<SitoCategoria>): RecyclerView.Adapter<SitiViewHolder>() {
 
     var sites: MutableList<SitoObject> = mutableListOf()
 
+    val agent: SitiLocalizer = SitiLocalizer()
+    private var categorie: MutableList<SitoCategoria> = mutableListOf()
+
+    var updateHandler: ((String) -> Unit)? = null
+
+    //var hasAlreadyRequestedSitesWhileEmpty: Boolean = false
+
+    init {
+        this.categorie = sitiCategorie
+    }
+
+    fun fetchLocalWebsites() {
+        this.sites.clear()
+        for (categoria in this.categorie) {
+            this.sites.addAll(agent.fetchLocalWebsites(categoria))
+        }
+    }
+
+    fun updateFromServer() {
+        //TODO: da finire di implementare. Da aggiungere le Locations e tutto il resto.
+    }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return this.sites.size
     }
 
 
     override fun onBindViewHolder(holder: SitiViewHolder, position: Int) {
-
+        val sito = this.sites[position]
+        holder.view.sitoNameLabel.text = sito.name
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SitiViewHolder {

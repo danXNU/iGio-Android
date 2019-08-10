@@ -54,4 +54,8 @@ class SitiLocalizer {
         realm.commitTransaction()
     }
 
+
+    fun fetchLocalWebsites(type: SitoCategoria) : List<SitoObject> {
+        return realm.where(SitoWeb::class.java).equalTo("_categoria", type.value).findAll().map { SitoWebHelper().createCodableFromSito(it) }
+    }
 }

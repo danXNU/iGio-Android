@@ -1,8 +1,10 @@
 package com.danitox.igio_android
 
+import android.util.Log
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import okhttp3.internal.notifyAll
 import java.net.URL
 
 open class Location : RealmObject() {
@@ -35,12 +37,25 @@ open class SitoWeb : RealmObject() {
     var descrizione: String = ""
     var urlString : String = ""
     var _scuolaType : Int = 0
-    var categoria : Int = 0
+    var _categoria : Int = 0
 
     var location: Location? = null
 
+    var categoria: SitoCategoria
+        get() {
+            return SitoCategoria.none.getFrom(_categoria)
+        }
+        set(value) { _categoria = value.value }
+
+    var scuolaType: ScuolaType
+        get() {
+            return ScuolaType.none.getFrom(_scuolaType)
+        }
+        set(value) { _scuolaType = value.value }
+
+
     fun updateContents(codable: SitoObject) {
-        this.categoria = codable.type.value
+        this._categoria = codable.type.value
         this.nome = codable.name
         this.descrizione = codable.descrizione
         this.order = codable.order
@@ -81,7 +96,18 @@ enum class ScuolaType(val value: Int) {
     none(0),
     medie(1),
     biennio(2),
-    triennio(3)
+    triennio(3);
+
+    fun getFrom(value: Int) : ScuolaType {
+        val categoria =  when(value) {
+            1 -> medie
+            2 -> biennio
+            3 -> triennio
+            else -> none
+        }
+        if (categoria == none) { Log.e("Enum error", "ScuolaTyoe ricevuto == .none") }
+        return categoria
+    }
 }
 
 enum class SitoCategoria(val value: Int){
@@ -91,7 +117,21 @@ enum class SitoCategoria(val value: Int){
     facebook(3),
     instagram(4),
     youtube(5),
-    calendario(6)
+    calendario(6);
+
+    fun getFrom(value: Int) : SitoCategoria {
+        val categoria =  when(value) {
+            1 -> materiali
+            2 -> preghiere
+            3 -> facebook
+            4 -> instagram
+            5 -> youtube
+            6 -> calendario
+            else -> none
+        }
+        if (categoria == none) { Log.e("Enum error", "SitoCategoria ricevuto == SitoCategoria.none") }
+        return categoria
+    }
 }
 
 class LocalizedList {
@@ -107,5 +147,18 @@ class SitoWebHelper {
         newSite.updateContents(codable)
 
         return newSite
+    }
+
+    fun createCodableFromSito(obj: SitoWeb) : SitoObject {
+        val newCodable = SitoObject()
+        newCodable.id = obj.id
+        newCodable.name = obj.nome
+        newCodable.urlString = obj.urlString
+        newCodable.type = obj.categoria
+        newCodable.scuolaType = obj.scuolaType
+        newCodable.locationID = obj.location?.id
+        newCodable.descrizione = obj.descrizione
+        newCodable.order = obj.order
+        return newCodable
     }
 }
