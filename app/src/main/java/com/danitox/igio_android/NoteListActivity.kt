@@ -19,7 +19,7 @@ import khronos.toString
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.note_row.view.*
 
-class MainActivity : AppCompatActivity() {
+class NoteListActivity : AppCompatActivity() {
 
     private val listAdapter = NotesAdapter()
 
