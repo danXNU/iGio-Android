@@ -161,4 +161,22 @@ class SitoWebHelper {
         newCodable.order = obj.order
         return newCodable
     }
+
+
+    fun createCodableLocationFrom(obj: Location) : LocationCodable {
+        val codable = LocationCodable()
+        codable.id = obj.id
+        codable.name = obj.name
+        codable.type = obj.type
+        codable.isSelected = obj.isSelected
+        return codable
+    }
+
+    fun createLocationFromCodable(codable: LocationCodable) : Location {
+        val location = Location()
+        location.id = codable.id
+        location.name = codable.name
+        location.type = codable.type
+        return location
+    }
 }

@@ -58,4 +58,47 @@ class SitiLocalizer {
     fun fetchLocalWebsites(type: SitoCategoria) : List<SitoObject> {
         return realm.where(SitoWeb::class.java).equalTo("_categoria", type.value).findAll().map { SitoWebHelper().createCodableFromSito(it) }
     }
+
+
+    fun getLocations(type: LocationType, saveRecords: Boolean = true, completionHandler: ((List<LocationCodable>?, String?) -> Unit)? = null) {
+        val request = ToxNetworkRequest()
+        request.requestType = RequestType.locations
+        request.args = mapOf(Pair("type", type.value.toString()))
+
+        val agent = NetworkAgent(mutableListOf<LocationCodable>()::class.java)
+        agent.executeNetworkRequest(request) { list, error ->
+            if (error == null && list != null) {
+                if (saveRecords) {
+                    this.saveLocations(list)
+                }
+                completionHandler!!(list, null)
+            } else {
+                completionHandler!!(null, error)
+            }
+        }
+    }
+
+    fun saveLocations(locations: List<LocationCodable>) {
+        realm.beginTransaction()
+
+        for (codable in locations) {
+            val savedObject = realm.where(Location::class.java).equalTo("id", codable.id).findFirst()
+            if (savedObject != null) {
+                savedObject.name = codable.name
+            } else {
+                val newObject = SitoWebHelper().createLocationFromCodable(codable)
+                realm.insert(newObject)
+            }
+        }
+
+        val currentSavedIDs = realm.where(Location::class.java).findAll().map { it.id }
+        val newIDs = locations.map { it.id }
+
+        val filtered = newIDs.filter { !currentSavedIDs.contains(it) }
+
+        val objectsToRemove = filtered.mapNotNull { realm.where(Location::class.java).equalTo("id", it).findFirst() }
+        objectsToRemove.forEach { it.deleteFromRealm() }
+
+        realm.commitTransaction()
+    }
 }
