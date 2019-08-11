@@ -101,4 +101,34 @@ class SitiLocalizer {
 
         realm.commitTransaction()
     }
+
+    fun updateFromLocal(locations: List<LocationCodable>) : MutableList<LocationCodable> {
+        val allLocations : MutableList<LocationCodable> = mutableListOf()
+
+        locations.forEach {
+            val savedObj = realm.where(Location::class.java).equalTo("id", it.id).findFirst()
+            var newObj = it
+            newObj.isSelected = if (savedObj == null)  false else savedObj.isSelected
+            allLocations.add(newObj)
+        }
+
+        return allLocations
+    }
+
+    fun fetchLocalLocations(type: LocationType) : MutableList<LocationCodable> {
+        val objects = realm.where(Location::class.java).equalTo("_type", type.value).findAll().map { it }
+        var allLocationsCodable : MutableList<LocationCodable> = mutableListOf()
+
+        objects.forEach {
+            val newCodable = LocationCodable()
+            newCodable.id = it.id
+            newCodable.name = it.name
+            newCodable.type = it.type
+            newCodable.isSelected = it.isSelected
+            allLocationsCodable.add(newCodable)
+        }
+
+        return allLocationsCodable
+    }
+
 }

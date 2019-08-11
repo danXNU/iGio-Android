@@ -44,6 +44,12 @@
         </activity>
 
 
+        <activity
+                android:name=".LocationActivity"
+                android:label="Locations"
+                android:launchMode="singleTop">
+        </activity>
+
     </application>
 
 </manifest>
