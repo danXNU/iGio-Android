@@ -24,8 +24,20 @@ open class Location : RealmObject() {
 }
 
 enum class LocationType(val value: Int) {
+    none(0),
     diocesi(1),
-    city(2)
+    city(2);
+
+    fun getFrom(value: Int) : LocationType {
+        val categoria =  when(value) {
+            0 -> none
+            1 -> diocesi
+            2 -> city
+            else -> none
+        }
+        if (categoria == none) { Log.e("Enum error", "LocationType ricevuto == .none") }
+        return categoria
+    }
 }
 
 

@@ -32,7 +32,7 @@ class NetworkAgent<Response>(val classType: Class<Response>) {
                 val gson = GsonBuilder().create()
 
                 try {
-                    val response = gson.fromJson(body, classType!!)
+                    val response = gson.fromJson(body, classType)
                     responseCompletion(response, null)
                 } catch (exc: JsonParseException) {
                     responseCompletion(null, exc.localizedMessage.plus("\nRAW_RESPONSE: $body"))

@@ -79,27 +79,28 @@ class SitiLocalizer {
     }
 
     fun saveLocations(locations: List<LocationCodable>) {
-        realm.beginTransaction()
+        val locRealm = Realm.getDefaultInstance()
+        locRealm.beginTransaction()
 
         for (codable in locations) {
-            val savedObject = realm.where(Location::class.java).equalTo("id", codable.id).findFirst()
+            val savedObject = locRealm.where(Location::class.java).equalTo("id", codable.id).findFirst()
             if (savedObject != null) {
                 savedObject.name = codable.name
             } else {
                 val newObject = SitoWebHelper().createLocationFromCodable(codable)
-                realm.insert(newObject)
+                locRealm.insert(newObject)
             }
         }
 
-        val currentSavedIDs = realm.where(Location::class.java).findAll().map { it.id }
+        val currentSavedIDs = locRealm.where(Location::class.java).findAll().map { it.id }
         val newIDs = locations.map { it.id }
 
         val filtered = newIDs.filter { !currentSavedIDs.contains(it) }
 
-        val objectsToRemove = filtered.mapNotNull { realm.where(Location::class.java).equalTo("id", it).findFirst() }
+        val objectsToRemove = filtered.mapNotNull { locRealm.where(Location::class.java).equalTo("id", it).findFirst() }
         objectsToRemove.forEach { it.deleteFromRealm() }
 
-        realm.commitTransaction()
+        locRealm.commitTransaction()
     }
 
     fun updateFromLocal(locations: List<LocationCodable>) : MutableList<LocationCodable> {

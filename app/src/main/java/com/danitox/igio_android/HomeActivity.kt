@@ -21,6 +21,12 @@ class HomeActivity: AppCompatActivity() {
             this.startActivity(intent)
         }
 
+        this.diocesiButton.setOnClickListener {
+            val intent = Intent(this, LocationActivity::class.java)
+            intent.putExtra("locType", LocationType.diocesi.value)
+            this.startActivity(intent)
+        }
+
         this.resourcesButton.setOnClickListener {
             val request = ToxNetworkRequest()
             request.requestType = RequestType.localizedSites

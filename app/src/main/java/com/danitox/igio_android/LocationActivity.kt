@@ -1,34 +1,59 @@
 package com.danitox.igio_android
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.lcoation_row.view.*
 import kotlinx.android.synthetic.main.locations_activity.*
+import kotlinx.android.synthetic.main.locations_activity.tableView
 
 class LocationActivity : AppCompatActivity() {
 
-    val locationsAdater: LocationsAdapter = LocationsAdapter()
+    private var locationsAdater: LocationsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.locations_activity)
 
+        val locationType = LocationType.none.getFrom(intent.getIntExtra("locType", 0))
+        this.locationsAdater = LocationsAdapter(locationType)
+
         this.tableView.layoutManager = LinearLayoutManager(this)
         this.tableView.adapter = locationsAdater
+
+        locationsAdater?.errorHandler = {
+            Snackbar.make(this.tableView, it, Snackbar.LENGTH_SHORT).show()
+        }
+
+        locationsAdater?.updateHandler = {
+            locationsAdater?.notifyDataSetChanged()
+        }
+
+        locationsAdater?.load()
     }
 }
 
-class LocationsAdapter: RecyclerView.Adapter<LocationsViewHolder>() {
+class LocationsAdapter(locType: LocationType): RecyclerView.Adapter<LocationsViewHolder>() {
 
-    val agent = SitiLocalizer()
+    private val agent = SitiLocalizer()
 
     var updateHandler: (() -> Unit)? = null
 
     var locationType: LocationType = LocationType.diocesi
+
+    init {
+        this.locationType = locType
+    }
 
     var errorHandler: ((String) -> Unit)? = null
         set(value) {
@@ -36,7 +61,7 @@ class LocationsAdapter: RecyclerView.Adapter<LocationsViewHolder>() {
             this.agent.errorHandler = value
         }
 
-    var allLocations: MutableList<LocationCodable> = mutableListOf()
+    private var allLocations: MutableList<LocationCodable> = mutableListOf()
         set(value) {
             if (value.isEmpty()) { return }
             field = value
@@ -72,13 +97,25 @@ class LocationsAdapter: RecyclerView.Adapter<LocationsViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, veiwType: Int): LocationsViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val inflator = LayoutInflater.from(parent.context)
+        val row = inflator.inflate(R.layout.lcoation_row, parent, false)
+        return LocationsViewHolder(row)
     }
 
-
-
     override fun onBindViewHolder(holder: LocationsViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val location = allLocations[position]
+
+        holder.view.locationNameLabel.text = location.name
+
+        if (location.isSelected) {
+            holder.view.testTickSwitch.visibility = INVISIBLE
+        } else {
+            if (this.loadingLocations.contains(location)) {
+                holder.view.testTickSwitch.visibility = VISIBLE
+            } else {
+                holder.view.testTickSwitch.visibility = INVISIBLE
+            }
+        }
     }
 
 
