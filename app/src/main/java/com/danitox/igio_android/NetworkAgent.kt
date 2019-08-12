@@ -5,8 +5,9 @@ import com.google.gson.JsonParseException
 import okhttp3.*
 import java.io.IOException
 import java.io.Serializable
+import java.lang.reflect.Type
 
-class NetworkAgent<Response>(val classType: Class<Response>) {
+class NetworkAgent<Response>(val classType: Class<Response>, val typedValue: Type? = null) {
 
     //TODO: create un public enum con tutti i link (es: mainUrl) per facilitare la modifica in futuro
 
@@ -32,7 +33,13 @@ class NetworkAgent<Response>(val classType: Class<Response>) {
                 val gson = GsonBuilder().create()
 
                 try {
-                    val response = gson.fromJson(body, classType)
+                    var response: Response
+                    if (typedValue == null) {
+                        response = gson.fromJson(body, classType)
+                    } else {
+                        response = gson.fromJson(body, typedValue)
+                    }
+
                     responseCompletion(response, null)
                 } catch (exc: JsonParseException) {
                     responseCompletion(null, exc.localizedMessage.plus("\nRAW_RESPONSE: $body"))

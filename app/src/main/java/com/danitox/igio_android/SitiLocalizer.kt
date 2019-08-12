@@ -1,5 +1,6 @@
 package com.danitox.igio_android
 
+import com.google.gson.reflect.TypeToken
 import io.realm.Realm
 
 class SitiLocalizer {
@@ -40,7 +41,6 @@ class SitiLocalizer {
         realm.beginTransaction()
 
         for (codableSite in allSites) {
-            //TODO: da finire di implementare
             val savedSite = realm.where(SitoWeb::class.java).equalTo("id", codableSite.id).findFirst()
             if (savedSite != null) {
                 savedSite.updateContents(codableSite)
@@ -65,7 +65,8 @@ class SitiLocalizer {
         request.requestType = RequestType.locations
         request.args = mapOf(Pair("type", type.value.toString()))
 
-        val agent = NetworkAgent(mutableListOf<LocationCodable>()::class.java)
+        //val agent = NetworkAgent(mutableListOf<LocationCodable>()::class.java)
+        val agent = NetworkAgent(listOf<LocationCodable>()::class.java, object : TypeToken<List<LocationCodable>>(){}.type)
         agent.executeNetworkRequest(request) { list, error ->
             if (error == null && list != null) {
                 if (saveRecords) {
@@ -104,11 +105,12 @@ class SitiLocalizer {
     }
 
     fun updateFromLocal(locations: List<LocationCodable>) : MutableList<LocationCodable> {
+        val localRealm = Realm.getDefaultInstance()
         val allLocations : MutableList<LocationCodable> = mutableListOf()
 
         locations.forEach {
-            val savedObj = realm.where(Location::class.java).equalTo("id", it.id).findFirst()
-            var newObj = it
+            val savedObj = localRealm.where(Location::class.java).equalTo("id", it.id).findFirst()
+            val newObj = it
             newObj.isSelected = if (savedObj == null)  false else savedObj.isSelected
             allLocations.add(newObj)
         }
@@ -124,7 +126,7 @@ class SitiLocalizer {
             val newCodable = LocationCodable()
             newCodable.id = it.id
             newCodable.name = it.name
-            newCodable.type = it.type
+            newCodable.loctype = it.type
             newCodable.isSelected = it.isSelected
             allLocationsCodable.add(newCodable)
         }

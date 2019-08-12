@@ -36,7 +36,9 @@ class LocationActivity : AppCompatActivity() {
         }
 
         locationsAdater?.updateHandler = {
-            locationsAdater?.notifyDataSetChanged()
+            runOnUiThread {
+                locationsAdater?.notifyDataSetChanged()
+            }
         }
 
         locationsAdater?.load()

@@ -1,9 +1,11 @@
 package com.danitox.igio_android
 
 import android.util.Log
+import com.google.gson.annotations.Expose
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
+import kotlinx.android.parcel.IgnoredOnParcel
 import okhttp3.internal.notifyAll
 import java.net.URL
 
@@ -99,9 +101,17 @@ class SitoObject {
 class LocationCodable {
     var id : Int = -1
     var name: String = ""
-    var type: LocationType = LocationType.diocesi
+    var type: Int = -1
 
-    var isSelected: Boolean = false
+    var loctype: LocationType
+        get() {
+            return LocationType.none.getFrom(type)
+        }
+        set(value) {
+            this.type = value.value
+        }
+
+    @Expose(deserialize = false) var isSelected: Boolean = false
 }
 
 enum class ScuolaType(val value: Int) {
@@ -179,7 +189,7 @@ class SitoWebHelper {
         val codable = LocationCodable()
         codable.id = obj.id
         codable.name = obj.name
-        codable.type = obj.type
+        codable.loctype = obj.type
         codable.isSelected = obj.isSelected
         return codable
     }
@@ -188,7 +198,7 @@ class SitoWebHelper {
         val location = Location()
         location.id = codable.id
         location.name = codable.name
-        location.type = codable.type
+        location.type = codable.loctype
         return location
     }
 }
