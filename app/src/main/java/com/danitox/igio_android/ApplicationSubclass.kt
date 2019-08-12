@@ -1,6 +1,7 @@
 package com.danitox.igio_android
 
 import android.app.Application
+import android.util.Log
 import io.realm.DynamicRealm
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -14,6 +15,8 @@ class ApplicationSubclass : Application() {
         Realm.init(this)
         val configuration = RealmConfiguration.Builder().schemaVersion(1).migration(MyMigration()).build()
         Realm.setDefaultConfiguration(configuration)
+
+        Log.d("Realm Path", Realm.getDefaultInstance().path)
     }
 }
 
