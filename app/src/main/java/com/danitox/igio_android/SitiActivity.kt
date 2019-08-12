@@ -1,6 +1,8 @@
 package com.danitox.igio_android
 
+import android.content.Intent
 import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -22,7 +24,11 @@ class SitiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.siti_activity)
 
-        this.sitesAdapter = SitiAdapter(mutableListOf(SitoCategoria.materiali, SitoCategoria.preghiere))
+        this.sitesAdapter = SitiAdapter(mutableListOf(SitoCategoria.materiali, SitoCategoria.preghiere)) { sito ->
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(sito.urlString)
+            this.startActivity(intent)
+        }
 
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         this.tableView.addItemDecoration(divider)
@@ -51,7 +57,7 @@ class SitiActivity : AppCompatActivity() {
     }
 }
 
-class SitiAdapter(private val sitiCategorie: MutableList<SitoCategoria>): RecyclerView.Adapter<SitiViewHolder>() {
+class SitiAdapter(private val sitiCategorie: MutableList<SitoCategoria>, val clickAction: ((SitoObject) -> Unit)?): RecyclerView.Adapter<SitiViewHolder>() {
 
     var sites: MutableList<SitoObject> = mutableListOf()
 
@@ -83,10 +89,12 @@ class SitiAdapter(private val sitiCategorie: MutableList<SitoCategoria>): Recycl
         return this.sites.size
     }
 
-
     override fun onBindViewHolder(holder: SitiViewHolder, position: Int) {
         val sito = this.sites[position]
         holder.view.sitoNameLabel.text = sito.name
+
+        holder.sitoObject = this.sites[position]
+        holder.clickAction = this.clickAction
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SitiViewHolder {
@@ -98,4 +106,14 @@ class SitiAdapter(private val sitiCategorie: MutableList<SitoCategoria>): Recycl
 }
 
 
-class SitiViewHolder(val view: View): RecyclerView.ViewHolder(view)
+class SitiViewHolder(val view: View, var sitoObject: SitoObject? = null, var clickAction: ((SitoObject) -> Unit)? = null): RecyclerView.ViewHolder(view) {
+
+    init {
+        view.setOnClickListener {
+            if (sitoObject != null) {
+                clickAction?.invoke(sitoObject!!)
+            }
+        }
+    }
+
+}

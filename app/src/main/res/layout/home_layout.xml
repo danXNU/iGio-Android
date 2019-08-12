@@ -11,7 +11,7 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="200dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
-            android:text="Button"
+            android:text="Risorse"
             android:layout_width="224dp"
             android:layout_height="106dp"
             android:id="@+id/resourcesButton" android:layout_marginTop="8dp"
