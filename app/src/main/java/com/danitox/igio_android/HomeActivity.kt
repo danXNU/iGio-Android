@@ -27,22 +27,15 @@ class HomeActivity: AppCompatActivity() {
             this.startActivity(intent)
         }
 
+        this.citiesButton.setOnClickListener {
+            val intent = Intent(this, LocationActivity::class.java)
+            intent.putExtra("locType", LocationType.city.value)
+            this.startActivity(intent)
+        }
+
         this.resourcesButton.setOnClickListener {
-            val request = ToxNetworkRequest()
-            request.requestType = RequestType.localizedSites
-
-            val agent = NetworkAgent(LocalizedList::class.java)
-            agent.executeNetworkRequest(request) { response, error ->
-                if (error != null) {
-                    Log.e("Network", error)
-                }
-
-                if (response != null) {
-                    println("Ho ottenuto il response correttamente")
-                    println("Esempio di sito ottenuto: ${response.siti.first().name}")
-                }
-
-            }
+            val intent = Intent(this, SitiActivity::class.java)
+            this.startActivity(intent)
         }
     }
 }

@@ -156,4 +156,54 @@ class SitiLocalizer {
         realm.commitTransaction()
     }
 
+
+    fun getAllLocalSelectedLocations() : List<LocationCodable> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Location::class.java).equalTo("isSelected", true).findAll().map { SitoWebHelper().createCodableLocationFrom(it) }
+    }
+
+    fun fetchAllWebsites(saveRecords: Boolean = true, completionHandler: (LocalizedList?, String?) -> Unit) {
+        val locations = this.getAllLocalSelectedLocations()
+
+        var allSites: MutableSet<SitoObject> = mutableSetOf()
+        var locerror: String? = null
+
+        val group = DispatchGroup()
+
+        if (locations.isEmpty()) {
+            group.enter()
+            this.fetchLocalizedWebsites { list, error ->
+                if (error == null && list != null) {
+                    allSites.addAll(list.siti)
+                } else {
+                    locerror = error
+                }
+                group.leave()
+            }
+        } else {
+            for (location in locations) {
+                group.enter()
+                this.fetchLocalizedWebsites(location) { list, error ->
+                    if (error == null && list != null) {
+                        allSites.addAll(list.siti)
+                    } else {
+                        locerror = error
+                    }
+                    group.leave()
+                }
+            }
+        }
+
+        group.notify {
+            if (locerror != null) {
+                completionHandler(null, locerror)
+            } else {
+                val list = LocalizedList()
+                list.siti = allSites.sortedBy { it.type.value }.toMutableList()
+                completionHandler(list, null)
+            }
+        }
+
+    }
+
 }
