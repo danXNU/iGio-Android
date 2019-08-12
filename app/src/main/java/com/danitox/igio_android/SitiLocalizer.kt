@@ -134,4 +134,23 @@ class SitiLocalizer {
         return allLocationsCodable
     }
 
+
+    fun removeSites(obj: LocationCodable) {
+        realm.beginTransaction()
+        val objects = realm.where(SitoWeb::class.java).equalTo("location.id", obj.id).findAll()
+
+        objects.forEach { it.deleteFromRealm() }
+
+        realm.commitTransaction()
+    }
+
+    fun toggle(location: LocationCodable) {
+        realm.beginTransaction()
+        val savedLocation = realm.where(Location::class.java).equalTo("id", location.id).findFirst()
+        if (savedLocation != null) {
+            savedLocation.isSelected = savedLocation.isSelected.not()
+        }
+        realm.commitTransaction()
+    }
+
 }

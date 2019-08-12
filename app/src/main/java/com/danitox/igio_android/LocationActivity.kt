@@ -4,6 +4,7 @@ import android.opengl.Visibility
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -28,6 +29,9 @@ class LocationActivity : AppCompatActivity() {
         val locationType = LocationType.none.getFrom(intent.getIntExtra("locType", 0))
         this.locationsAdater = LocationsAdapter(locationType)
 
+
+        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        this.tableView.addItemDecoration(divider)
         this.tableView.layoutManager = LinearLayoutManager(this)
         this.tableView.adapter = locationsAdater
 
@@ -118,10 +122,42 @@ class LocationsAdapter(locType: LocationType): RecyclerView.Adapter<LocationsVie
                 holder.view.testTickSwitch.visibility = INVISIBLE
             }
         }
+
+        holder.location = this.allLocations[position]
+        holder.onClickAction = { location ->
+            if (location.isSelected) {
+                this.agent.removeSites(location)
+                this.agent.toggle(location)
+                this.reloadFromLocal()
+            } else {
+                this.loadingLocations.add(location)
+
+                this.agent.fetchLocalizedWebsites(location) { list, error ->
+                    if (error == null && list != null) {
+                        list.siti.forEach { print("${it.urlString}") }
+
+                        this.loadingLocations.clear()
+                        agent.toggle(location)
+                        this.reloadFromLocal()
+
+                    } else {
+                        this.errorHandler?.invoke(error!!)
+                    }
+                }
+            }
+        }
     }
 
 
 }
 
 
-class LocationsViewHolder(val view: View): RecyclerView.ViewHolder(view)
+class LocationsViewHolder(val view: View, var location: LocationCodable? = null, var onClickAction: ((LocationCodable) -> Unit)? = null): RecyclerView.ViewHolder(view) {
+
+    init {
+        view.setOnClickListener {
+            onClickAction?.invoke(location!!)
+        }
+    }
+
+}
