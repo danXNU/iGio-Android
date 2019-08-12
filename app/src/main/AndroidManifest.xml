@@ -48,6 +48,10 @@
                 android:name=".LocationActivity"
                 android:label="Locations"
                 android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".HomeActivity"
+            />
         </activity>
 
     </application>

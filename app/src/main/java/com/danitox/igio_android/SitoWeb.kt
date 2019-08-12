@@ -2,6 +2,8 @@ package com.danitox.igio_android
 
 import android.util.Log
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
@@ -69,15 +71,16 @@ open class SitoWeb : RealmObject() {
 
 
     fun updateContents(codable: SitoObject) {
-        this._categoria = codable.type.value
+        this.categoria = codable.type
         this.nome = codable.name
         this.descrizione = codable.descrizione
         this.order = codable.order
-        this._scuolaType = codable.scuolaType.value
+        this.scuolaType = codable.scuolaType
         this.urlString = codable.urlString
 
         if (codable.locationID != null) {
-            this.location = realm.where(Location::class.java).equalTo("id", codable.locationID).findFirst()
+            val locRealm = Realm.getDefaultInstance()
+            this.location = locRealm.where(Location::class.java).equalTo("id", codable.locationID).findFirst()
         }
     }
 
@@ -88,7 +91,7 @@ class SitoObject {
     var name: String = ""
     var urlString: String = ""
 
-    var _type: Int = 0
+    @SerializedName("type") var _type: Int = 0
     var type: SitoCategoria
         get() {
             return SitoCategoria.none.getFrom(_type)
@@ -97,7 +100,7 @@ class SitoObject {
             _type = value.value
         }
 
-    var _scuolaType: Int = 0
+    @SerializedName("scuolaType") var _scuolaType: Int = 0
     var scuolaType: ScuolaType
         get() {
             return ScuolaType.none.getFrom(_scuolaType)

@@ -114,10 +114,10 @@ class LocationsAdapter(locType: LocationType): RecyclerView.Adapter<LocationsVie
         holder.view.locationNameLabel.text = location.name
 
         if (location.isSelected) {
-            holder.view.testTickSwitch.visibility = INVISIBLE
+            holder.view.testTickSwitch.visibility = VISIBLE
         } else {
             if (this.loadingLocations.contains(location)) {
-                holder.view.testTickSwitch.visibility = VISIBLE
+                holder.view.testTickSwitch.visibility = INVISIBLE
             } else {
                 holder.view.testTickSwitch.visibility = INVISIBLE
             }
@@ -134,7 +134,7 @@ class LocationsAdapter(locType: LocationType): RecyclerView.Adapter<LocationsVie
 
                 this.agent.fetchLocalizedWebsites(location) { list, error ->
                     if (error == null && list != null) {
-                        list.siti.forEach { print("${it.urlString}") }
+                        list.siti.forEach { println("${it.urlString}") }
 
                         this.loadingLocations.clear()
                         agent.toggle(location)
