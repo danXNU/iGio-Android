@@ -88,8 +88,23 @@ class SitoObject {
     var name: String = ""
     var urlString: String = ""
 
-    var type: SitoCategoria = SitoCategoria.none
-    var scuolaType: ScuolaType = ScuolaType.none
+    var _type: Int = 0
+    var type: SitoCategoria
+        get() {
+            return SitoCategoria.none.getFrom(_type)
+        }
+        set(value) {
+            _type = value.value
+        }
+
+    var _scuolaType: Int = 0
+    var scuolaType: ScuolaType
+        get() {
+            return ScuolaType.none.getFrom(_scuolaType)
+        }
+        set(value) {
+            _scuolaType = value.value
+        }
 
     var locationID: Int? = null
 

@@ -5,8 +5,6 @@ import io.realm.Realm
 
 class SitiLocalizer {
 
-    val realm = Realm.getDefaultInstance()
-
     var errorHandler: ((String) -> Unit)? = null
 
     fun fetchLocalizedWebsites(location: LocationCodable? = null, saveRecords: Boolean = true, completionHandler: (LocalizedList?, String?) -> Unit) {
@@ -37,6 +35,7 @@ class SitiLocalizer {
     }
 
     private fun saveLocalizedSitesList(list: LocalizedList) {
+        val realm = Realm.getDefaultInstance()
         val allSites = list.siti
         realm.beginTransaction()
 
@@ -56,6 +55,7 @@ class SitiLocalizer {
 
 
     fun fetchLocalWebsites(type: SitoCategoria) : List<SitoObject> {
+        val realm = Realm.getDefaultInstance()
         return realm.where(SitoWeb::class.java).equalTo("_categoria", type.value).findAll().map { SitoWebHelper().createCodableFromSito(it) }
     }
 
@@ -80,28 +80,28 @@ class SitiLocalizer {
     }
 
     fun saveLocations(locations: List<LocationCodable>) {
-        val locRealm = Realm.getDefaultInstance()
-        locRealm.beginTransaction()
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
 
         for (codable in locations) {
-            val savedObject = locRealm.where(Location::class.java).equalTo("id", codable.id).findFirst()
+            val savedObject = realm.where(Location::class.java).equalTo("id", codable.id).findFirst()
             if (savedObject != null) {
                 savedObject.name = codable.name
             } else {
                 val newObject = SitoWebHelper().createLocationFromCodable(codable)
-                locRealm.insert(newObject)
+                realm.insert(newObject)
             }
         }
 
-        val currentSavedIDs = locRealm.where(Location::class.java).findAll().map { it.id }
+        val currentSavedIDs = realm.where(Location::class.java).findAll().map { it.id }
         val newIDs = locations.map { it.id }
 
         val filtered = newIDs.filter { !currentSavedIDs.contains(it) }
 
-        val objectsToRemove = filtered.mapNotNull { locRealm.where(Location::class.java).equalTo("id", it).findFirst() }
+        val objectsToRemove = filtered.mapNotNull { realm.where(Location::class.java).equalTo("id", it).findFirst() }
         objectsToRemove.forEach { it.deleteFromRealm() }
 
-        locRealm.commitTransaction()
+        realm.commitTransaction()
     }
 
     fun updateFromLocal(locations: List<LocationCodable>) : MutableList<LocationCodable> {
@@ -119,6 +119,7 @@ class SitiLocalizer {
     }
 
     fun fetchLocalLocations(type: LocationType) : MutableList<LocationCodable> {
+        val realm = Realm.getDefaultInstance()
         val objects = realm.where(Location::class.java).equalTo("_type", type.value).findAll().map { it }
         var allLocationsCodable : MutableList<LocationCodable> = mutableListOf()
 
@@ -136,6 +137,7 @@ class SitiLocalizer {
 
 
     fun removeSites(obj: LocationCodable) {
+        val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
         val objects = realm.where(SitoWeb::class.java).equalTo("location.id", obj.id).findAll()
 
@@ -145,6 +147,7 @@ class SitiLocalizer {
     }
 
     fun toggle(location: LocationCodable) {
+        val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
         val savedLocation = realm.where(Location::class.java).equalTo("id", location.id).findFirst()
         if (savedLocation != null) {
