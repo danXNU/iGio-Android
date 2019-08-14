@@ -115,7 +115,6 @@ class SitoObject {
     var order: Int = -1
 }
 
-//TODO: testare se gson riesce a creare un Enum a partire da un valore. Es: enum Location { case dicoesi = 1 }. JSON: { "test" : 1 } --> json["test"] == Location.diocesi
 class LocationCodable {
     var id : Int = -1
     var name: String = ""
@@ -132,23 +131,6 @@ class LocationCodable {
     @Expose(deserialize = false) var isSelected: Boolean = false
 }
 
-enum class ScuolaType(val value: Int) {
-    none(0),
-    medie(1),
-    biennio(2),
-    triennio(3);
-
-    fun getFrom(value: Int) : ScuolaType {
-        val categoria =  when(value) {
-            1 -> medie
-            2 -> biennio
-            3 -> triennio
-            else -> none
-        }
-        if (categoria == none) { Log.e("Enum error", "ScuolaTyoe ricevuto == .none") }
-        return categoria
-    }
-}
 
 enum class SitoCategoria(val value: Int){
     none(0),
