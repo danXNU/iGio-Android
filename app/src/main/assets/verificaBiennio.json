@@ -1,0 +1,48 @@
+{
+    "scuolaType": 2,
+    "categorie" : [
+        {
+            "nome" : "Presenza, interesse e stile",
+            "domande" : [
+                "Sono costante nella partecipazione e puntuale agli incontri, utilizza in modo appropriato le risorse (materiali, attrezzature e strumenti, spazi, strutture)",
+                "Dimostro impegno e interesse per il percorso e le attività proposte; vive volentieri i momenti e le attività assegnate (gioco, condivisione, preghiera, riflessione, laboratori)"
+            ]
+        },
+        {
+            "nome" : "Priorità, organizzazione e confronto",
+            "domande" : [
+                "Organizzo lo spazio di lavoro e le attività (es. studio, sport, formazione) pianificando i propri impegni (priorità, tempi) in base alle disposizioni ricevute",
+                "So confrontarmi e interagire con i responsabili dei settori (docenti, formatori, rappresentanti) per ottenere consigli e pareri"
+            ]
+        },
+        {
+            "nome" : "Annuncio e formazione personale",
+            "domande" : [
+                "Sono capace di usare le conoscenze e competenze in modo autonomo e creativo; la formazione ricevuta (ritiri, compagnie, buongiorno, IRC, progetti) ha una ricaduta viva nella propria vita",
+                "Nelle scelte quotidiane mi dimostro coerente con le conoscenze acquisite, so essere coerente e assertivo"
+            ]
+        },
+        {
+            "nome" : "Comunione e spirito di gruppo",
+            "domande" : [
+                "Collaboro con le altre persone del gruppo al conseguimento degli obiettivi, rispettando lo stile e le regole comuni",
+                "So esprimere il proprio contributo nel gruppo, rispettando idee e apporti degli altri membri del team"
+            ]
+        },
+        {
+            "nome" : "Servizio e attenzione al prossimo",
+            "domande" : [
+                "Mi mostro disponibile a svolgere lavori e servizi su indicazione dei responsabili",
+                "So accorgermi dei bisogni ordinari dell’ambiente e se ne fa carico"
+            ]
+        },
+        {
+            "nome" : "Carisma salesiano",
+            "domande" : [
+                "In questa scuola mi sento a mio agio, mi sento “a casa”",
+                "Accetto consegne extra e piccoli compiti di responsabilità verso i più giovani, in continuità con il percorso di formazione ricevuto"
+            ]
+        }
+    ]
+}
+

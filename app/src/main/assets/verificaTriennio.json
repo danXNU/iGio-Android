@@ -1,0 +1,48 @@
+{
+    "scuolaType" : 3,
+    "categorie" : [
+        {
+            "nome" : "Presenza, interesse e stile",
+            "domande" : [
+                "Ho assunto un atteggiamento in sintonia con lo stile del gruppo, nel rispetto degli spazi e delle persone",
+                "Affronto i problemi e le sfide, in situazioni ordinarie e non, mantenendo l’autocontrollo e chiedendo aiuto e supporto quando è necessario"
+            ]
+        },
+        {
+            "nome" : "Priorità, organizzazione e confronto",
+            "domande" : [
+                "Uso criteri chiari e trasparenti nello scegliere le priorità da seguire (es. studio, sport, formazione), ne sono consapevole e comunico le mie decisioni ai responsabili tempestivamente",
+                "Sono in grado di scegliere a cosa dedicarmi a partire da motivi profondi e di motivare la mia scelta perseverandomi; non faccio più ricorso a scuse superficiali o futili"
+            ]
+        },
+        {
+            "nome" : "Annuncio e formazione personale",
+            "domande" : [
+                "Sono capace di usare le conoscenze e competenze in modo autonomo e creativo; la formazione ricevuta (ritiri, compagnie, buongiorno, IRC, progetti) ha una ricaduta viva nella mia vita",
+                "Nelle scelte quotidiane mi dimostro coerente con le conoscenze acquisite, so essere coerente e assertivo"
+            ]
+        },
+        {
+            "nome" : "Comunione e spirito di gruppo",
+            "domande" : [
+                "Ho costruito relazioni positive con i membri del gruppo anche al di fuori dai momenti di lavoro formale",
+                "Mi mostro accogliente coi nuovi membri del gruppo e sono capace coinvolgere gli altri"
+            ]
+        },
+        {
+            "nome" : "Servizio e attenzione al prossimo",
+            "domande" : [
+                "Ho l’attenzione, la prontezza e la disponibilità di prendere l’iniziativa per andare in aiuto di situazioni o bisogni imprevisti",
+                "Mi informo di mia iniziativa sugli eventuali bisogni del gruppo, dell’ambiente e del territorio"
+            ]
+        },
+        {
+            "nome" : "Carisma salesiano",
+            "domande" : [
+                "Mi accorgo e mi preoccupo delle necessità dell’ambiente e delle persone, mostrando un’inclinazione a interessarmi dei giovani più in difficoltà",
+                "Condivido e padroneggio ragionamenti e prospettive tipiche dello stile salesiano; riconosco di avere assunto un modus operandi tipico della scuola frequentata (questo giudizio è una sintesi di tutti i precedenti!)"
+            ]
+        }
+    ]
+}
+
