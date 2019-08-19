@@ -4,7 +4,7 @@
                                              android:layout_height="match_parent">
 
     <Button
-            android:text="Button"
+            android:text="Note"
             android:layout_width="225dp"
             android:layout_height="106dp"
             android:id="@+id/notesButton" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
@@ -32,4 +32,12 @@
             android:id="@+id/citiesButton" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="161dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="162dp" app:layout_constraintTop_toBottomOf="@+id/diocesiButton"/>
+    <Button
+            android:text="Percorso Formativo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/verificaButton" android:layout_marginBottom="73dp"
+            app:layout_constraintBottom_toTopOf="@+id/notesButton" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="79dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="161dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="162dp"/>
 </android.support.constraint.ConstraintLayout>

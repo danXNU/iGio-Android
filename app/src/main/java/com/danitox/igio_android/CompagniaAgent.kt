@@ -53,6 +53,13 @@ class CompagniaAgent(val context: Context) {
         realm.insert(newCompagnia)
         realm.commitTransaction()
     }
+
+    fun getLatestVerifica(type: ScuolaType) : VerificaCompagnia? {
+        val realm = Realm.getDefaultInstance()
+        val verifica = realm.where(VerificaCompagnia::class.java).equalTo("_scuolaType", type.value).findFirst()
+        return verifica
+    }
+
 }
 
 open class VerificaCompagnia: RealmObject() {
@@ -118,4 +125,5 @@ class VerificaCreator {
         }
         return verifica
     }
+
 }

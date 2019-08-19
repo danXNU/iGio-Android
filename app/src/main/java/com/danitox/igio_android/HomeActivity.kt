@@ -37,5 +37,11 @@ class HomeActivity: AppCompatActivity() {
             val intent = Intent(this, SitiActivity::class.java)
             this.startActivity(intent)
         }
+
+        this.verificaButton.setOnClickListener {
+            val intent = Intent(this, CompagniaActivity::class.java)
+            intent.putExtra("type", UserManager().currentUser().ageScuola.value)
+            this.startActivity(intent)
+        }
     }
 }
