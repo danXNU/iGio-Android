@@ -54,7 +54,7 @@ enum class UserGender(val value: Int) {
     }
 }
 
-class User: RealmObject() {
+open class User: RealmObject() {
     @PrimaryKey var id : String = UUID.randomUUID().toString()
     var _genderValue : Int = 0
     var _scuolaType : Int = 1
