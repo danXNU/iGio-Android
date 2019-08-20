@@ -5,15 +5,18 @@ import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.SeekBar
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
+import io.realm.Realm
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.compagnia_activity.tableView
 import kotlinx.android.synthetic.main.compagnia_row.view.*
+import kotlin.math.round
 
 class CompagniaActivity: AppCompatActivity() {
 
@@ -71,6 +74,23 @@ class CompagniaRow(val domanda: VerificaDomanda): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.domandaLabel.text = domanda.domanda
         viewHolder.itemView.domandaSlider.progress = domanda.risposta
+
+        viewHolder.itemView.domandaSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                val realm = domanda.realm
+                realm.beginTransaction()
+                domanda.risposta = seekBar?.progress ?: 0
+                realm.commitTransaction()
+            }
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+            }
+        })
     }
 
     override fun getLayout(): Int {
