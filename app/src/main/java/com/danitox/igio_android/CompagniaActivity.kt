@@ -3,13 +3,16 @@ package com.danitox.igio_android
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import io.realm.RealmList
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.compagnia_activity.*
+import kotlinx.android.synthetic.main.compagnia_activity.tableView
 import kotlinx.android.synthetic.main.compagnia_row.view.*
 
 class CompagniaActivity: AppCompatActivity() {
@@ -23,6 +26,9 @@ class CompagniaActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.compagnia_activity)
+
+        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        tableView.addItemDecoration(divider)
 
         type = ScuolaType.none.getFrom(intent.getIntExtra("type", 0))
 
@@ -38,17 +44,16 @@ class CompagniaActivity: AppCompatActivity() {
 
     }
 
-    fun fillTableView() {
+    private fun fillTableView() {
         val adapter = GroupAdapter<ViewHolder>()
 
-        for (i in 0..storage.size - 1) {
+        for (i in 0 until storage.size) {
             val newSection = Section()
-            val categoriaObj = storage[i]
-            if (categoriaObj == null) { continue }
+            val categoriaObj = storage[i] ?: continue
 
-            for (x in 0..categoriaObj.domande.size - 1) {
-                val domanda = categoriaObj.domande[x]
-                if (domanda == null) { continue }
+            for (x in 0 until categoriaObj.domande.size) {
+                val domanda = categoriaObj.domande[x] ?: continue
+
                 val newRow = CompagniaRow(domanda)
                 newSection.add(newRow)
             }
