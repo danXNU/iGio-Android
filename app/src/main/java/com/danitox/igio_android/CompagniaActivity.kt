@@ -41,12 +41,12 @@ class CompagniaActivity: AppCompatActivity() {
     fun fillTableView() {
         val adapter = GroupAdapter<ViewHolder>()
 
-        for (i in 0..storage.size) {
+        for (i in 0..storage.size - 1) {
             val newSection = Section()
             val categoriaObj = storage[i]
             if (categoriaObj == null) { continue }
 
-            for (x in 0..categoriaObj.domande.size) {
+            for (x in 0..categoriaObj.domande.size - 1) {
                 val domanda = categoriaObj.domande[x]
                 if (domanda == null) { continue }
                 val newRow = CompagniaRow(domanda)

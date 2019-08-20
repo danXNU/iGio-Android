@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.AssetManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.annotations.SerializedName
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
@@ -25,6 +26,7 @@ class CompagniaAgent(val context: Context) {
         val realm = Realm.getDefaultInstance()
 
         for (type in ScuolaType.values()) {
+            if (type == ScuolaType.none) { continue }
             val allRegole = realm.where(VerificaCompagnia::class.java).equalTo("_scuolaType", type.value).findAll()
             if (allRegole.size < 1) {
                 var fileName : VerificaFileNames = when (type) {
@@ -90,7 +92,8 @@ open class VerificaDomanda: RealmObject() {
 
 
 class CompagniaFile {
-    private var _scuolaType: Int = 0
+
+    @SerializedName("scuolaType") private var _scuolaType: Int = 0
     var categorie: MutableList<CompagniaCategoriaFile> = mutableListOf()
 
     var scuolaType: ScuolaType
