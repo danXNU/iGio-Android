@@ -1,6 +1,10 @@
 package com.danitox.igio_android
 
+import android.content.Context
+import android.view.View
+import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
+import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.RealmResults
@@ -79,4 +83,52 @@ class RegolaHelper {
         }
         return regolaCD
     }
+}
+
+class RegolaFetcherModel(val context: Context) {
+
+    enum class RegolaFileNames(val value: String) {
+        medie("regolaMedie.json"),
+        biennio("regolaBiennio.json"),
+        triennio("regolaTriennio.json")
+    }
+
+    fun createIfNotPresent() {
+        val realm = Realm.getDefaultInstance()
+        for (type in ScuolaType.values()) {
+            if (type == ScuolaType.none) { continue }
+
+            val allRegole = realm.where(RegolaVita::class.java).equalTo("_scuolaType", type.value).findAll()
+            if (allRegole.size < 1) {
+                val fileName : RegolaFileNames = when (type) {
+                    ScuolaType.medie ->  RegolaFileNames.medie
+                    ScuolaType.biennio -> RegolaFileNames.biennio
+                    ScuolaType.triennio -> RegolaFileNames.triennio
+                    else -> RegolaFileNames.medie
+                }
+                createRegolaModel(fileName)
+            }
+        }
+    }
+
+    fun createRegolaModel(fileName: RegolaFileNames) {
+        val stream = this.context.assets.open(fileName.value)
+        val rawBytes = stream.readBytes()
+        stream.close()
+        val jsonString = String(rawBytes)
+        val gson = GsonBuilder().create()
+        val regolaFile = gson.fromJson(jsonString, RegolaFile::class.java)
+
+        val newRegola = RegolaHelper().createFromFile(regolaFile)
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+        realm.insert(newRegola)
+        realm.commitTransaction()
+    }
+
+    fun getLatestRegola(type: ScuolaType) : RegolaVita? {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(RegolaVita::class.java).equalTo("_scuolaType", type.value).findFirst()
+    }
+
 }
