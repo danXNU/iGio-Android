@@ -1,0 +1,100 @@
+{
+    "scuolaType" : 2,
+    "categories" : [
+        {
+            "id" : 0,
+            "name" : "Motto",
+            "domande" : [
+                {
+                    "idDomanda" : 1,
+                    "domanda" : "Il mio MOTTO",
+                    "risposta" : null
+                }
+            ]
+        },
+        {
+            "id" : 1,
+            "name" : "Studio e dovere quotidiano",
+            "domande" : [
+                {
+                    "idDomanda" : 2,
+                    "domanda" : "Un mio pregio",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 3,
+                    "domanda" : "Un mio limite",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 4,
+                    "domanda" : "Un proposito (semplice, concreto, fattibile)",
+                    "risposta" : null
+                }
+            ]
+        },
+        {
+            "id" : 2,
+            "name" : "Santità e cammino di fede e di preghiera",
+            "domande" : [
+                {
+                    "idDomanda" : 5,
+                    "domanda" : "Un mio pregio",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 6,
+                    "domanda" : "Un mio limite",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 7,
+                    "domanda" : "Un proposito (semplice, concreto, fattibile)",
+                    "risposta" : null
+                }
+            ]
+        },
+        {
+            "id" : 3,
+            "name" : "Salute e scelte di vita gioiose ed equilibrate",
+            "domande" : [
+                {
+                    "idDomanda" : 8,
+                    "domanda" : "Un mio pregio",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 9,
+                    "domanda" : "Un mio limite",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 10,
+                    "domanda" : "Un proposito (semplice, concreto, fattibile)",
+                    "risposta" : null
+                }
+            ]
+        },
+        {
+            "id" : 4,
+            "name" : "Impegno per gli altri",
+            "domande" : [
+                {
+                    "idDomanda" : 11,
+                    "domanda" : "Il mio impregno per gli altri (famiglia, amici, bisognosi)",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 12,
+                    "domanda" : "Con chi mi confronto",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 13,
+                    "domanda" : "Una preghiera di affidamento",
+                    "risposta" : null
+                }
+            ]
+        }
+    ]
+}

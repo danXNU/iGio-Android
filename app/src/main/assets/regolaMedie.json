@@ -1,0 +1,69 @@
+{
+    "scuolaType" : 1,
+    "categories" : [
+        {
+            "id" : 0,
+            "name" : "Allegria",
+            "domande" : [
+                {
+                    "idDomanda" : 1,
+                    "domanda" : "Cosa mi impegno a fare",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 2,
+                    "domanda" : "Quando mi impegno a farlo",
+                    "risposta" : null
+                }
+            ]
+        },
+        {
+            "id" : 1,
+            "name" : "Quotidianità",
+            "domande" : [
+                {
+                    "idDomanda" : 3,
+                    "domanda" : "Cosa mi impegno a fare",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 4,
+                    "domanda" : "Quando mi impegno a farlo",
+                    "risposta" : null
+                }
+            ]
+        },
+        {
+            "id" : 2,
+            "name" : "Preghiera",
+            "domande" : [
+                {
+                    "idDomanda" : 5,
+                    "domanda" : "Cosa mi impegno a fare",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 6,
+                    "domanda" : "Quando mi impegno a farlo",
+                    "risposta" : null
+                }
+            ]
+        },
+        {
+            "id" : 3,
+            "name" : "Affidamento",
+            "domande" : [
+                {
+                    "idDomanda" : 7,
+                    "domanda" : "Con chi mi confronto",
+                    "risposta" : null
+                },
+                {
+                    "idDomanda" : 8,
+                    "domanda" : "Una preghiera di affidamento",
+                    "risposta" : null
+                }
+            ]
+        }
+    ]
+}
