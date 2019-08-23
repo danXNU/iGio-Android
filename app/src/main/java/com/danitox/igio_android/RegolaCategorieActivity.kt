@@ -1,5 +1,7 @@
 package com.danitox.igio_android
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -48,7 +50,7 @@ class RegolaCategorieActivity : AppCompatActivity() {
 
             for (x in 0 until categoria.domande.size) {
                 val domanda = categoria.domande[x] ?: continue
-                val newItem = RegolaDomandaRow(domanda)
+                val newItem = RegolaDomandaRow(domanda, this)
                 newSection.add(newItem)
             }
             adapter.add(newSection)
@@ -59,11 +61,20 @@ class RegolaCategorieActivity : AppCompatActivity() {
 }
 
 
-class RegolaDomandaRow(val domanda: RegolaDomanda): Item<ViewHolder>() {
+class RegolaDomandaRow(val domanda: RegolaDomanda, val context: Context): Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.domandaLabel.text = domanda.domanda
-        viewHolder.itemView.rispostaLabel.text = domanda.risposta
+
+        var tempRisposta : String? = domanda.risposta
+        if (tempRisposta == null || tempRisposta.isBlank()) { tempRisposta = "Nessuna risposta" }
+        viewHolder.itemView.rispostaLabel.text = tempRisposta
+
+        viewHolder.itemView.setOnClickListener {
+            val intent = Intent(context, RegolaRispostaActivity::class.java)
+            intent.putExtra("domandaID", domanda.id)
+            context.startActivity(intent)
+        }
     }
 
     override fun getLayout(): Int {

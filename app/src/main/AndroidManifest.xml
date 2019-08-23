@@ -85,6 +85,17 @@
             />
         </activity>
 
+
+        <activity
+                android:name=".RegolaRispostaActivity"
+                android:label="Risposta"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".RegolaCategorieActivity"
+            />
+        </activity>
+
     </application>
 
 </manifest>
