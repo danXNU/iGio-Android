@@ -43,5 +43,14 @@ class HomeActivity: AppCompatActivity() {
             intent.putExtra("type", UserManager().currentUser().ageScuola.value)
             this.startActivity(intent)
         }
+
+        this.regolaButton.setOnClickListener {
+            val model = RegolaFetcherModel(this)
+            model.createIfNotPresent()
+
+            val intent = Intent(this, RegolaCategorieActivity::class.java)
+            intent.putExtra("type", UserManager().currentUser().ageScuola.value)
+            this.startActivity(intent)
+        }
     }
 }

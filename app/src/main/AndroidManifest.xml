@@ -75,6 +75,16 @@
             />
         </activity>
 
+        <activity
+                android:name=".RegolaCategorieActivity"
+                android:label="Agenda dell'allegria e della santità"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".HomeActivity"
+            />
+        </activity>
+
     </application>
 
 </manifest>
