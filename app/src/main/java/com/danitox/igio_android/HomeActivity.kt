@@ -44,6 +44,11 @@ class HomeActivity: AppCompatActivity() {
             this.startActivity(intent)
         }
 
+        this.tsm_button.setOnClickListener {
+            val intent = Intent(this, TeenStarMaschioListActivity::class.java)
+            this.startActivity(intent)
+        }
+
         this.regolaButton.setOnClickListener {
             val model = RegolaFetcherModel(this)
             model.createIfNotPresent()
