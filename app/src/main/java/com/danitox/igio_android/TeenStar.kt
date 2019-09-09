@@ -1,8 +1,13 @@
 package com.danitox.igio_android
 
 import android.graphics.Color
+import io.realm.Realm
 import io.realm.RealmObject
+import io.realm.Sort
 import khronos.beginningOfDay
+import khronos.beginningOfMonth
+import khronos.endOfDay
+import khronos.with
 import java.util.*
 
 interface TeenStarDerivative {
@@ -134,4 +139,54 @@ enum class CicloColor(val rawValue: Int) {
             croce -> "Giorno in cui è avvenuta la mestruazione"
         }
     }
+}
+
+class TeenStarWeek(val startOfWeek: Date) {
+    var tables: MutableList<TeenStarMaschio> = mutableListOf()
+}
+
+class TeenStarModel(val type: TSModelType) {
+    enum class TSModelType {
+        maschio,
+        femmina
+    }
+
+    var errorHandler: ((String) -> Unit)? = null
+
+    fun isTodayEmpty(): Boolean {
+        val realm = Realm.getDefaultInstance()
+
+        val dateFrom = Date().beginningOfDay
+        val dateTo = dateFrom.endOfDay
+
+        if (type == TSModelType.maschio) {
+            val count =  realm.where(TeenStarMaschio::class.java).between("date", dateFrom, dateTo).count().toInt()
+            return count == 0
+        } else {
+            val count =  realm.where(TeenStarFemmina::class.java).between("date", dateFrom, dateTo).count().toInt()
+            return count == 0
+        }
+    }
+
+    fun getThemAll() : List<TeenStarWeek> {
+        val realm = Realm.getDefaultInstance()
+        val allDates = realm.where(TeenStarMaschio::class.java).findAll().map { it.date }
+
+        var weeks: MutableSet<TeenStarWeek> = mutableSetOf()
+
+        for (date in allDates) {
+            val newWeek = TeenStarWeek(date.startOfWeek())
+            weeks.add(newWeek)
+        }
+
+        for (week in weeks) {
+            val dateFrom = week.startOfWeek.beginningOfDay
+            val dateTo = dateFrom.endOfWeek()
+
+            week.tables = realm.where(TeenStarMaschio::class.java).between("date", dateFrom, dateTo).findAll().sort("date", Sort.DESCENDING)
+        }
+
+        return weeks.sortedByDescending { it.startOfWeek }
+    }
+
 }

@@ -6,6 +6,9 @@ import io.realm.DynamicRealm
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmMigration
+import khronos.beginningOfDay
+import khronos.endOfDay
+import java.util.*
 
 class ApplicationSubclass : Application() {
 
@@ -46,4 +49,24 @@ class MyMigration : RealmMigration {
             oldVersion += 1
         }
     }
+}
+
+fun Date.startOfWeek() : Date {
+    val cal = Calendar.getInstance()
+    cal.time = this
+    cal.set(Calendar.DAY_OF_WEEK, cal.getActualMinimum(Calendar.DAY_OF_WEEK))
+    return cal.time.beginningOfDay
+}
+
+fun Date.endOfWeek() : Date {
+    val cal = Calendar.getInstance()
+    cal.time = this
+    cal.set(Calendar.DAY_OF_WEEK, cal.getActualMaximum(Calendar.DAY_OF_WEEK))
+    return cal.time.endOfDay
+}
+
+fun Date.dayOfWeek() : String {
+    val cal = Calendar.getInstance()
+    cal.time = this
+    return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
 }
