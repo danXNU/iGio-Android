@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content">
+    <Button
+            android:text="😢"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/tristezzaButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/gioiaButton"
+            app:layout_constraintTop_toTopOf="@+id/gioiaButton" android:textSize="30sp"/>
+    <Button
+            android:text="😡"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/rabbiaButton"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp" android:textSize="30sp"/>
+    <Button
+            android:text="😐"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/equilibrioButton" app:layout_constraintStart_toEndOf="@+id/gioiaButton"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gioiaButton" android:textSize="30sp"/>
+    <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/fiduciaButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/rabbiaButton"
+            app:layout_constraintTop_toTopOf="@+id/rabbiaButton" android:text="😌" android:textSize="30sp"/>
+    <Button
+            android:text="😁"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/gioiaButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.501" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/rabbiaButton"
+            android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="parent" android:textSize="30sp"/>
+    <Button
+            android:text="😱"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/pauraButton" app:layout_constraintStart_toEndOf="@+id/rabbiaButton"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rabbiaButton" android:textSize="30sp"/>
+</android.support.constraint.ConstraintLayout>
