@@ -190,3 +190,33 @@ class TeenStarModel(val type: TSModelType) {
     }
 
 }
+
+
+class TSMVolatile {
+    var sentimento8: Emozione? = null
+    var sentimento14: Emozione? = null
+    var sentimento20: Emozione? = null
+    var date: Date = Date().beginningOfDay
+
+    fun getEmozioneFrom(index: Int): Emozione? {
+        return when(index) {
+            1 -> sentimento8
+            2 -> sentimento14
+            3 -> sentimento20
+            else -> null
+        }
+    }
+
+    fun setEmozione(emozione: Emozione, index: Int) {
+        when(index) {
+            1 -> this.sentimento8 = emozione
+            2 -> this.sentimento14 = emozione
+            3 -> this.sentimento20 = emozione
+        }
+    }
+}
+
+class TSFVolatile {
+    var ciclo: CicloColor? = null
+    var date: Date = Date().beginningOfDay
+}

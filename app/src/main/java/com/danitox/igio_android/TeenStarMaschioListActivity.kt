@@ -17,8 +17,6 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
     var model = TeenStarModel(TeenStarModel.TSModelType.maschio)
     var weeks: List<TeenStarWeek> = listOf()
 
-    var dataLoaded: (() -> Unit)? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.compagnia_activity)
@@ -26,6 +24,10 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         tableView.addItemDecoration(divider)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         fetchEntries()
     }
 

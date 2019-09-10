@@ -106,6 +106,16 @@
             />
         </activity>
 
+        <activity
+                android:name=".TeenStarMaschioEditorActivity"
+                android:label="TeenSTAR"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".TeenStarMaschioListActivity"
+            />
+        </activity>
+
     </application>
 
 </manifest>
