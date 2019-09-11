@@ -18,13 +18,13 @@ interface TeenStarDerivative {
 open class TeenStarMaschio: RealmObject(), TeenStarDerivative {
     override var id: String = UUID.randomUUID().toString()
     override var date = Date().beginningOfDay
-    var sentimentoTable: SentimentoTable? = null
+    var sentimentoTable: SentimentoTable? = SentimentoTable()
 }
 
 open class TeenStarFemmina: RealmObject(), TeenStarDerivative {
     override var id: String = UUID.randomUUID().toString()
     override var date = Date().beginningOfDay
-    var cicloTable: CicloTable? = null
+    var cicloTable: CicloTable? = CicloTable()
 }
 
 open class SentimentoTable: RealmObject() {

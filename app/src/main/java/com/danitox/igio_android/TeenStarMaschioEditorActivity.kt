@@ -1,10 +1,12 @@
 package com.danitox.igio_android
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.DatePicker
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
@@ -27,8 +29,11 @@ enum class Orario(val rawValue: String) {
 
 class TeenStarMaschioEditorActivity : AppCompatActivity() {
 
+    var isEntryCreatedNow: Boolean = false
     var currentVolatileTable: TSMVolatile = TSMVolatile()
     var dbEntry: TeenStarMaschio? = null
+
+    val cal = Calendar.getInstance()
 
     private val emojiClicked : (Emozione, Orario) -> Unit = { emozione, orario ->
         when(orario) {
@@ -42,11 +47,17 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.compagnia_activity)
 
+        this.isEntryCreatedNow = intent.getBooleanExtra("isNewEntry", false)
+
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         tableView.addItemDecoration(divider)
 
-        val entryID = intent.getIntExtra("entryID", -1)
-        if (entryID > 0) {
+        val entryID = intent.getStringExtra("entryID")
+        if (entryID == null) {
+            val entry = TeenStarMaschio()
+            entry.date = Date()
+            this.dbEntry = entry
+        } else {
             val realm = Realm.getDefaultInstance()
             this.dbEntry = realm.where(TeenStarMaschio::class.java).equalTo("id", entryID).findFirst()
         }
@@ -63,10 +74,33 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
         fillTableView()
     }
 
+    override fun onPause() {
+        super.onPause()
+        saveTeenStarTable()
+    }
+
     fun fillTableView() {
+        cal.time = currentVolatileTable.date
+
+        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
+                                   dayOfMonth: Int) {
+
+                cal.set(year, monthOfYear, dayOfMonth)
+                dateDidChange(cal.time)
+            }
+        }
+
+
         val adapter = GroupAdapter<ViewHolder>()
         val dateSection = Section(ToxHeader(currentVolatileTable.date.toString()))
-        val changeDateRow = BasicRow("Modifica la data")
+        val changeDateRow = DateRow("Modifica la data") {
+            DatePickerDialog(this, dateSetListener,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
+
         dateSection.add(changeDateRow)
         adapter.add(dateSection)
 
@@ -89,33 +123,47 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
         return objects.size == 0
     }
 
-    fun dateDidChangeAction(date: Date) {
+    fun dateDidChange(date: Date) {
         this.currentVolatileTable.date = date
+        fillTableView()
     }
-
 
 
     fun saveTeenStarTable() {
-        if (!isDateAvailable(currentVolatileTable.date.beginningOfDay)) {
-            return
+        val isDateSelectedAvailable = isDateAvailable(currentVolatileTable.date.beginningOfDay)
+
+        if (isDateSelectedAvailable || isDateSelectedAvailable == false && isEntryCreatedNow == false) {
+            val realm = Realm.getDefaultInstance()
+            realm.beginTransaction()
+            dbEntry?.date = currentVolatileTable.date
+            if (currentVolatileTable.sentimento8 != null) {
+                dbEntry?.sentimentoTable?.sentimento8 = currentVolatileTable.sentimento8!!
+            }
+            if (currentVolatileTable.sentimento14 != null) {
+                dbEntry?.sentimentoTable?.sentimento14 = currentVolatileTable.sentimento14!!
+            }
+            if (currentVolatileTable.sentimento20 != null) {
+                dbEntry?.sentimentoTable?.sentimento20 = currentVolatileTable.sentimento20!!
+            }
+            realm.insertOrUpdate(dbEntry!!)
+            realm.commitTransaction()
         }
-        val realm = Realm.getDefaultInstance()
-        realm.beginTransaction()
-        dbEntry?.date = currentVolatileTable.date
-        if (currentVolatileTable.sentimento8 != null) {
-            dbEntry?.sentimentoTable?.sentimento8 = currentVolatileTable.sentimento8!!
-        }
-        if (currentVolatileTable.sentimento14 != null) {
-            dbEntry?.sentimentoTable?.sentimento14 = currentVolatileTable.sentimento14!!
-        }
-        if (currentVolatileTable.sentimento20 != null) {
-            dbEntry?.sentimentoTable?.sentimento20 = currentVolatileTable.sentimento20!!
-        }
-        realm.insertOrUpdate(dbEntry!!)
-        realm.commitTransaction()
+
     }
 
 }
+
+class DateRow(val text: String, val clickAction: () -> Unit): Item<ViewHolder>() {
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.mainLabel.text = text
+        viewHolder.itemView.setOnClickListener { clickAction.invoke() }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.basic_row
+    }
+}
+
 
 class BasicRow(val text: String): Item<ViewHolder>() {
 

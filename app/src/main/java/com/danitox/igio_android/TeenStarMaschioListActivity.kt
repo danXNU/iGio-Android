@@ -32,6 +32,7 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
 
         this.add_button.setOnClickListener {
             val newIntent = Intent(this, TeenStarMaschioEditorActivity::class.java)
+            newIntent.putExtra("isNewEntry", true)
             this.startActivity(newIntent)
         }
     }
@@ -51,7 +52,11 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
             for (x in 0 until week.tables.size) {
                 val entry = week.tables[x]
 
-                val newRow = TSMCell(entry)
+                val newRow = TSMCell(entry) {
+                    val newIntent = Intent(this, TeenStarMaschioEditorActivity::class.java)
+                    newIntent.putExtra("entryID", entry.id)
+                    this.startActivity(newIntent)
+                }
                 newSection.add(newRow)
             }
             adapter.add(newSection)
@@ -74,7 +79,7 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
 
 }
 
-class TSMCell(val entry: TeenStarMaschio) : Item<ViewHolder>() {
+class TSMCell(val entry: TeenStarMaschio, val clickAction: () -> Unit) : Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.dayLabel.text = "${entry.date.dayOfWeek()} - ${entry.date.toString("dd/MM/yyyy")}"
@@ -84,6 +89,7 @@ class TSMCell(val entry: TeenStarMaschio) : Item<ViewHolder>() {
             viewHolder.itemView.emoji14Label.text = this.getEmojiFrom(table.sentimento14)
             viewHolder.itemView.emoji20Label.text = this.getEmojiFrom(table.sentimento20)
         }
+        viewHolder.itemView.setOnClickListener { clickAction.invoke() }
     }
 
 
