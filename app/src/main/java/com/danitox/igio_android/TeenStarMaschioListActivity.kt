@@ -1,10 +1,15 @@
 package com.danitox.igio_android
 
 import android.content.Intent
+import android.content.Context
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
@@ -20,6 +25,8 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
 
     var model = TeenStarModel(TeenStarModel.TSModelType.maschio)
     var weeks: List<TeenStarWeek> = listOf()
+
+    var selectedEntryID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +59,12 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
             for (x in 0 until week.tables.size) {
                 val entry = week.tables[x]
 
-                val newRow = TSMCell(entry) {
+                val newRow = TSMCell(entry, clickAction = {
                     val newIntent = Intent(this, TeenStarMaschioEditorActivity::class.java)
                     newIntent.putExtra("entryID", entry.id)
                     this.startActivity(newIntent)
+                }) { entryIDselected ->
+                    selectedEntryID = entryIDselected
                 }
                 newSection.add(newRow)
             }
@@ -74,12 +83,32 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
         realm.beginTransaction()
         table.deleteFromRealm()
         realm.commitTransaction()
-        this.weeks.first { it.tables.contains(table) }.tables.removeAll { it == table }
+        //this.weeks.firstOrNull { it.tables.contains(table) }.tables.removeAll { it == table }
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == 121) {
+            val realm = Realm.getDefaultInstance()
+            val entry = realm.where(TeenStarMaschio::class.java).equalTo("id", selectedEntryID).findFirst()
+            if (entry != null) {
+                remove(entry)
+                fillTableView()
+                showRemoveMessage()
+            }
+            return true
+        } else {
+            return super.onContextItemSelected(item)
+        }
+
+    }
+
+    private fun showRemoveMessage() {
+        Snackbar.make(this.tableView, "Item rimosso con successo!", Snackbar.LENGTH_SHORT).show()
     }
 
 }
 
-class TSMCell(val entry: TeenStarMaschio, val clickAction: () -> Unit) : Item<ViewHolder>() {
+class TSMCell(val entry: TeenStarMaschio, val clickAction: () -> Unit, val menuItemCallback: (String) -> Unit) : Item<ViewHolder>(), View.OnCreateContextMenuListener {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.dayLabel.text = "${entry.date.dayOfWeek()} - ${entry.date.toString("dd/MM/yyyy")}"
@@ -90,8 +119,13 @@ class TSMCell(val entry: TeenStarMaschio, val clickAction: () -> Unit) : Item<Vi
             viewHolder.itemView.emoji20Label.text = this.getEmojiFrom(table.sentimento20)
         }
         viewHolder.itemView.setOnClickListener { clickAction.invoke() }
+        viewHolder.itemView.setOnCreateContextMenuListener(this)
     }
 
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        menu?.add(0, 121, 0, "Rimuovi")
+        menuItemCallback.invoke(entry.id)
+    }
 
     override fun getLayout(): Int {
         return R.layout.teenstar_m_cell
