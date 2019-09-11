@@ -172,19 +172,25 @@ class TeenStarModel(val type: TSModelType) {
         val realm = Realm.getDefaultInstance()
         val allDates = realm.where(TeenStarMaschio::class.java).findAll().map { it.date }
 
-        var weeks: MutableSet<TeenStarWeek> = mutableSetOf()
+        val weeks: MutableList<TeenStarWeek> = mutableListOf()
 
         for (date in allDates) {
-            val newWeek = TeenStarWeek(date.startOfWeek())
-            weeks.add(newWeek)
+            val existingWeek: TeenStarWeek? = weeks.firstOrNull { it.startOfWeek.beginningOfDay.isCloseToDayEqualTo(date.startOfWeek().beginningOfDay) }
+            if (existingWeek == null) {
+                val newWeek = TeenStarWeek(date.startOfWeek())
+                weeks.add(newWeek)
+
+                val dateFrom = newWeek.startOfWeek.beginningOfDay
+                val dateTo = dateFrom.endOfWeek()
+
+                newWeek.tables = realm.where(TeenStarMaschio::class.java)
+                    .between("date", dateFrom, dateTo)
+                    .findAll().sort("date", Sort.DESCENDING)
+            }
         }
 
-        for (week in weeks) {
-            val dateFrom = week.startOfWeek.beginningOfDay
-            val dateTo = dateFrom.endOfWeek()
-
-            week.tables = realm.where(TeenStarMaschio::class.java).between("date", dateFrom, dateTo).findAll().sort("date", Sort.DESCENDING)
-        }
+        //for (week in weeks) {
+        //}
 
         return weeks.sortedByDescending { it.startOfWeek }
     }

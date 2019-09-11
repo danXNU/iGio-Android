@@ -70,3 +70,15 @@ fun Date.dayOfWeek() : String {
     cal.time = this
     return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
 }
+
+
+fun Date.isCloseToDayEqualTo(date: Date): Boolean {
+    val cal = Calendar.getInstance()
+    cal.time = this
+
+    val cal2 = Calendar.getInstance()
+    cal2.time = date
+    return cal.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+            cal.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+            cal.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
+}
