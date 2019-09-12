@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.compagnia_activity.tableView
 import kotlinx.android.synthetic.main.teenstar_m_cell.view.*
 import kotlinx.android.synthetic.main.tsm_list.*
+import java.util.*
+import kotlin.math.abs
 
 class TeenStarMaschioListActivity : AppCompatActivity() {
 
@@ -54,7 +56,25 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
 
         for (i in 0 until this.weeks.size) {
             val week = weeks[i]
-            val newSection = Section(ToxHeader("Daaaang - ${week.startOfWeek}"))
+
+            val now = Date()
+            val cal = Calendar.getInstance()
+            cal.time = Date()
+            val nowWeeks = cal.get(Calendar.WEEK_OF_YEAR)
+            cal.time = week.startOfWeek
+            val oldWeeks = cal.get(Calendar.WEEK_OF_YEAR)
+
+            val diffWeeks = abs(oldWeeks - nowWeeks)
+            var title: String = ""
+            if (diffWeeks == 0) {
+                title = "Questa settimana"
+            } else if (diffWeeks == 1) {
+                title = "1 settimana fa"
+            } else {
+                title = "$diffWeeks settimane fa"
+            }
+
+            val newSection = Section(ToxHeader(title))
 
             for (x in 0 until week.tables.size) {
                 val entry = week.tables[x]
