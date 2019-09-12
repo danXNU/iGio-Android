@@ -213,6 +213,14 @@ class TSMVolatile {
         }
     }
 
+    fun getEmozioneFrom(orario: Orario): Emozione? {
+        return when(orario) {
+            Orario.h8 -> sentimento8
+            Orario.h14 -> sentimento14
+            Orario.h20 -> sentimento20
+        }
+    }
+
     fun setEmozione(emozione: Emozione, index: Int) {
         when(index) {
             1 -> this.sentimento8 = emozione

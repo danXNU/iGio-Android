@@ -2,10 +2,12 @@ package com.danitox.igio_android
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Button
 import android.widget.DatePicker
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -14,6 +16,7 @@ import com.xwray.groupie.ViewHolder
 import io.realm.Realm
 import khronos.beginningOfDay
 import khronos.endOfDay
+import khronos.toString
 import kotlinx.android.synthetic.main.basic_row.view.*
 import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.compagnia_activity.tableView
@@ -41,6 +44,7 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
             Orario.h14 -> currentVolatileTable.setEmozione(emozione,2)
             Orario.h20 -> currentVolatileTable.setEmozione(emozione,3)
         }
+        fillTableView()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +97,7 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
 
 
         val adapter = GroupAdapter<ViewHolder>()
-        val dateSection = Section(ToxHeader(currentVolatileTable.date.toString()))
+        val dateSection = Section(ToxHeader(currentVolatileTable.date.toString("EEEE - dd/MM/yyyy")))
         val changeDateRow = DateRow("Modifica la data") {
             DatePickerDialog(this, dateSetListener,
                 cal.get(Calendar.YEAR),
@@ -106,7 +110,7 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
 
         for (orario in Orario.values()) {
             val newSection = Section(ToxHeader("Sentimento prevalente alle ore ${orario.rawValue}"))
-            val editingRow = TSMEditRow(orario, emojiClicked)
+            val editingRow = TSMEditRow(orario, currentVolatileTable.getEmozioneFrom(orario), emojiClicked)
             newSection.add(editingRow)
             adapter.add(newSection)
         }
@@ -151,6 +155,10 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
 
     }
 
+    fun updateEmotionsView() {
+
+    }
+
 }
 
 class DateRow(val text: String, val clickAction: () -> Unit): Item<ViewHolder>() {
@@ -177,18 +185,39 @@ class BasicRow(val text: String): Item<ViewHolder>() {
 
 }
 
-class TSMEditRow(val orario: Orario, val emozioneClicked: (Emozione, Orario) -> Unit): Item<ViewHolder>() {
+class TSMEditRow(val orario: Orario, val initialEmozione: Emozione?, val emozioneClicked: (Emozione, Orario) -> Unit): Item<ViewHolder>() {
+
+    private lateinit var emozioniButtons : Map<Emozione, Button>
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
+        emozioniButtons = hashMapOf(
+            Pair(Emozione.fiducioso, viewHolder.itemView.fiduciaButton),
+            Pair(Emozione.aggressività, viewHolder.itemView.rabbiaButton),
+            Pair(Emozione.paura, viewHolder.itemView.pauraButton),
+            Pair(Emozione.tristezza, viewHolder.itemView.tristezzaButton),
+            Pair(Emozione.gioia, viewHolder.itemView.gioiaButton),
+            Pair(Emozione.equilibrio, viewHolder.itemView.equilibrioButton)
+            )
+
         viewHolder.itemView.fiduciaButton.setOnClickListener { emozioneClicked.invoke(Emozione.fiducioso, orario) }
         viewHolder.itemView.rabbiaButton.setOnClickListener { emozioneClicked.invoke(Emozione.aggressività, orario) }
         viewHolder.itemView.pauraButton.setOnClickListener { emozioneClicked.invoke(Emozione.paura, orario) }
         viewHolder.itemView.tristezzaButton.setOnClickListener { emozioneClicked.invoke(Emozione.tristezza, orario) }
         viewHolder.itemView.gioiaButton.setOnClickListener { emozioneClicked.invoke(Emozione.gioia, orario) }
         viewHolder.itemView.equilibrioButton.setOnClickListener { emozioneClicked.invoke(Emozione.equilibrio, orario) }
+
+        if (initialEmozione != null) {
+            setEmozione(initialEmozione!!)
+        }
+
     }
 
     override fun getLayout(): Int {
         return R.layout.tsm_edit_row
+    }
+
+    fun setEmozione(emozione: Emozione) {
+        emozioniButtons.values.forEach { it.setBackgroundColor(Color.TRANSPARENT) }
+        emozioniButtons[emozione]?.setBackgroundColor(Color.GREEN)
     }
 }
