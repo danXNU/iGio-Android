@@ -14,10 +14,42 @@ import kotlinx.android.synthetic.main.teenstar_m_cell.view.dayLabel
 import kotlinx.android.synthetic.main.tsf_list_activity.*
 import kotlinx.android.synthetic.main.tsf_list_activity.tableView
 import kotlinx.android.synthetic.main.tsf_list_item.view.*
+import java.util.*
 
 
 class TeenStarFemminaListActivity : AppCompatActivity() {
 
+    var selectedMonth: Int = 0
+        set(value) {
+            field = value
+            if (selectedMonth <= 0) { return }
+            if (selectedYear <= 0) { return }
+            val cal = Calendar.getInstance()
+            cal.time = currentDate
+            cal.set(Calendar.MONTH, selectedMonth)
+            currentDate = cal.time
+        }
+
+    var selectedYear: Int = 0
+        set(value) {
+            field = value
+            if (selectedYear <= 0) { return }
+            if (selectedMonth <= 0) { return }
+            val cal = Calendar.getInstance()
+            cal.time = currentDate
+            cal.set(Calendar.YEAR, selectedYear)
+            currentDate = cal.time
+        }
+
+    var currentDate: Date = Date()
+        set(value) {
+            field = value
+            updateDates()
+            fetchItems(currentDate)
+        }
+
+    var allItems: List<TeenStarFemmina> = listOf()
+    var allDates: List<Date> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +79,15 @@ class TeenStarFemminaListActivity : AppCompatActivity() {
         tableView.layoutManager = GridLayoutManager(this, adapter.spanCount).apply { spanSizeLookup = adapter.spanSizeLookup }
         tableView.adapter = adapter
     }
+
+    fun updateDates() {
+
+    }
+
+    fun fetchItems(date: Date) {
+
+    }
+
 }
 
 class TSFListItem: Item<ViewHolder>() {
