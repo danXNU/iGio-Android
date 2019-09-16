@@ -60,18 +60,24 @@ class TeenStarFemminaListActivity : AppCompatActivity() {
         val divider2 = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         tableView.addItemDecoration(divider)
         tableView.addItemDecoration(divider2)
+
+        setUp()
     }
 
     override fun onResume() {
         super.onResume()
-        fillTableview()
+        refresh()
+    }
+
+    fun refresh() {
+        this.fetchItems(currentDate)
     }
 
     fun fillTableview() {
         val adapter = GroupAdapter<ViewHolder>()
         adapter.spanCount = 4
 
-        for (i in 0 .. 30) {
+        for (i in 0 until dates.size) {
             val newItem = TSFListItem()
             adapter.add(newItem)
         }
@@ -100,8 +106,6 @@ class TeenStarFemminaListActivity : AppCompatActivity() {
         if (year != null) {
             selectedYear = year
         }
-
-
     }
 
     fun setUp() {

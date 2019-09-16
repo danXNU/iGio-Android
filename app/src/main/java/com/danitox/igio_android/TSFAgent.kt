@@ -3,6 +3,8 @@ package com.danitox.igio_android
 import io.realm.Realm
 import io.realm.Sort
 import khronos.DateRange
+import khronos.beginningOfDay
+import khronos.endOfDay
 import java.time.LocalDate
 import java.util.*
 
@@ -61,7 +63,7 @@ class TSFAgent {
         val range = this.getMonthRange(date)
 
         val realm = Realm.getDefaultInstance()
-        return realm.where(TeenStarFemmina::class.java).between("date", range.start, range.endInclusive).findAll()
+        return realm.where(TeenStarFemmina::class.java).between("date", range.start.beginningOfDay, range.endInclusive.endOfDay).findAll()
     }
 
 
@@ -75,10 +77,10 @@ class TSFAgent {
     fun getArrayDatesFromRange(range: ClosedRange<Date>): List<Date> {
         val datesInRange : MutableList<Date> = mutableListOf()
         val cal = Calendar.getInstance()
-        cal.time = range.start
+        cal.time = range.start.beginningOfDay
 
         val endCalendar = Calendar.getInstance()
-        endCalendar.time = range.endInclusive
+        endCalendar.time = range.endInclusive.endOfDay
 
         while (cal.before(endCalendar)) {
             val result = cal.time
