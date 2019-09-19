@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
+import android.widget.Adapter
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -14,16 +18,21 @@ import kotlinx.android.synthetic.main.teenstar_m_cell.view.dayLabel
 import kotlinx.android.synthetic.main.tsf_list_activity.*
 import kotlinx.android.synthetic.main.tsf_list_activity.tableView
 import kotlinx.android.synthetic.main.tsf_list_item.view.*
+import java.text.DateFormatSymbols
 import java.time.LocalDate
 import java.util.*
 
 
-class TeenStarFemminaListActivity : AppCompatActivity() {
+class TeenStarFemminaListActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private val months: List<String> = DateFormatSymbols().months.map { it }
+    private var years: List<Int> = listOf()
+
 
     var selectedMonth: Int = 0
         set(value) {
             field = value
-            if (selectedMonth <= 0) { return }
+            if (selectedMonth < 0) { return }
             if (selectedYear <= 0) { return }
             val cal = Calendar.getInstance()
             cal.time = currentDate
@@ -56,10 +65,16 @@ class TeenStarFemminaListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tsf_list_activity)
 
+        monthSpinner.onItemSelectedListener = this
+        yearSpinner.onItemSelectedListener = this
+
+
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         val divider2 = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         tableView.addItemDecoration(divider)
         tableView.addItemDecoration(divider2)
+
+        refreshSpinners()
 
         setUp()
     }
@@ -67,6 +82,35 @@ class TeenStarFemminaListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         refresh()
+        refreshSpinners()
+    }
+
+    override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
+        if (arg0 == monthSpinner) {
+            set(position, null)
+        } else {
+            set(null, years[position])
+        }
+    }
+
+    override fun onNothingSelected(arg0: AdapterView<*>) {
+
+    }
+
+    fun refreshSpinners() {
+        val monthsAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, months)
+        monthsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        monthSpinner.adapter = monthsAdapter
+
+        val agent = TSFAgent()
+        this.years = agent.getYearsList(agent.getFarestDate())
+        val yearsAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, years)
+        yearsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        yearSpinner.adapter = yearsAdapter
+
+        monthSpinner.setSelection(selectedMonth)
+        yearSpinner.setSelection(years.indexOf(selectedYear))
+
     }
 
     fun refresh() {
@@ -117,6 +161,10 @@ class TeenStarFemminaListActivity : AppCompatActivity() {
 
         selectedMonth = month
         selectedYear = year
+
+        monthSpinner.setSelection(month, true)
+        yearSpinner.setSelection(years.indexOf(year), true)
+
     }
 
 }
