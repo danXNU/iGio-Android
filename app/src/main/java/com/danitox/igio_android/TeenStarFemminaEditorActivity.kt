@@ -74,11 +74,13 @@ class TeenStarFemminaEditorActivity: AppCompatActivity() {
     }
 
     fun saveTeenStarTable() {
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+
         if (currentVolatileTable.ciclo != null) {
             item.cicloTable?.cicloColor = currentVolatileTable.ciclo!!
         }
-        val realm = Realm.getDefaultInstance()
-        realm.beginTransaction()
+        
         realm.insertOrUpdate(item)
         realm.commitTransaction()
     }

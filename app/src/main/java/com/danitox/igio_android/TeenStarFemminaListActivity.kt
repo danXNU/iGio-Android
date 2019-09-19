@@ -127,7 +127,7 @@ class TeenStarFemminaListActivity : AppCompatActivity(), AdapterView.OnItemSelec
         for (i in 0 until dates.size) {
             var newItem: TSFListItem
             val currDate = dates[i]
-            val fitem = allItems.firstOrNull { it.date.beginningOfDay == currDate.beginningOfDay }
+            val fitem = allItems.firstOrNull { it.date.beginningOfDay.isCloseToDayEqualTo(currDate.beginningOfDay) }
             if (fitem == null) {
                 newItem = TSFListItem(currDate)
                 newItem.clickAction = { date, _ ->
