@@ -126,6 +126,16 @@
             />
         </activity>
 
+        <activity
+                android:name=".TeenStarFemminaEditorActivity"
+                android:label="TeenSTAR"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".TeenStarFemminaListActivity"
+            />
+        </activity>
+
     </application>
 
 </manifest>

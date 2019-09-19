@@ -1,5 +1,6 @@
 package com.danitox.igio_android
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +13,8 @@ import android.widget.ArrayAdapter
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
+import io.realm.Realm
+import khronos.beginningOfDay
 import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.teenstar_m_cell.view.*
 import kotlinx.android.synthetic.main.teenstar_m_cell.view.dayLabel
@@ -122,7 +125,24 @@ class TeenStarFemminaListActivity : AppCompatActivity(), AdapterView.OnItemSelec
         adapter.spanCount = 4
 
         for (i in 0 until dates.size) {
-            val newItem = TSFListItem()
+            var newItem: TSFListItem
+            if (allItems.size < dates.size) {
+                newItem = TSFListItem(dates[i])
+                newItem.clickAction = { date, _ ->
+                    val intent = Intent(this, TeenStarFemminaEditorActivity::class.java)
+                    intent.putExtra("date", date!!.time)
+                    this.startActivity(intent)
+                }
+            } else {
+                val date = dates[i]
+                val fitem = allItems.firstOrNull { it.date.beginningOfDay == date.beginningOfDay }
+                newItem = TSFListItem(date, fitem)
+                newItem.clickAction = { _, item ->
+                    val intent = Intent(this, TeenStarFemminaEditorActivity::class.java)
+                    intent.putExtra("itemID", item!!.id)
+                    this.startActivity(intent)
+                }
+            }
             adapter.add(newItem)
         }
 
@@ -169,12 +189,33 @@ class TeenStarFemminaListActivity : AppCompatActivity(), AdapterView.OnItemSelec
 
 }
 
-class TSFListItem: Item<ViewHolder>() {
+class TSFListItem(val date: Date, var item: TeenStarFemmina? = null): Item<ViewHolder>() {
+
+    var clickAction: ((Date?, TeenStarFemmina?) -> Unit)? = null
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.dayLabel.text = "ASD"
-        viewHolder.itemView.cicloColorView.setBackgroundColor(Color.RED)
+        val cal = Calendar.getInstance()
+        cal.time = date
+
+        val day = cal.get(Calendar.DAY_OF_MONTH)
+
+        viewHolder.itemView.dayLabel.text = "$day"
+        viewHolder.itemView.cicloColorView.setBackgroundColor(item?.cicloTable?.cicloColor?.getViewColor() ?: Color.TRANSPARENT)
+
+        viewHolder.itemView.setOnClickListener {
+            clickAction?.invoke(date, item)
+        }
     }
+
+    /*fun fetchItem() {
+        val realm = Realm.getDefaultInstance()
+        val cal = Calendar.getInstance()
+        cal.time = date
+
+
+
+        item = realm.where(TeenStarFemmina::class.java).between("date", )
+    }*/
 
     override fun getSpanSize(spanCount: Int, position: Int): Int {
         return spanCount / 4
