@@ -126,17 +126,17 @@ class TeenStarFemminaListActivity : AppCompatActivity(), AdapterView.OnItemSelec
 
         for (i in 0 until dates.size) {
             var newItem: TSFListItem
-            if (allItems.size < dates.size) {
-                newItem = TSFListItem(dates[i])
+            val currDate = dates[i]
+            val fitem = allItems.firstOrNull { it.date.beginningOfDay == currDate.beginningOfDay }
+            if (fitem == null) {
+                newItem = TSFListItem(currDate)
                 newItem.clickAction = { date, _ ->
                     val intent = Intent(this, TeenStarFemminaEditorActivity::class.java)
                     intent.putExtra("date", date!!.time)
                     this.startActivity(intent)
                 }
             } else {
-                val date = dates[i]
-                val fitem = allItems.firstOrNull { it.date.beginningOfDay == date.beginningOfDay }
-                newItem = TSFListItem(date, fitem)
+                newItem = TSFListItem(currDate, fitem)
                 newItem.clickAction = { _, item ->
                     val intent = Intent(this, TeenStarFemminaEditorActivity::class.java)
                     intent.putExtra("itemID", item!!.id)

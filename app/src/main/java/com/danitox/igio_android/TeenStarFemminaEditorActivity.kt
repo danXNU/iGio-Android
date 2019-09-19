@@ -47,14 +47,19 @@ class TeenStarFemminaEditorActivity: AppCompatActivity() {
         fillTableview()
     }
 
+    override fun onPause() {
+        super.onPause()
+        saveTeenStarTable()
+    }
+
     fun fillTableview() {
         val adapter = GroupAdapter<ViewHolder>()
 
         for (color in CicloColor.values()) {
             if (color == CicloColor.none) { continue }
-            val newItem = TSFEditorItem(color, item.cicloTable?.cicloColor == color)
+            val newItem = TSFEditorItem(color, currentVolatileTable.ciclo == color)
             newItem.clickAction = {
-
+                updateCicloSelected(it)
             }
             adapter.add(newItem)
         }
@@ -63,6 +68,20 @@ class TeenStarFemminaEditorActivity: AppCompatActivity() {
         tableView.adapter = adapter
     }
 
+    fun updateCicloSelected(cicloColor: CicloColor) {
+        this.currentVolatileTable.ciclo = cicloColor
+        fillTableview()
+    }
+
+    fun saveTeenStarTable() {
+        if (currentVolatileTable.ciclo != null) {
+            item.cicloTable?.cicloColor = currentVolatileTable.ciclo!!
+        }
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+        realm.insertOrUpdate(item)
+        realm.commitTransaction()
+    }
 
 }
 
