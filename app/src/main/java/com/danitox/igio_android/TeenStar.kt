@@ -9,6 +9,7 @@ import khronos.beginningOfMonth
 import khronos.endOfDay
 import khronos.with
 import java.util.*
+import kotlin.collections.HashMap
 
 interface TeenStarDerivative {
     var id: String
@@ -127,6 +128,10 @@ enum class CicloColor(val rawValue: Int) {
             bianco -> Color.WHITE
             croce -> Color.CYAN
         }
+    }
+
+    fun getDescriptionFrom(cicloColor: CicloColor) : String {
+        return cicloColor.getDescriptionText()
     }
 
     fun getDescriptionText() : String {
