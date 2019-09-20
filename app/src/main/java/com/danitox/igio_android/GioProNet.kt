@@ -112,5 +112,5 @@ enum class GioProTime(val rawValue: Int) {
 }
 
 class GioProNetWeek(val startOfWeek: Date) {
-    val tables: List<GioProNet> = listOf()
+    var tables: List<GioProNet> = listOf()
 }
