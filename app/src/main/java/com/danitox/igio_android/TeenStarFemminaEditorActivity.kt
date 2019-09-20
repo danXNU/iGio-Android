@@ -80,7 +80,7 @@ class TeenStarFemminaEditorActivity: AppCompatActivity() {
         if (currentVolatileTable.ciclo != null) {
             item.cicloTable?.cicloColor = currentVolatileTable.ciclo!!
         }
-        
+
         realm.insertOrUpdate(item)
         realm.commitTransaction()
     }
