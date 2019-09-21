@@ -136,6 +136,26 @@
             />
         </activity>
 
+        <activity
+                android:name=".GioProListActivity"
+                android:label="TeenSTAR"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".HomeActivity"
+            />
+        </activity>
+
+        <activity
+                android:name=".GioProEditorActivity"
+                android:label="TeenSTAR"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".GioProListActivity"
+            />
+        </activity>
+
     </application>
 
 </manifest>
