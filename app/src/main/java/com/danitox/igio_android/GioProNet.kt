@@ -1,5 +1,6 @@
 package com.danitox.igio_android
 
+import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.RealmResults
@@ -12,6 +13,36 @@ open class GioProNet: RealmObject() {
     @PrimaryKey var id : String = UUID.randomUUID().toString()
     var date: Date = Date().beginningOfDay
     var tasks : RealmList<GioProNetTask> = RealmList()
+
+    fun getTask(time: GioProTime) : GioProNetTask {
+        val taskObject = this.tasks.firstOrNull { it.time == time }
+        if (taskObject != null) {
+            return taskObject
+        } else {
+            val newTask = GioProNetTask()
+            newTask.time = time
+            newTask.taskType = TaskType.none
+
+            val realm = Realm.getDefaultInstance()
+            realm.beginTransaction()
+            tasks.add(newTask)
+            realm.commitTransaction()
+
+            return newTask
+        }
+    }
+
+
+    fun isConsideredEmpty() : Boolean {
+        if (this.tasks.isEmpty()) { return true }
+        var counter = 0
+        for (task in this.tasks) {
+            if (task.taskType != TaskType.none) {
+                counter += 1
+            }
+        }
+        return counter == 0
+    }
 }
 
 open class GioProNetTask: RealmObject() {

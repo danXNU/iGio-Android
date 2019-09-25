@@ -15,4 +15,13 @@ class GioProListActivity : AppCompatActivity() {
             this.startActivity(newIntent)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        fillTableView()
+    }
+
+    fun fillTableView() {
+
+    }
 }

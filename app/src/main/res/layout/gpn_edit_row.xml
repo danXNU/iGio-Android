@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content">
+
+    <Button
+            android:text="Button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/waButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/gamingButton"
+            app:layout_constraintTop_toTopOf="@+id/gamingButton" android:textAlignment="center"/>
+    <TextView
+            android:text="Chat e Social"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/waLabel"
+            app:layout_constraintTop_toBottomOf="@+id/waButton" app:layout_constraintStart_toStartOf="@+id/waButton"
+            android:textAlignment="center"/>
+    <Button
+            android:text="Button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/gamingButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" app:layout_constraintTop_toTopOf="parent" android:textAlignment="center"/>
+    <TextView
+            android:text="Web e Gaming"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/gamingLabel"
+            app:layout_constraintTop_toBottomOf="@+id/gamingButton"
+            app:layout_constraintStart_toStartOf="@+id/gamingButton"
+            android:textAlignment="center"/>
+    <Button
+            android:text="Button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/amiciButton" app:layout_constraintStart_toEndOf="@+id/gamingButton"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gamingButton" android:textAlignment="center"/>
+    <TextView
+            android:text="Amici e famiglia"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/amiciLabel"
+            app:layout_constraintTop_toBottomOf="@+id/amiciButton"
+            app:layout_constraintStart_toStartOf="@+id/amiciButton"
+            android:textAlignment="center"/>
+    <Button
+            android:text="Button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/libriButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/sportButton"
+            app:layout_constraintTop_toTopOf="@+id/sportButton" android:textAlignment="center"/>
+    <TextView
+            android:text="Dovere quotidiano"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/libriLabel"
+            app:layout_constraintTop_toBottomOf="@+id/libriButton"
+            app:layout_constraintStart_toStartOf="@+id/libriButton"
+            android:textAlignment="center"/>
+    <Button
+            android:text="Button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/sportButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" app:layout_constraintTop_toBottomOf="@+id/gamingLabel"
+            android:textAlignment="center"/>
+    <TextView
+            android:text="Sport e Hobby"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/sportLabel"
+            app:layout_constraintTop_toBottomOf="@+id/sportButton"
+            app:layout_constraintStart_toStartOf="@+id/sportButton"
+            android:textAlignment="center" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"/>
+    <Button
+            android:text="Button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/riposoButton" app:layout_constraintStart_toEndOf="@+id/sportButton"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/sportButton" android:textAlignment="center"/>
+    <TextView
+            android:text="Riposo"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/riposoLabel"
+            app:layout_constraintTop_toBottomOf="@+id/riposoButton"
+            app:layout_constraintStart_toStartOf="@+id/riposoButton"
+            android:textAlignment="center"/>
+</android.support.constraint.ConstraintLayout>
