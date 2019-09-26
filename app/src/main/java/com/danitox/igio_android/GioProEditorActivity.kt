@@ -46,6 +46,11 @@ class GioProEditorActivity : AppCompatActivity() {
         fillTableView()
     }
 
+    override fun onPause() {
+        super.onPause()
+        saveGioItem()
+    }
+
     fun fillTableView() {
         val dateSetListener = object : DatePickerDialog.OnDateSetListener {
             override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
@@ -99,6 +104,16 @@ class GioProEditorActivity : AppCompatActivity() {
 
         fillTableView()
     }
+
+    fun saveGioItem() {
+        if (!gioItem.isConsideredEmpty() && GioProNetAgent().isDateAvailable(gioItem)) {
+            val realm = Realm.getDefaultInstance()
+            realm.beginTransaction()
+            realm.insertOrUpdate(gioItem)
+            realm.commitTransaction()
+        }
+    }
+
 }
 
 
