@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import khronos.toString
+import kotlinx.android.synthetic.main.gio_list_cell.view.*
 import kotlinx.android.synthetic.main.tsm_list.*
 import org.joda.time.LocalDate
 import org.joda.time.Weeks
@@ -63,7 +65,8 @@ class GioProListActivity : AppCompatActivity() {
             for (x in 0 until week.tables.size) {
                 val entry = week.tables[x]
 
-                val newRow = BasicRow("${entry.date.toString("dd/MM/yyyy")}")
+                //val newRow = BasicRow("${entry.date.toString("dd/MM/yyyy")}")
+                val newRow = GPNListCell(entry)
                 newSection.add(newRow)
             }
             adapter.add(newSection)
@@ -71,5 +74,16 @@ class GioProListActivity : AppCompatActivity() {
 
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = adapter
+    }
+}
+
+class GPNListCell(val item: GioProNet): Item<ViewHolder>() {
+
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.dateLabel.text = item.date.toString("dd/MM/yyyy")
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.gio_list_cell
     }
 }

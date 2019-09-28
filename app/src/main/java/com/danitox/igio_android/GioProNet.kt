@@ -68,10 +68,10 @@ enum class TaskType(val rawValue: Int) {
     sport(5),
     riposo(6);
 
-    fun imageName(): String? {
+    fun imageName(): Int? {
         return when(this) {
-            whatsapp -> "whatsapp"
-            gaming -> "instagram"
+            whatsapp -> R.drawable.wa_logo_native
+            gaming -> null
             else -> null
         }
     }
