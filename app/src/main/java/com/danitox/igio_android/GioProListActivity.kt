@@ -7,14 +7,19 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ScaleDrawable
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
+import io.realm.Realm
 import khronos.toString
 import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.gio_list_cell.view.*
@@ -27,6 +32,8 @@ class GioProListActivity : AppCompatActivity() {
 
     var model = GioProNetAgent()
     var weeks: List<GioProNetWeek> = listOf()
+
+    var selectedEntryID: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +85,9 @@ class GioProListActivity : AppCompatActivity() {
             for (x in 0 until week.tables.size) {
                 val entry = week.tables[x]
 
-                val newRow = GPNListCell(entry) {
+                val newRow = GPNListCell(entry, menuItemCallback = {
+                    selectedEntryID = it
+                }) {
                     val intent = Intent(this, GioProEditorActivity::class.java)
                     intent.putExtra("itemID", it.id)
                     this.startActivity(intent)
@@ -91,9 +100,36 @@ class GioProListActivity : AppCompatActivity() {
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = adapter
     }
+
+    fun remove(item: GioProNet) {
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+        item.deleteFromRealm()
+        realm.commitTransaction()
+    }
+
+    override fun onContextItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == 121) {
+            val realm = Realm.getDefaultInstance()
+            val entry = realm.where(GioProNet::class.java).equalTo("id", selectedEntryID).findFirst()
+            if (entry != null) {
+                remove(entry)
+                fillTableView()
+                showRemoveMessage()
+            }
+            return true
+        } else {
+            return super.onContextItemSelected(item)
+        }
+
+    }
+
+    private fun showRemoveMessage() {
+        Snackbar.make(this.tableView, "Item rimosso con successo!", Snackbar.LENGTH_SHORT).show()
+    }
 }
 
-class GPNListCell(val item: GioProNet, val clickAction: (GioProNet) -> Unit): Item<ViewHolder>() {
+class GPNListCell(val item: GioProNet, val menuItemCallback: (String) -> Unit, val clickAction: (GioProNet) -> Unit): Item<ViewHolder>(), View.OnCreateContextMenuListener {
 
     private lateinit var orariLabel: HashMap<GioProTime, TextView>
 
@@ -106,6 +142,7 @@ class GPNListCell(val item: GioProNet, val clickAction: (GioProNet) -> Unit): It
             Pair(GioProTime.ventiquattro, viewHolder.itemView.emoji24)
         )
 
+        viewHolder.itemView.setOnCreateContextMenuListener(this)
         viewHolder.itemView.dateLabel.text = item.date.toString("dd/MM/yyyy")
 
         for ((orario, label) in orariLabel) {
@@ -121,6 +158,11 @@ class GPNListCell(val item: GioProNet, val clickAction: (GioProNet) -> Unit): It
         viewHolder.itemView.setOnClickListener {
             clickAction.invoke(item)
         }
+    }
+
+    override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+        menu?.add(0, 121, 0, "Rimuovi")
+        menuItemCallback.invoke(item.id)
     }
 
     override fun getLayout(): Int {

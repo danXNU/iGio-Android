@@ -3,9 +3,12 @@ package com.danitox.igio_android
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
 import com.xwray.groupie.GroupAdapter
@@ -57,8 +60,10 @@ class GioProEditorActivity : AppCompatActivity() {
 
     fun fillTableView() {
         val dateSetListener = object : DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
-                                   dayOfMonth: Int) {
+            override fun onDateSet(
+                view: DatePicker, year: Int, monthOfYear: Int,
+                dayOfMonth: Int
+            ) {
 
                 cal.set(year, monthOfYear, dayOfMonth)
                 dateDidChange(cal.time)
@@ -68,7 +73,8 @@ class GioProEditorActivity : AppCompatActivity() {
         val adapter = GroupAdapter<ViewHolder>()
         val dateSection = Section(ToxHeader(gioItem.date.toString("EEEE - dd/MM/yyyy")))
         val changeDateRow = DateRow("Modifica la data") {
-            DatePickerDialog(this, dateSetListener,
+            DatePickerDialog(
+                this, dateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
@@ -80,7 +86,9 @@ class GioProEditorActivity : AppCompatActivity() {
 
 
         for (orario in GioProTime.values()) {
-            if (orario == GioProTime.none) { continue }
+            if (orario == GioProTime.none) {
+                continue
+            }
             val newSection = Section(ToxHeader("Cosa ho fatto alle ${orario.stringValue()}"))
             val editingRow = GPNEditRow(orario, gioItem.getTask(orario).taskType, taskClicked)
             newSection.add(editingRow)
@@ -121,7 +129,7 @@ class GioProEditorActivity : AppCompatActivity() {
 }
 
 
-class GPNEditRow(val orario: GioProTime, val initialTask: TaskType?, val taskTapped: (TaskType, GioProTime) -> Unit): Item<ViewHolder>() {
+class GPNEditRow(val orario: GioProTime, val initialTask: TaskType?, val taskTapped: (TaskType, GioProTime) -> Unit): Item<ViewHolder>(){
 
     private lateinit var tasksButtons: Map<TaskType, Button>
 
