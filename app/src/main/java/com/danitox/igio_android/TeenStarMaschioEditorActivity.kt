@@ -174,6 +174,7 @@ class DateRow(val text: String, val clickAction: () -> Unit): Item<ViewHolder>()
 
 
 class BasicRow(val text: String): Item<ViewHolder>() {
+    var id: Int = -1
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.mainLabel.text = text
