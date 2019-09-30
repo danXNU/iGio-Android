@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Button
 import android.widget.DatePicker
@@ -38,6 +39,9 @@ class GioProEditorActivity : AppCompatActivity() {
             val realm = Realm.getDefaultInstance()
             gioItem = realm.where(GioProNet::class.java).equalTo("id", itemID).findFirst()!!
         }
+
+        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        tableView.addItemDecoration(divider)
 
     }
 
