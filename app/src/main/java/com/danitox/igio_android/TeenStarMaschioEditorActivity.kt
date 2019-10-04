@@ -172,20 +172,6 @@ class DateRow(val text: String, val clickAction: () -> Unit): Item<ViewHolder>()
     }
 }
 
-
-class BasicRow(val text: String): Item<ViewHolder>() {
-    var id: Int = -1
-
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.mainLabel.text = text
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.basic_row
-    }
-
-}
-
 class TSMEditRow(val orario: Orario, val initialEmozione: Emozione?, val emozioneClicked: (Emozione, Orario) -> Unit): Item<ViewHolder>() {
 
     private lateinit var emozioniButtons : Map<Emozione, Button>

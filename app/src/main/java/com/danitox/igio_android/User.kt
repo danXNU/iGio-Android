@@ -32,12 +32,29 @@ enum class ScuolaType(val value: Int) {
         if (categoria == none) { Log.e("Enum error", "ScuolaTyoe ricevuto == .none") }
         return categoria
     }
+
+    fun stringValues(): List<String> {
+        return listOf(
+            ScuolaType.medie.stringValue,
+            ScuolaType.biennio.stringValue,
+            ScuolaType.triennio.stringValue
+        )
+    }
 }
 
 enum class UserGender(val value: Int) {
     none(-1),
     boy(0),
     girl(1);
+
+    var stringValue: String = ""
+        get() {
+            return when(this) {
+                boy -> "Maschio"
+                girl -> "Femmina"
+                else -> ""
+            }
+        }
 
     fun getFrom(value: Int) : UserGender {
         return when (value) {
@@ -51,6 +68,13 @@ enum class UserGender(val value: Int) {
     fun getFromString(str: String): UserGender {
         if (str == "Maschio") { return boy }
         else { return girl }
+    }
+
+    fun stringValues(): List<String> {
+        return listOf(
+            "Maschio",
+            "Femmina"
+        )
     }
 }
 
