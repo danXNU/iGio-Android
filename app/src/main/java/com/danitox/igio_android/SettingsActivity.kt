@@ -1,5 +1,6 @@
 package com.danitox.igio_android
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -51,50 +52,61 @@ class SettingsActivity : AppCompatActivity() {
         }
 
 
-        val row3 = BasicRow("Provincia & città").apply {
+        val row3 = BasicRow("Provincia").apply {
                 id = 3
                 clickAction = {
-
+                    val intent = Intent(this@SettingsActivity, LocationActivity::class.java)
+                    intent.putExtra("locType", LocationType.diocesi.value)
+                    this@SettingsActivity.startActivity(intent)
                 }
         }
-
-            userSection.add(row1)
-            userSection.add(row2)
-            userSection.add(row3)
-
-            val generalSection = Section(ToxHeader("Generale"))
-            val row4 = BasicRow("Info").apply {
-                id = 4
-                clickAction = {
-
-                }
+        var row4 = BasicRow("Città").apply {
+            id = 4
+            clickAction = {
+                val intent = Intent(this@SettingsActivity, LocationActivity::class.java)
+                intent.putExtra("locType", LocationType.city.value)
+                this@SettingsActivity.startActivity(intent)
             }
-            val row5 = BasicRow("Notifiche").apply {
-                id = 5
-                clickAction = {
-
-                }
-            }
-            val row7 = BasicRow("Licenze").apply {
-                id = 7
-                clickAction = {
-
-                }
-            }
-            val row8 = BasicRow("Debug").apply {
-                id = 8
-                clickAction = {
-
-                }
-            }
-
-            generalSection.add(row4)
-            generalSection.add(row5)
-            generalSection.add(row7)
-            generalSection.add(row8)
-
-            adapter.add(userSection)
-            adapter.add(generalSection)
-            tableView.adapter = adapter
         }
+
+        userSection.add(row1)
+        userSection.add(row2)
+        userSection.add(row3)
+        userSection.add(row4)
+
+        val generalSection = Section(ToxHeader("Generale"))
+        val row5 = BasicRow("Info").apply {
+            id = 5
+            clickAction = {
+
+            }
+        }
+        val row6 = BasicRow("Notifiche").apply {
+            id = 6
+            clickAction = {
+
+            }
+        }
+        val row7 = BasicRow("Licenze").apply {
+            id = 7
+            clickAction = {
+
+            }
+        }
+        val row8 = BasicRow("Debug").apply {
+            id = 8
+            clickAction = {
+
+            }
+        }
+
+        generalSection.add(row4)
+        generalSection.add(row5)
+        generalSection.add(row7)
+        generalSection.add(row8)
+
+        adapter.add(userSection)
+        adapter.add(generalSection)
+        tableView.adapter = adapter
+    }
 }
