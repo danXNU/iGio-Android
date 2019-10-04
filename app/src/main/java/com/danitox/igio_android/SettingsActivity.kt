@@ -60,7 +60,7 @@ class SettingsActivity : AppCompatActivity() {
                     this@SettingsActivity.startActivity(intent)
                 }
         }
-        var row4 = BasicRow("Città").apply {
+        val row4 = BasicRow("Città").apply {
             id = 4
             clickAction = {
                 val intent = Intent(this@SettingsActivity, LocationActivity::class.java)
@@ -78,7 +78,8 @@ class SettingsActivity : AppCompatActivity() {
         val row5 = BasicRow("Info").apply {
             id = 5
             clickAction = {
-
+                val intent = Intent(this@SettingsActivity, InfoActivity::class.java)
+                this@SettingsActivity.startActivity(intent)
             }
         }
         val row6 = BasicRow("Notifiche").apply {
@@ -100,8 +101,8 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        generalSection.add(row4)
         generalSection.add(row5)
+        generalSection.add(row6)
         generalSection.add(row7)
         generalSection.add(row8)
 
