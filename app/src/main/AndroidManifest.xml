@@ -176,6 +176,16 @@
             />
         </activity>
 
+        <activity
+                android:name=".NotificheActivity"
+                android:label="Info"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".SettingsActivity"
+            />
+        </activity>
+
     </application>
 
 </manifest>

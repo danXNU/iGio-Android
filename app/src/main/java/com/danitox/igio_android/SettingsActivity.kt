@@ -85,7 +85,8 @@ class SettingsActivity : AppCompatActivity() {
         val row6 = BasicRow("Notifiche").apply {
             id = 6
             clickAction = {
-
+                val intent = Intent(this@SettingsActivity, NotificheActivity::class.java)
+                this@SettingsActivity.startActivity(intent)
             }
         }
         val row7 = BasicRow("Licenze").apply {
