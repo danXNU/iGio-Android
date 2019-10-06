@@ -62,6 +62,13 @@ class CompagniaAgent(val context: Context) {
         return verifica
     }
 
+    fun removeAll() {
+        val realm = Realm.getDefaultInstance()
+        realm.beginTransaction()
+        realm.delete(VerificaCompagnia::class.java)
+        realm.commitTransaction()
+    }
+
 }
 
 open class VerificaCompagnia: RealmObject() {

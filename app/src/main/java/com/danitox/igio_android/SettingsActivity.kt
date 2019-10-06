@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.compagnia_activity.*
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tsm_list)
+        setContentView(R.layout.activity_main)
 
         tableView.layoutManager = LinearLayoutManager(this)
 
@@ -99,7 +99,8 @@ class SettingsActivity : AppCompatActivity() {
         val row8 = BasicRow("Debug").apply {
             id = 8
             clickAction = {
-
+                val intent = Intent(this@SettingsActivity, DebugActivity::class.java)
+                this@SettingsActivity.startActivity(intent)
             }
         }
 
