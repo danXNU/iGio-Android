@@ -92,7 +92,8 @@ class SettingsActivity : AppCompatActivity() {
         val row7 = BasicRow("Licenze").apply {
             id = 7
             clickAction = {
-
+                val intent = Intent(this@SettingsActivity, LicenzeActivity::class.java)
+                this@SettingsActivity.startActivity(intent)
             }
         }
         val row8 = BasicRow("Debug").apply {
