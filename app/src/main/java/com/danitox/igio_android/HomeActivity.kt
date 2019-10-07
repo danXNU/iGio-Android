@@ -64,6 +64,11 @@ class HomeActivity: AppCompatActivity() {
             this.startActivity(intent)
         }
 
+        this.socialButton.setOnClickListener {
+            val intent = Intent(this, SocialActivity::class.java)
+            this.startActivity(intent)
+        }
+
         this.regolaButton.setOnClickListener {
             val model = RegolaFetcherModel(this)
             model.createIfNotPresent()

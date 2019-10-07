@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/facebookButton" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/intagramButton" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp" android:background="@drawable/fb"/>
+    <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/intagramButton" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp" android:background="@drawable/instagram"/>
+    <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/youtubeButton"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/intagramButton"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"
+            android:background="@drawable/youtube"/>
+    <TextView
+            android:text="Ti aspettiamo su Facebook!"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:id="@+id/facebookLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/facebookButton"
+            app:layout_constraintStart_toEndOf="@+id/facebookButton" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:textSize="24sp"
+            android:textAlignment="center"/>
+    <TextView
+            android:text="#igio su Instagram"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:id="@+id/instagramLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/intagramButton"
+            app:layout_constraintStart_toEndOf="@+id/intagramButton"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:textSize="24sp" android:textAlignment="center"/>
+    <TextView
+            android:text="Guarda i nostri video"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:id="@+id/youtubeLabel"
+            app:layout_constraintBottom_toBottomOf="@+id/youtubeButton"
+            app:layout_constraintStart_toEndOf="@+id/youtubeButton"
+            android:layout_marginStart="16dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:textSize="24sp" android:textAlignment="center"/>
+</android.support.constraint.ConstraintLayout>

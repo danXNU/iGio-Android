@@ -178,7 +178,7 @@
 
         <activity
                 android:name=".NotificheActivity"
-                android:label="Info"
+                android:label="Notifiche"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -188,7 +188,7 @@
 
         <activity
                 android:name=".LicenzeActivity"
-                android:label="Info"
+                android:label="Licenze"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -198,11 +198,21 @@
 
         <activity
                 android:name=".DebugActivity"
-                android:label="Info"
+                android:label="Debug"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".SettingsActivity"
+            />
+        </activity>
+
+        <activity
+                android:name=".SocialActivity"
+                android:label="Social"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".HomeActivity"
             />
         </activity>
 
