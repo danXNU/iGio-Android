@@ -109,6 +109,15 @@ class SitoObject {
             _scuolaType = value.value
         }
 
+    var profileName: String? = null
+        get() {
+            val availableCategories: List<SitoCategoria> = listOf(SitoCategoria.facebook, SitoCategoria.instagram, SitoCategoria.youtube)
+            if (!availableCategories.contains(this.type)) {
+                return null
+            }
+            return this.urlString
+        }
+
     var locationID: Int? = null
 
     var descrizione: String = ""
