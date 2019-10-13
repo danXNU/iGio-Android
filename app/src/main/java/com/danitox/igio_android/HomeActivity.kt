@@ -1,120 +1,140 @@
 package com.danitox.igio_android
 
 import android.content.Intent
-import android.net.Uri
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.v7.app.AlertDialog
+import android.os.UserManager
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.widget.Toast
-import kotlinx.android.synthetic.main.home_layout.*
+import android.support.v7.widget.GridLayoutManager
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.home_cell.view.*
 
-class HomeActivity: AppCompatActivity() {
+class HomeItem(val id: Int, val name: String, val imageID: Int, val color: Int, val allowedAge: Array<ScuolaType>, val allowedGenders: Array<UserGender>)
+
+class HomeItemsHelper {
+    var allItems: List<HomeItem> = listOf(
+        HomeItem(0, "Diario Personale", R.drawable.diary, Color.BLUE, ScuolaType.values(), UserGender.values()),
+        HomeItem(1, "TeenSTAR", R.drawable.star, Color.MAGENTA, ScuolaType.values(), UserGender.values()),
+        HomeItem(2, "GioProNet", R.drawable.weightscale, Color.RED, ScuolaType.values(), UserGender.values()),
+        HomeItem(3, "Agenda dell'allegria e della santità", R.drawable.airplane, Color.GREEN, arrayOf(ScuolaType.medie), UserGender.values()),
+        HomeItem(4, "Il mio percorso formativo", R.drawable.search, Color.rgb(252,117,40), arrayOf(ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
+        HomeItem(5, "Il progetto delle 3S", R.drawable.airplane, Color.GREEN, arrayOf(ScuolaType.biennio), UserGender.values()),
+        HomeItem(6, "Regola di Vita", R.drawable.airplane, Color.GREEN, arrayOf(ScuolaType.triennio), UserGender.values())
+    )
+}
+
+
+class HomeActivity : AppCompatActivity() {
+
+    val helper = HomeItemsHelper()
+    var items: List<HomeItem> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.tsm_list)
+    }
 
-        setContentView(R.layout.home_layout)
-        this.notesButton.text = "Diario personale"
+    override fun onResume() {
+        super.onResume()
+        update()
+    }
 
+    fun update() {
+        val user = UserManager().currentUser()
+        items = helper.allItems.filter { it.allowedAge.contains(user.ageScuola) && it.allowedGenders.contains(user.gender) }
+        fillTableView()
+    }
 
-        this.notesButton.setOnClickListener {
-            val intent = Intent(this, NoteListActivity::class.java)
-            this.startActivity(intent)
+    fun fillTableView() {
+        val adapter = GroupAdapter<ViewHolder>()
+        adapter.spanCount = 2
+
+        for (item in items) {
+            val newHomeItemCell = HomeCell(item) {
+                when(item.id) {
+                    0 -> { showNoteListController() }
+                    1 -> { showTeenStarController() }
+                    2 -> { showGioProNetController() }
+                    3 -> { showRegolaController() }
+                    4 -> { showVerificaCompagniaController() }
+                    5 -> { showRegolaController() }
+                    6 -> { showRegolaController() }
+                    else -> {  }
+                }
+            }
+
+            adapter.add(newHomeItemCell)
+
         }
 
-        this.diocesiButton.setOnClickListener {
-            val intent = Intent(this, LocationActivity::class.java)
-            intent.putExtra("locType", LocationType.diocesi.value)
-            this.startActivity(intent)
-        }
+        this.tableView.layoutManager = GridLayoutManager(this, adapter.spanCount).apply { spanSizeLookup = adapter.spanSizeLookup }
+        this.tableView.adapter = adapter
+    }
 
-        this.citiesButton.setOnClickListener {
-            val intent = Intent(this, LocationActivity::class.java)
-            intent.putExtra("locType", LocationType.city.value)
-            this.startActivity(intent)
-        }
+    fun showNoteListController() {
+        val intent = Intent(this, NoteListActivity::class.java)
+        this.startActivity(intent)
+    }
 
-        this.resourcesButton.setOnClickListener {
-            val intent = Intent(this, SitiActivity::class.java)
-            this.startActivity(intent)
-        }
-
-        this.verificaButton.setOnClickListener {
-            val intent = Intent(this, CompagniaActivity::class.java)
-            intent.putExtra("type", UserManager().currentUser().ageScuola.value)
-            this.startActivity(intent)
-        }
-
-        this.tsm_button.setOnClickListener {
+    fun showTeenStarController() {
+        val user = UserManager().currentUser()
+        if (user.gender == UserGender.boy) {
             val intent = Intent(this, TeenStarMaschioListActivity::class.java)
             this.startActivity(intent)
-        }
-
-        this.teenStarFButton.setOnClickListener {
-            val intent = Intent(this, TeenStarFemminaListActivity::class.java)
-            this.startActivity(intent)
-        }
-
-        this.gioProButton.setOnClickListener {
-            val intent = Intent(this, GioProListActivity::class.java)
-            this.startActivity(intent)
-        }
-
-        this.settingsButton.setOnClickListener {
-            val intent = Intent(this, SettingsActivity::class.java)
-            this.startActivity(intent)
-        }
-
-        this.socialButton.setOnClickListener {
-            val intent = Intent(this, SocialActivity::class.java)
-            this.startActivity(intent)
-        }
-
-        this.regolaButton.setOnClickListener {
-            val model = RegolaFetcherModel(this)
-            model.createIfNotPresent()
-
-            val intent = Intent(this, RegolaCategorieActivity::class.java)
-            intent.putExtra("type", UserManager().currentUser().ageScuola.value)
-            this.startActivity(intent)
-        }
-
-        this.calendarioButton.setOnClickListener {
-            val agent = SitiLocalizer()
-            val sites = agent.fetchLocalWebsites(SitoCategoria.calendario)
-
-            if (sites.isEmpty()) {
-                val url = Uri.parse(URLs.calendarioURL.rawValue)
-                val intent = Intent(Intent.ACTION_VIEW, url)
+        } else if (user.gender == UserGender.girl) {
+            if (user.ageScuola == ScuolaType.medie) {
+                val intent = Intent(this, TeenStarMaschioListActivity::class.java)
                 this.startActivity(intent)
-            } else if (sites.size == 1) {
-                val urlString = sites.firstOrNull()?.urlString
-                if (urlString != null) {
-                    val url = (Uri.parse(urlString))
-                    val intent = Intent(Intent.ACTION_VIEW, url)
-                    this.startActivity(intent)
-                }
             } else {
-                val items : Array<String> = sites.map { it.name }.toTypedArray()
-
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Quale calendario vuoi vedere?")
-
-                builder.setItems(items) { dialog, which ->
-                    val url = Uri.parse(sites[which].urlString)
-                    val intent = Intent(Intent.ACTION_VIEW, url)
-                    this.startActivity(intent)
-                    Toast.makeText(applicationContext, items[which], Toast.LENGTH_LONG).show()
-                }
-
-                builder.setNeutralButton("Annulla") { dialog, which ->
-
-                }
-                val dialog = builder.create()
-                dialog.show()
+                val intent = Intent(this, TeenStarFemminaListActivity::class.java)
+                this.startActivity(intent)
             }
         }
+    }
+
+    fun showGioProNetController() {
+        val intent = Intent(this, GioProListActivity::class.java)
+        this.startActivity(intent)
+    }
+
+    fun showRegolaController() {
+        val model = RegolaFetcherModel(this)
+        model.createIfNotPresent()
+
+        val intent = Intent(this, RegolaCategorieActivity::class.java)
+        intent.putExtra("type", UserManager().currentUser().ageScuola.value)
+        this.startActivity(intent)
+    }
+
+    fun showVerificaCompagniaController() {
+        val intent = Intent(this, CompagniaActivity::class.java)
+        intent.putExtra("type", UserManager().currentUser().ageScuola.value)
+        this.startActivity(intent)
+    }
+
+}
+
+class HomeCell(val homeItem: HomeItem, val clickAction: (HomeItem) -> Unit): Item<ViewHolder>() {
+
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.setOnClickListener {
+            clickAction.invoke(homeItem)
+        }
+
+        viewHolder.itemView.setBackgroundColor(homeItem.color)
+        viewHolder.itemView.itemTitleLabel.text = homeItem.name
+        viewHolder.itemView.iconView.setBackgroundResource(homeItem.imageID)
+    }
+
+    override fun getSpanSize(spanCount: Int, position: Int): Int {
+        return spanCount / 2
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.home_cell
     }
 }
