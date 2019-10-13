@@ -49,17 +49,21 @@ class SocialActivity: AppCompatActivity() {
         } else if (sites.size == 1) {
             executeQuery(sites.first().profileName, categoria)
         } else {
-            val items : Array<CharSequence> = sites.map { it.name }.toTypedArray()
+            val items : Array<String> = sites.map { it.name }.toTypedArray()
 
+            val builder = AlertDialog.Builder(this@SocialActivity)
+            builder.setTitle("Quale profilo vuoi raggiungere?")
 
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Diverse opzioni")
-            builder.setMessage("Segui diverse province/città, quindi scegli quale profilo vorresti raggiungere")
             builder.setItems(items) { dialog, which ->
+                this.executeQuery(sites[which].profileName, categoria)
                 Toast.makeText(applicationContext, items[which], Toast.LENGTH_LONG).show()
-                //this.executeQuery(sites[which].profileName, categoria)
             }
-            builder.show()
+
+            builder.setNeutralButton("Annulla") { dialog, which ->
+                
+            }
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 
