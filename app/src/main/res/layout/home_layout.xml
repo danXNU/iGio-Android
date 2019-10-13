@@ -87,4 +87,12 @@
             android:id="@+id/socialButton"
             app:layout_constraintBottom_toBottomOf="@+id/settingsButton" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/settingsButton"/>
+    <Button
+            android:text="Calendario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/calendarioButton"
+            app:layout_constraintBottom_toBottomOf="@+id/settingsButton"
+            app:layout_constraintStart_toEndOf="@+id/settingsButton" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"/>
 </android.support.constraint.ConstraintLayout>

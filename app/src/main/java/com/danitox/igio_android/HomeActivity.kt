@@ -1,10 +1,13 @@
 package com.danitox.igio_android
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import kotlinx.android.synthetic.main.home_layout.*
 
 class HomeActivity: AppCompatActivity() {
@@ -76,6 +79,42 @@ class HomeActivity: AppCompatActivity() {
             val intent = Intent(this, RegolaCategorieActivity::class.java)
             intent.putExtra("type", UserManager().currentUser().ageScuola.value)
             this.startActivity(intent)
+        }
+
+        this.calendarioButton.setOnClickListener {
+            val agent = SitiLocalizer()
+            val sites = agent.fetchLocalWebsites(SitoCategoria.calendario)
+
+            if (sites.isEmpty()) {
+                val url = Uri.parse(URLs.calendarioURL.rawValue)
+                val intent = Intent(Intent.ACTION_VIEW, url)
+                this.startActivity(intent)
+            } else if (sites.size == 1) {
+                val urlString = sites.firstOrNull()?.urlString
+                if (urlString != null) {
+                    val url = (Uri.parse(urlString))
+                    val intent = Intent(Intent.ACTION_VIEW, url)
+                    this.startActivity(intent)
+                }
+            } else {
+                val items : Array<String> = sites.map { it.name }.toTypedArray()
+
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Quale calendario vuoi vedere?")
+
+                builder.setItems(items) { dialog, which ->
+                    val url = Uri.parse(sites[which].urlString)
+                    val intent = Intent(Intent.ACTION_VIEW, url)
+                    this.startActivity(intent)
+                    Toast.makeText(applicationContext, items[which], Toast.LENGTH_LONG).show()
+                }
+
+                builder.setNeutralButton("Annulla") { dialog, which ->
+
+                }
+                val dialog = builder.create()
+                dialog.show()
+            }
         }
     }
 }
