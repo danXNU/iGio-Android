@@ -5,220 +5,170 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+            android:name=".ApplicationSubclass"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            android:name=".ApplicationSubclass">
+            android:theme="@style/AppTheme">
         <activity
-                android:name=".NoteListActivity"
-                android:label="@string/app_name">
+                android:name=".TabBarActivity"
+                android:label="@string/title_activity_tab_bar">
 
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
-
-        </activity>
-
-        <activity
-                android:name=".HomeActivity"
-                android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".NoteListActivity"
+                android:label="@string/app_name">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".HomeActivityTesting"/>
+        </activity>
 
         <activity
                 android:name=".HomeActivityTesting"
                 android:label="@string/app_name">
         </activity>
-
         <activity
                 android:name=".NoteEditorActivity"
                 android:label="Editor"
                 android:launchMode="singleTop">
-        <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NoteListActivity"
-        />
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".NoteListActivity"/>
         </activity>
-
-
         <activity
                 android:name=".LocationActivity"
                 android:label="Locations"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
+                    android:value=".HomeActivityTesting"/>
         </activity>
-
-
         <activity
                 android:name=".SitiActivity"
                 android:label="Risorse"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
+                    android:value=".HomeActivityTesting"/>
         </activity>
-
         <activity
                 android:name=".CompagniaActivity"
                 android:label="Percorso formativo"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
+                    android:value=".HomeActivityTesting"/>
         </activity>
-
         <activity
                 android:name=".RegolaCategorieActivity"
-                android:label="Agenda dell'allegria e della santità"
+                android:label="Agenda dell&apos;allegria e della santità"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
+                    android:value=".HomeActivityTesting"/>
         </activity>
-
-
         <activity
                 android:name=".RegolaRispostaActivity"
                 android:label="Risposta"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".RegolaCategorieActivity"
-            />
+                    android:value=".RegolaCategorieActivity"/>
         </activity>
-
         <activity
                 android:name=".TeenStarMaschioListActivity"
                 android:label="TeenSTAR"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
+                    android:value=".HomeActivityTesting"/>
         </activity>
-
         <activity
                 android:name=".TeenStarMaschioEditorActivity"
                 android:label="TeenSTAR"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".TeenStarMaschioListActivity"
-            />
+                    android:value=".TeenStarMaschioListActivity"/>
         </activity>
-
         <activity
                 android:name=".TeenStarFemminaListActivity"
                 android:label="TeenSTAR"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
+                    android:value=".HomeActivityTesting"/>
         </activity>
-
         <activity
                 android:name=".TeenStarFemminaEditorActivity"
                 android:label="TeenSTAR"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".TeenStarFemminaListActivity"
-            />
+                    android:value=".TeenStarFemminaListActivity"/>
         </activity>
-
         <activity
                 android:name=".GioProListActivity"
                 android:label="TeenSTAR"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
+                    android:value=".HomeActivityTesting"/>
         </activity>
-
         <activity
                 android:name=".GioProEditorActivity"
                 android:label="TeenSTAR"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".GioProListActivity"
-            />
+                    android:value=".GioProListActivity"/>
         </activity>
-
         <activity
                 android:name=".SettingsActivity"
                 android:label="Impostazioni"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"
-            />
+                    android:value=".HomeActivityTesting"/>
         </activity>
-
         <activity
                 android:name=".InfoActivity"
                 android:label="Info"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".SettingsActivity"
-            />
+                    android:value=".SettingsActivity"/>
         </activity>
-
         <activity
                 android:name=".NotificheActivity"
                 android:label="Notifiche"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".SettingsActivity"
-            />
+                    android:value=".SettingsActivity"/>
         </activity>
-
         <activity
                 android:name=".LicenzeActivity"
                 android:label="Licenze"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".SettingsActivity"
-            />
+                    android:value=".SettingsActivity"/>
         </activity>
-
         <activity
                 android:name=".DebugActivity"
                 android:label="Debug"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".SettingsActivity"
-            />
-        </activity>
-
-        <activity
-                android:name=".SocialActivity"
-                android:label="Social"
-                android:launchMode="singleTop">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivity"
-            />
+                    android:value=".SettingsActivity"/>
         </activity>
 
     </application>

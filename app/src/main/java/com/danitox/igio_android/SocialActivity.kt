@@ -4,18 +4,41 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.ContextMenu
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.social_layout.*
 
-class SocialActivity: AppCompatActivity() {
+class SocialActivity: Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.social_layout)
+
+        facebookButton.setOnClickListener {
+            tapped(SitoCategoria.facebook)
+        }
+
+        instagramButton.setOnClickListener {
+            tapped(SitoCategoria.instagram)
+        }
+
+        youtubeButton.setOnClickListener {
+            tapped(SitoCategoria.youtube)
+        }
+    }*/
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.social_layout, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         facebookButton.setOnClickListener {
             tapped(SitoCategoria.facebook)
@@ -51,12 +74,12 @@ class SocialActivity: AppCompatActivity() {
         } else {
             val items : Array<String> = sites.map { it.name }.toTypedArray()
 
-            val builder = AlertDialog.Builder(this@SocialActivity)
+            val builder = AlertDialog.Builder(this.context!!)
             builder.setTitle("Quale profilo vuoi raggiungere?")
 
             builder.setItems(items) { dialog, which ->
                 this.executeQuery(sites[which].profileName, categoria)
-                Toast.makeText(applicationContext, items[which], Toast.LENGTH_LONG).show()
+                Toast.makeText(this.context, items[which], Toast.LENGTH_LONG).show()
             }
 
             builder.setNeutralButton("Annulla") { dialog, which ->
@@ -95,10 +118,10 @@ class SocialActivity: AppCompatActivity() {
 
         try {
             val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse(query))
-            this@SocialActivity.startActivity(appIntent)
+            this.activity?.startActivity(appIntent)
         } catch (ex: ActivityNotFoundException) {
             val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl))
-            this@SocialActivity.startActivity(webIntent)
+            this.activity?.startActivity(webIntent)
         }
 
     }

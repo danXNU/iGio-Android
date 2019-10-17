@@ -5,8 +5,12 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.UserManager
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -28,14 +32,18 @@ class HomeItemsHelper {
 }
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : Fragment() {
 
     val helper = HomeItemsHelper()
     var items: List<HomeItem> = listOf()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tsm_list)
+    }*/
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.tsm_list, container, false)
     }
 
     override fun onResume() {
@@ -71,47 +79,47 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
-        this.tableView.layoutManager = GridLayoutManager(this, adapter.spanCount).apply { spanSizeLookup = adapter.spanSizeLookup }
+        this.tableView.layoutManager = GridLayoutManager(this.context, adapter.spanCount).apply { spanSizeLookup = adapter.spanSizeLookup }
         this.tableView.adapter = adapter
     }
 
     fun showNoteListController() {
-        val intent = Intent(this, NoteListActivity::class.java)
+        val intent = Intent(this.context, NoteListActivity::class.java)
         this.startActivity(intent)
     }
 
     fun showTeenStarController() {
         val user = UserManager().currentUser()
         if (user.gender == UserGender.boy) {
-            val intent = Intent(this, TeenStarMaschioListActivity::class.java)
+            val intent = Intent(this.context, TeenStarMaschioListActivity::class.java)
             this.startActivity(intent)
         } else if (user.gender == UserGender.girl) {
             if (user.ageScuola == ScuolaType.medie) {
-                val intent = Intent(this, TeenStarMaschioListActivity::class.java)
+                val intent = Intent(this.context, TeenStarMaschioListActivity::class.java)
                 this.startActivity(intent)
             } else {
-                val intent = Intent(this, TeenStarFemminaListActivity::class.java)
+                val intent = Intent(this.context, TeenStarFemminaListActivity::class.java)
                 this.startActivity(intent)
             }
         }
     }
 
     fun showGioProNetController() {
-        val intent = Intent(this, GioProListActivity::class.java)
+        val intent = Intent(this.context, GioProListActivity::class.java)
         this.startActivity(intent)
     }
 
     fun showRegolaController() {
-        val model = RegolaFetcherModel(this)
+        val model = RegolaFetcherModel(this.context!!)
         model.createIfNotPresent()
 
-        val intent = Intent(this, RegolaCategorieActivity::class.java)
+        val intent = Intent(this.context, RegolaCategorieActivity::class.java)
         intent.putExtra("type", UserManager().currentUser().ageScuola.value)
         this.startActivity(intent)
     }
 
     fun showVerificaCompagniaController() {
-        val intent = Intent(this, CompagniaActivity::class.java)
+        val intent = Intent(this.context, CompagniaActivity::class.java)
         intent.putExtra("type", UserManager().currentUser().ageScuola.value)
         this.startActivity(intent)
     }
