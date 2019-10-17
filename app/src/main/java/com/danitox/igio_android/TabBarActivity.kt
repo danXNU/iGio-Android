@@ -17,11 +17,11 @@ class TabBarActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_risorse -> {
-
-                replcaeFragment(SocialActivity())
+                replcaeFragment(SitiActivity())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_social -> {
+                replcaeFragment(SocialActivity())
                 return@OnNavigationItemSelectedListener true
             }
         }

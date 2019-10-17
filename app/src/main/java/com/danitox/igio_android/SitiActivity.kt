@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -15,14 +16,18 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.locations_activity.tableView
 import kotlinx.android.synthetic.main.siti_activity.*
 import kotlinx.android.synthetic.main.sito_row.view.*
+import kotlinx.android.synthetic.main.social_layout.*
 
-class SitiActivity : AppCompatActivity() {
+class SitiActivity : Fragment() {
 
     private var sitesAdapter: SitiAdapter? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.siti_activity)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.siti_activity, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         this.sitesAdapter = SitiAdapter(mutableListOf(SitoCategoria.materiali, SitoCategoria.preghiere)) { sito ->
             val intent = Intent(Intent.ACTION_VIEW)
@@ -30,13 +35,13 @@ class SitiActivity : AppCompatActivity() {
             this.startActivity(intent)
         }
 
-        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        val divider = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
         this.tableView.addItemDecoration(divider)
-        this.tableView.layoutManager = LinearLayoutManager(this)
+        this.tableView.layoutManager = LinearLayoutManager(this.context)
         this.tableView.adapter = sitesAdapter
 
         this.sitesAdapter?.updateHandler = {
-            runOnUiThread {
+            this.activity?.runOnUiThread {
                 this.sitesAdapter?.notifyDataSetChanged()
             }
         }
@@ -48,8 +53,8 @@ class SitiActivity : AppCompatActivity() {
         this.reloadButton.setOnClickListener {
             this.sitesAdapter?.updateFromServer()
         }
-
     }
+
 
     override fun onResume() {
         super.onResume()
