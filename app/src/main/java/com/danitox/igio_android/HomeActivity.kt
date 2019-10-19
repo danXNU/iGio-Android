@@ -15,6 +15,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_tab_bar.*
 import kotlinx.android.synthetic.main.home_cell.view.*
 
 class HomeItem(val id: Int, val name: String, val imageID: Int, val color: Int, val allowedAge: Array<ScuolaType>, val allowedGenders: Array<UserGender>)

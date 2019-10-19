@@ -13,6 +13,9 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.lcoation_row.view.*
 import kotlinx.android.synthetic.main.locations_activity.*
@@ -20,33 +23,105 @@ import kotlinx.android.synthetic.main.locations_activity.tableView
 
 class LocationActivity : AppCompatActivity() {
 
-    private var locationsAdater: LocationsAdapter? = null
+    private val agent = SitiLocalizer()
+    private lateinit var locationType: LocationType
+    private var allLocations: List<LocationCodable> = listOf()
+    private var loadingLocations: MutableList<LocationCodable> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.locations_activity)
 
-        val locationType = LocationType.none.getFrom(intent.getIntExtra("locType", 0))
-        this.locationsAdater = LocationsAdapter(locationType)
+        this.locationType = LocationType.none.getFrom(intent.getIntExtra("locType", 0))
 
 
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         this.tableView.addItemDecoration(divider)
         this.tableView.layoutManager = LinearLayoutManager(this)
-        this.tableView.adapter = locationsAdater
 
-        locationsAdater?.errorHandler = {
-            Snackbar.make(this.tableView, it, Snackbar.LENGTH_SHORT).show()
-        }
 
-        locationsAdater?.updateHandler = {
-            runOnUiThread {
-                locationsAdater?.notifyDataSetChanged()
+        load()
+    }
+
+    fun load() {
+        agent.getLocations(locationType, saveRecords = true) { codableLocations, error ->
+            if (codableLocations != null) {
+                this.allLocations = this.agent.updateFromLocal(codableLocations)
+                fillTableView()
+            }
+            if (error != null) {
+                showErrror(error)
             }
         }
-
-        locationsAdater?.load()
     }
+
+    fun reloadFromLocal() {
+        allLocations = agent.fetchLocalLocations(this.locationType)
+        fillTableView()
+    }
+
+    fun fillTableView() {
+        runOnUiThread {
+            val adapter = GroupAdapter<ViewHolder>()
+
+            for (location in this.allLocations) {
+                val newRow = LocationItemView(location) { locCodale ->
+                    rowClickAction(locCodale)
+                }
+                adapter.add(newRow)
+            }
+
+            tableView.adapter = adapter
+        }
+    }
+
+    fun rowClickAction(location: LocationCodable) {
+        if (location.isSelected) {
+            this.agent.removeSites(location)
+            this.agent.toggle(location)
+            this.reloadFromLocal()
+        } else {
+            this.loadingLocations.add(location)
+
+            this.agent.fetchLocalizedWebsites(location) { list, error ->
+                if (error == null && list != null) {
+                    list.siti.forEach { println("${it.urlString}") }
+
+                    this.loadingLocations.clear()
+                    agent.toggle(location)
+                    this.reloadFromLocal()
+
+                } else {
+                    showErrror(error!!)
+                }
+            }
+        }
+    }
+
+    fun showErrror(message: String) {
+        Snackbar.make(this.tableView, message, Snackbar.LENGTH_LONG).show()
+    }
+}
+
+class LocationItemView(val location: LocationCodable, val clickAction: ((LocationCodable) -> Unit)? = null): Item<ViewHolder>() {
+
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.locationNameLabel.text = location.name
+
+        if (location.isSelected) {
+            viewHolder.itemView.testTickSwitch.visibility = VISIBLE
+        } else {
+            viewHolder.itemView.testTickSwitch.visibility = INVISIBLE
+        }
+
+        viewHolder.itemView.setOnClickListener { clickAction?.invoke(location) }
+
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.lcoation_row
+    }
+
 }
 
 class LocationsAdapter(locType: LocationType): RecyclerView.Adapter<LocationsViewHolder>() {

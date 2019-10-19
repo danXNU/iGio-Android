@@ -11,7 +11,7 @@ class NetworkAgent<Response>(val classType: Class<Response>, val typedValue: Typ
 
     fun executeNetworkRequest(request: ToxNetworkRequest, responseCompletion: (Response?, String?) -> Unit) {
         val pathComponent = request.requestType.value
-        var urlString = "${URLs.mainURL.rawValue}".plus(pathComponent).plus(".php")
+        var urlString = "${URLs.mainURL.rawValue}/".plus(pathComponent).plus(".php")
 
         if (request.args != null) {
             val args = request.args!!
