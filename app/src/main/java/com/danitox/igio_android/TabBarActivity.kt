@@ -1,27 +1,28 @@
 package com.danitox.igio_android
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
 
 class TabBarActivity : AppCompatActivity() {
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                replcaeFragment(HomeActivity())
+                replaceFragment(HomeActivity())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_risorse -> {
-                replcaeFragment(SitiActivity())
+                replaceFragment(SitiActivity())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_social -> {
-                replcaeFragment(SocialActivity())
+                replaceFragment(SocialActivity())
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_settings -> {
+                replaceFragment(SettingsActivity())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -35,10 +36,10 @@ class TabBarActivity : AppCompatActivity() {
 
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        replcaeFragment(HomeActivity())
+        replaceFragment(HomeActivity())
     }
 
-    fun replcaeFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager.beginTransaction()
         fragmentManager.replace(R.id.container, fragment)
         fragmentManager.commit()

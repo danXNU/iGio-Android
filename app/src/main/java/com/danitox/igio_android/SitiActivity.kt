@@ -23,7 +23,7 @@ class SitiActivity : Fragment() {
     private var sitesAdapter: SitiAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.siti_activity, container, false)
+        return inflater.inflate(R.layout.list_view, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,9 +50,8 @@ class SitiActivity : Fragment() {
             Log.e("Sites", it)
         }
 
-        this.reloadButton.setOnClickListener {
-            this.sitesAdapter?.updateFromServer()
-        }
+
+        this.sitesAdapter?.updateFromServer()
     }
 
 

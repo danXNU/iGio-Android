@@ -2,23 +2,30 @@ package com.danitox.igio_android
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import io.realm.Realm
 import kotlinx.android.synthetic.main.compagnia_activity.*
 
-class SettingsActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class SettingsActivity : Fragment() {
 
-        tableView.layoutManager = LinearLayoutManager(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.list_view, container, false)
+    }
 
-        val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        tableView.layoutManager = LinearLayoutManager(this.context)
+
+        val divider = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
         tableView.addItemDecoration(divider)
     }
 
@@ -31,7 +38,7 @@ class SettingsActivity : AppCompatActivity() {
         val adapter = GroupAdapter<ViewHolder>()
 
         val userSection = Section(ToxHeader("Utente"))
-        val row1 = SpinnerRow("Età", ScuolaType.none.stringValues(), this, UserManager().currentUser().ageScuola.stringValue)
+        val row1 = SpinnerRow("Età", ScuolaType.none.stringValues(), this.context!!, UserManager().currentUser().ageScuola.stringValue)
         row1.selectedItemAction = { index ->
             val allItems = ScuolaType.values().filter { it != ScuolaType.none }
 
@@ -41,7 +48,7 @@ class SettingsActivity : AppCompatActivity() {
             realm.commitTransaction()
         }
 
-        val row2 = SpinnerRow("Maschio/Femmina", UserGender.none.stringValues(), this, UserManager().currentUser().gender.stringValue)
+        val row2 = SpinnerRow("Maschio/Femmina", UserGender.none.stringValues(), this.context!!, UserManager().currentUser().gender.stringValue)
         row2.selectedItemAction = { index ->
             val allItems = UserGender.values().filter { it != UserGender.none }
 
@@ -55,7 +62,7 @@ class SettingsActivity : AppCompatActivity() {
         val row3 = BasicRow("Provincia").apply {
                 id = 3
                 clickAction = {
-                    val intent = Intent(this@SettingsActivity, LocationActivity::class.java)
+                    val intent = Intent(this@SettingsActivity.context, LocationActivity::class.java)
                     intent.putExtra("locType", LocationType.diocesi.value)
                     this@SettingsActivity.startActivity(intent)
                 }
@@ -63,7 +70,7 @@ class SettingsActivity : AppCompatActivity() {
         val row4 = BasicRow("Città").apply {
             id = 4
             clickAction = {
-                val intent = Intent(this@SettingsActivity, LocationActivity::class.java)
+                val intent = Intent(this@SettingsActivity.context, LocationActivity::class.java)
                 intent.putExtra("locType", LocationType.city.value)
                 this@SettingsActivity.startActivity(intent)
             }
@@ -78,28 +85,28 @@ class SettingsActivity : AppCompatActivity() {
         val row5 = BasicRow("Info").apply {
             id = 5
             clickAction = {
-                val intent = Intent(this@SettingsActivity, InfoActivity::class.java)
+                val intent = Intent(this@SettingsActivity.context, InfoActivity::class.java)
                 this@SettingsActivity.startActivity(intent)
             }
         }
         val row6 = BasicRow("Notifiche").apply {
             id = 6
             clickAction = {
-                val intent = Intent(this@SettingsActivity, NotificheActivity::class.java)
+                val intent = Intent(this@SettingsActivity.context, NotificheActivity::class.java)
                 this@SettingsActivity.startActivity(intent)
             }
         }
         val row7 = BasicRow("Licenze").apply {
             id = 7
             clickAction = {
-                val intent = Intent(this@SettingsActivity, LicenzeActivity::class.java)
+                val intent = Intent(this@SettingsActivity.context, LicenzeActivity::class.java)
                 this@SettingsActivity.startActivity(intent)
             }
         }
         val row8 = BasicRow("Debug").apply {
             id = 8
             clickAction = {
-                val intent = Intent(this@SettingsActivity, DebugActivity::class.java)
+                val intent = Intent(this@SettingsActivity.context, DebugActivity::class.java)
                 this@SettingsActivity.startActivity(intent)
             }
         }

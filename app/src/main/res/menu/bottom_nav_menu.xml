@@ -8,12 +8,17 @@
 
     <item
             android:id="@+id/navigation_risorse"
-            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:icon="@drawable/school_bag"
             android:title="Risorse"/>
 
     <item
             android:id="@+id/navigation_social"
-            android:icon="@drawable/ic_notifications_black_24dp"
+            android:icon="@drawable/social"
             android:title="Social"/>
+
+    <item
+            android:id="@+id/navigation_settings"
+            android:icon="@drawable/settings"
+            android:title="Impostazioni"/>
 
 </menu>
