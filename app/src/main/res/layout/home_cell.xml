@@ -11,7 +11,7 @@
             android:id="@+id/iconView"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp" android:backgroundTint="#C7D5D3"/>
     <TextView
             android:text="TextView"
             android:layout_width="0dp"
@@ -20,5 +20,5 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/iconView"
             android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:textAlignment="center"/>
+            android:textAlignment="center" android:textColor="#C7D5D3"/>
 </android.support.constraint.ConstraintLayout>

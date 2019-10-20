@@ -1,6 +1,7 @@
 package com.danitox.igio_android
 
 import android.app.Application
+import android.graphics.Color
 import android.util.Log
 import io.realm.DynamicRealm
 import io.realm.Realm
@@ -81,4 +82,17 @@ fun Date.isCloseToDayEqualTo(date: Date): Boolean {
     return cal.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
             cal.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
             cal.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
+}
+
+fun manipulateColor(color: Int, factor: Float): Int {
+    val a = Color.alpha(color)
+    val r = Math.round(Color.red(color) * factor)
+    val g = Math.round(Color.green(color) * factor)
+    val b = Math.round(Color.blue(color) * factor)
+    return Color.argb(
+        a,
+        Math.min(r, 255),
+        Math.min(g, 255),
+        Math.min(b, 255)
+    )
 }

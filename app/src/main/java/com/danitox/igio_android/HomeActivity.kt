@@ -3,10 +3,12 @@ package com.danitox.igio_android
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.UserManager
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -22,13 +24,13 @@ class HomeItem(val id: Int, val name: String, val imageID: Int, val color: Int, 
 
 class HomeItemsHelper {
     var allItems: List<HomeItem> = listOf(
-        HomeItem(0, "Diario Personale", R.drawable.diary, Color.BLUE, ScuolaType.values(), UserGender.values()),
-        HomeItem(1, "TeenSTAR", R.drawable.star, Color.MAGENTA, ScuolaType.values(), UserGender.values()),
-        HomeItem(2, "GioProNet", R.drawable.weightscale, Color.RED, ScuolaType.values(), UserGender.values()),
-        HomeItem(3, "Agenda dell'allegria e della santità", R.drawable.airplane, Color.GREEN, arrayOf(ScuolaType.medie), UserGender.values()),
-        HomeItem(4, "Il mio percorso formativo", R.drawable.search, Color.rgb(252,117,40), arrayOf(ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
-        HomeItem(5, "Il progetto delle 3S", R.drawable.airplane, Color.GREEN, arrayOf(ScuolaType.biennio), UserGender.values()),
-        HomeItem(6, "Regola di Vita", R.drawable.airplane, Color.GREEN, arrayOf(ScuolaType.triennio), UserGender.values())
+        HomeItem(0, "Diario Personale", R.drawable.diary, manipulateColor(Color.BLUE, 0.8f), ScuolaType.values(), UserGender.values()),
+        HomeItem(1, "TeenSTAR", R.drawable.star, manipulateColor(Color.MAGENTA, 0.7f), ScuolaType.values(), UserGender.values()),
+        HomeItem(2, "GioProNet", R.drawable.weightscale, manipulateColor(Color.RED, 0.8f), ScuolaType.values(), UserGender.values()),
+        HomeItem(3, "Agenda dell'allegria e della santità", R.drawable.airplane, manipulateColor(Color.GREEN, 0.8f), arrayOf(ScuolaType.medie), UserGender.values()),
+        HomeItem(4, "Il mio percorso formativo", R.drawable.search, manipulateColor(Color.rgb(252,117,40), 0.8f), arrayOf(ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
+        HomeItem(5, "Il progetto delle 3S", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.biennio), UserGender.values()),
+        HomeItem(6, "Regola di Vita", R.drawable.airplane, manipulateColor(Color.GREEN, 0.8f), arrayOf(ScuolaType.triennio), UserGender.values())
     )
 }
 
@@ -38,13 +40,13 @@ class HomeActivity : Fragment() {
     val helper = HomeItemsHelper()
     var items: List<HomeItem> = listOf()
 
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.tsm_list)
-    }*/
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.list_view, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        tableView.addItemDecoration(SpaceItemDecoration(8))
     }
 
     override fun onResume() {
@@ -61,6 +63,7 @@ class HomeActivity : Fragment() {
     fun fillTableView() {
         val adapter = GroupAdapter<ViewHolder>()
         adapter.spanCount = 2
+
 
         for (item in items) {
             val newHomeItemCell = HomeCell(item) {
@@ -134,7 +137,13 @@ class HomeCell(val homeItem: HomeItem, val clickAction: (HomeItem) -> Unit): Ite
             clickAction.invoke(homeItem)
         }
 
-        viewHolder.itemView.setBackgroundColor(homeItem.color)
+        val shape = GradientDrawable()
+        shape.shape = GradientDrawable.RECTANGLE
+        shape.setColor(homeItem.color)
+        shape.cornerRadius = 20f
+        viewHolder.itemView.background = shape
+
+        //viewHolder.itemView.setBackgroundColor(homeItem.color)
         viewHolder.itemView.itemTitleLabel.text = homeItem.name
         viewHolder.itemView.iconView.setBackgroundResource(homeItem.imageID)
     }
