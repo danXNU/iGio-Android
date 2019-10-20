@@ -8,6 +8,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.basic_row.view.*
 import kotlinx.android.synthetic.main.basic_row.view.mainLabel
+import kotlinx.android.synthetic.main.check_row.view.*
 import kotlinx.android.synthetic.main.ms_row.view.*
 import kotlinx.android.synthetic.main.switch_row.view.*
 import kotlinx.android.synthetic.main.tsf_list_activity.*
@@ -72,5 +73,19 @@ class SwitchRow(val text: String, val initialValue: Boolean, var switchChangedAc
 
     override fun getLayout(): Int {
         return R.layout.switch_row
+    }
+}
+
+class CheckRow(val text: String, val initialValue: Boolean, var switchChangedAction: ((Boolean) -> Unit)? = null): Item<ViewHolder>() {
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.mainLabel.text = text
+
+        viewHolder.itemView.switchButton.setOnCheckedChangeListener { _, isOn ->
+            switchChangedAction?.invoke(isOn)
+        }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.check_row
     }
 }
