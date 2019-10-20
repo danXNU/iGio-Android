@@ -10,5 +10,6 @@
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp" android:id="@+id/tableView"
             android:paddingTop="?attr/actionBarSize"
+            android:paddingBottom="?attr/actionBarSize"
     />
 </android.support.constraint.ConstraintLayout>
