@@ -71,8 +71,8 @@ class GioProEditorActivity : AppCompatActivity() {
         }
 
         val adapter = GroupAdapter<ViewHolder>()
-        val dateSection = Section(ToxHeader(gioItem.date.toString("EEEE - dd/MM/yyyy")))
-        val changeDateRow = DateRow("Modifica la data") {
+        //val dateSection = Section(ToxHeader(gioItem.date.toString("EEEE - dd/MM/yyyy")))
+        val changeDateRow = DateRow(gioItem.date.toString("EEEE - dd/MM/yyyy")) {
             DatePickerDialog(
                 this, dateSetListener,
                 cal.get(Calendar.YEAR),
@@ -81,8 +81,8 @@ class GioProEditorActivity : AppCompatActivity() {
             ).show()
         }
 
-        dateSection.add(changeDateRow)
-        adapter.add(dateSection)
+        //dateSection.add(changeDateRow)
+        adapter.add(changeDateRow)
 
 
         for (orario in GioProTime.values()) {

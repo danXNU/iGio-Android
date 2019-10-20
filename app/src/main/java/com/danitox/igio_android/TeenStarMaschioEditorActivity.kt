@@ -3,10 +3,12 @@ package com.danitox.igio_android
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.widget.Button
 import android.widget.DatePicker
 import com.xwray.groupie.GroupAdapter
@@ -97,16 +99,16 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
 
 
         val adapter = GroupAdapter<ViewHolder>()
-        val dateSection = Section(ToxHeader(currentVolatileTable.date.toString("EEEE - dd/MM/yyyy")))
-        val changeDateRow = DateRow("Modifica la data") {
+        //val dateSection = Section(ToxHeader(currentVolatileTable.date.toString("EEEE - dd/MM/yyyy")))
+        val changeDateRow = DateRow(currentVolatileTable.date.toString("EEEE - dd/MM/yyyy")) {
             DatePickerDialog(this, dateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)).show()
         }
 
-        dateSection.add(changeDateRow)
-        adapter.add(dateSection)
+        //dateSection.add(changeDateRow)
+        adapter.add(changeDateRow)
 
         for (orario in Orario.values()) {
             val newSection = Section(ToxHeader("Sentimento prevalente alle ore ${orario.rawValue}"))
@@ -163,7 +165,11 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
 
 class DateRow(val text: String, val clickAction: () -> Unit): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.mainLabel.setTextColor(Color.BLUE)
+        viewHolder.itemView.mainLabel.typeface = Typeface.DEFAULT_BOLD
+        viewHolder.itemView.mainLabel.textSize = 18f
         viewHolder.itemView.mainLabel.text = text
+        viewHolder.itemView.mainLabel.textAlignment = TEXT_ALIGNMENT_CENTER
         viewHolder.itemView.setOnClickListener { clickAction.invoke() }
     }
 
