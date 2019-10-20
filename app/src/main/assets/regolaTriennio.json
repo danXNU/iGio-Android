@@ -8,17 +8,17 @@
                 {
                 	"idDomanda" : 1,
                     "domanda" : "Versione",
-                    "risposta" : "v1.0"
+                    "risposta" : null
                 },
                 {	
                 	"idDomanda" : 2,
                     "domanda" : "Prossima revisione",
-                    "risposta" : "IDK"
+                    "risposta" : null
                 },
                 {
                 	"idDomanda" : 3,
                     "domanda" : "Guida spirituale",
-                    "risposta" : "Begato"
+                    "risposta" : null
                 },
                 {
                 	"idDomanda" : 4,
