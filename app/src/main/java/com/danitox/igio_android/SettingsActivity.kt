@@ -25,8 +25,8 @@ class SettingsActivity : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         tableView.layoutManager = LinearLayoutManager(this.context)
 
-        val divider = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
-        tableView.addItemDecoration(divider)
+        //val divider = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+        //tableView.addItemDecoration(divider)
     }
 
     override fun onResume() {
