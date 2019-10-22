@@ -54,8 +54,10 @@ class MyMigration : RealmMigration {
 
 fun Date.startOfWeek() : Date {
     val cal = Calendar.getInstance()
+    cal.timeZone = TimeZone.getDefault()
     cal.time = this
-    cal.set(Calendar.DAY_OF_WEEK, cal.getActualMinimum(Calendar.DAY_OF_WEEK))
+    //cal.set(Calendar.DAY_OF_WEEK, cal.getActualMinimum(Calendar.DAY_OF_WEEK))
+    cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
     return cal.time.beginningOfDay
 }
 

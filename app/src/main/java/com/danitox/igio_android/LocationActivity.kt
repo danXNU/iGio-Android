@@ -15,6 +15,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
+import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.lcoation_row.view.*
@@ -64,13 +65,16 @@ class LocationActivity : AppCompatActivity() {
         runOnUiThread {
             val adapter = GroupAdapter<ViewHolder>()
 
+            val mainSection = Section(ToxHeader("Seleziona la location che desideri seguire"))
+
             for (location in this.allLocations) {
                 val newRow = LocationItemView(location) { locCodale ->
                     rowClickAction(locCodale)
                 }
-                adapter.add(newRow)
+                mainSection.add(newRow)
             }
 
+            adapter.add(mainSection)
             tableView.adapter = adapter
         }
     }
