@@ -19,5 +19,5 @@
             android:layout_height="24dp"
             android:id="@+id/mainSpinner" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp" android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp" android:gravity="right"/>
 </android.support.constraint.ConstraintLayout>
