@@ -31,7 +31,7 @@ class LicenzeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.list_view)
     }
 
     override fun onResume() {
