@@ -23,7 +23,7 @@ open class Note : RealmObject() {
     var body: String = ""
 
     fun getBodyWordsCount() : Int {
-        return body.replace("\n", " ").split(" ").size
+        return body.replace("\n", " ").split(" ").filter { !it.isEmpty() }.size
     }
 
     fun getReadbleDate() : String {
