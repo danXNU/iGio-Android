@@ -46,7 +46,7 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
             Orario.h14 -> currentVolatileTable.setEmozione(emozione,2)
             Orario.h20 -> currentVolatileTable.setEmozione(emozione,3)
         }
-        fillTableView()
+        //fillTableView()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -192,15 +192,33 @@ class TSMEditRow(val orario: Orario, val initialEmozione: Emozione?, val emozion
             Pair(Emozione.equilibrio, viewHolder.itemView.equilibrioButton)
             )
 
-        viewHolder.itemView.fiduciaButton.setOnClickListener { emozioneClicked.invoke(Emozione.fiducioso, orario) }
-        viewHolder.itemView.rabbiaButton.setOnClickListener { emozioneClicked.invoke(Emozione.aggressività, orario) }
-        viewHolder.itemView.pauraButton.setOnClickListener { emozioneClicked.invoke(Emozione.paura, orario) }
-        viewHolder.itemView.tristezzaButton.setOnClickListener { emozioneClicked.invoke(Emozione.tristezza, orario) }
-        viewHolder.itemView.gioiaButton.setOnClickListener { emozioneClicked.invoke(Emozione.gioia, orario) }
-        viewHolder.itemView.equilibrioButton.setOnClickListener { emozioneClicked.invoke(Emozione.equilibrio, orario) }
+        viewHolder.itemView.fiduciaButton.setOnClickListener {
+            setEmozione(Emozione.fiducioso)
+            emozioneClicked.invoke(Emozione.fiducioso, orario)
+        }
+        viewHolder.itemView.rabbiaButton.setOnClickListener {
+            setEmozione(Emozione.aggressività)
+            emozioneClicked.invoke(Emozione.aggressività, orario)
+        }
+        viewHolder.itemView.pauraButton.setOnClickListener {
+            setEmozione(Emozione.paura)
+            emozioneClicked.invoke(Emozione.paura, orario)
+        }
+        viewHolder.itemView.tristezzaButton.setOnClickListener {
+            setEmozione(Emozione.tristezza)
+            emozioneClicked.invoke(Emozione.tristezza, orario)
+        }
+        viewHolder.itemView.gioiaButton.setOnClickListener {
+            setEmozione(Emozione.gioia)
+            emozioneClicked.invoke(Emozione.gioia, orario)
+        }
+        viewHolder.itemView.equilibrioButton.setOnClickListener {
+            setEmozione(Emozione.equilibrio)
+            emozioneClicked.invoke(Emozione.equilibrio, orario)
+        }
 
         if (initialEmozione != null) {
-            setEmozione(initialEmozione!!)
+            setEmozione(initialEmozione)
         }
 
     }
