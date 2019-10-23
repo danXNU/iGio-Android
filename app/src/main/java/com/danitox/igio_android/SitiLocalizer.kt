@@ -199,7 +199,14 @@ class SitiLocalizer {
                 completionHandler(null, locerror)
             } else {
                 val list = LocalizedList()
-                list.siti = allSites.sortedBy { it.type.value }.toMutableList()
+                val uniqueArray : MutableList<SitoObject> = mutableListOf()
+                val completeList = allSites.sortedBy { it.type.value }
+                for (sito in completeList) {
+                    if (uniqueArray.firstOrNull { it.id == sito.id } == null) {
+                        uniqueArray.add(sito)
+                    }
+                }
+                list.siti = uniqueArray
                 completionHandler(list, null)
             }
         }

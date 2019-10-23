@@ -30,6 +30,8 @@ class SitiActivity : Fragment() {
     val sitiAgent: SitiLocalizer = SitiLocalizer()
     var allSites: List<SitoObject> = listOf()
 
+    var isFirstRun: Boolean = true
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.list_view, container, false)
     }
@@ -47,7 +49,12 @@ class SitiActivity : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        fetchLocalWebsites()
+        if (isFirstRun) {
+            isFirstRun = false
+        } else {
+            //fetchLocalWebsites()
+        }
+
     }
 
     fun fetchLocalWebsites() {
