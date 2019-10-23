@@ -105,7 +105,7 @@ class GioProEditorActivity : AppCompatActivity() {
         gioItem.getTask(time).taskType = task
         realm.commitTransaction()
 
-        fillTableView()
+        //fillTableView()
     }
 
     fun dateDidChange(date: Date) {
@@ -143,12 +143,30 @@ class GPNEditRow(val orario: GioProTime, val initialTask: TaskType?, val taskTap
             Pair(TaskType.riposo, viewHolder.itemView.riposoButton)
         )
 
-        viewHolder.itemView.waButton.setOnClickListener { taskTapped.invoke(TaskType.whatsapp, orario) }
-        viewHolder.itemView.gamingButton.setOnClickListener { taskTapped.invoke(TaskType.gaming, orario) }
-        viewHolder.itemView.amiciButton.setOnClickListener { taskTapped.invoke(TaskType.amici, orario) }
-        viewHolder.itemView.libriButton.setOnClickListener { taskTapped.invoke(TaskType.libri, orario) }
-        viewHolder.itemView.sportButton.setOnClickListener { taskTapped.invoke(TaskType.sport, orario) }
-        viewHolder.itemView.riposoButton.setOnClickListener { taskTapped.invoke(TaskType.riposo, orario) }
+        viewHolder.itemView.waButton.setOnClickListener {
+            setTask(TaskType.whatsapp)
+            taskTapped.invoke(TaskType.whatsapp, orario)
+        }
+        viewHolder.itemView.gamingButton.setOnClickListener {
+            setTask(TaskType.gaming)
+            taskTapped.invoke(TaskType.gaming, orario)
+        }
+        viewHolder.itemView.amiciButton.setOnClickListener {
+            setTask(TaskType.amici)
+            taskTapped.invoke(TaskType.amici, orario)
+        }
+        viewHolder.itemView.libriButton.setOnClickListener {
+            setTask(TaskType.libri)
+            taskTapped.invoke(TaskType.libri, orario)
+        }
+        viewHolder.itemView.sportButton.setOnClickListener {
+            setTask(TaskType.sport)
+            taskTapped.invoke(TaskType.sport, orario)
+        }
+        viewHolder.itemView.riposoButton.setOnClickListener {
+            setTask(TaskType.riposo)
+            taskTapped.invoke(TaskType.riposo, orario)
+        }
 
 
         if (initialTask != null) {
