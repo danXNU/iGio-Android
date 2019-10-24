@@ -213,7 +213,7 @@ class TSFListItem(val date: Date, var item: TeenStarFemmina? = null): Item<ViewH
             clickAction?.invoke(date, item)
         }
     }
-    
+
     override fun getSpanSize(spanCount: Int, position: Int): Int {
         return spanCount / 4
     }
