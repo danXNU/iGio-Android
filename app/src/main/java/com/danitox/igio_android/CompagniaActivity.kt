@@ -26,7 +26,7 @@ class CompagniaActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.tsm_list)
+        setContentView(R.layout.list_view)
 
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         tableView.addItemDecoration(divider)
