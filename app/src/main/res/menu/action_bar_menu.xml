@@ -4,6 +4,6 @@
             android:id="@+id/calendarioButton"
             android:title="Calendario"
             app:showAsAction="always"
-            android:icon="@drawable/calendar"
+            android:icon="@drawable/ic_calendario_white_24dp"
     />
 </menu>
