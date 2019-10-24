@@ -109,7 +109,7 @@
         </activity>
         <activity
                 android:name=".GioProListActivity"
-                android:label="TeenSTAR"
+                android:label="GioProNet"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
@@ -117,7 +117,7 @@
         </activity>
         <activity
                 android:name=".GioProEditorActivity"
-                android:label="TeenSTAR"
+                android:label="Editor"
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"

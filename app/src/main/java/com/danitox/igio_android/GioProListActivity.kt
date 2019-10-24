@@ -14,6 +14,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.TextView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -39,6 +41,8 @@ class GioProListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.tsm_list)
 
+        msgLabel.text = "Nessun GioProNet. Creane uno premendo sul pulsante + "
+
         this.add_button.setOnClickListener {
             val newIntent = Intent(this, GioProEditorActivity::class.java)
             this.startActivity(newIntent)
@@ -59,7 +63,17 @@ class GioProListActivity : AppCompatActivity() {
         fillTableView()
     }
 
+    fun updateMessage() {
+        if (weeks.isEmpty() || weeks.size == 1 && weeks.firstOrNull()?.tables.isNullOrEmpty()) {
+            msgLabel.visibility = VISIBLE
+        } else {
+            msgLabel.visibility = INVISIBLE
+        }
+    }
+
     fun fillTableView() {
+        updateMessage()
+
         val adapter = GroupAdapter<ViewHolder>()
 
         for (i in 0 until this.weeks.size) {
@@ -114,7 +128,8 @@ class GioProListActivity : AppCompatActivity() {
             val entry = realm.where(GioProNet::class.java).equalTo("id", selectedEntryID).findFirst()
             if (entry != null) {
                 remove(entry)
-                fillTableView()
+                fetchEntries()
+                //fillTableView()
                 showRemoveMessage()
             }
             return true
