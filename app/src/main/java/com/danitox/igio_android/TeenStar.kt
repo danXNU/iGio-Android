@@ -125,7 +125,7 @@ enum class CicloColor(val rawValue: Int) {
             rosso -> Color.RED
             verde -> Color.GREEN
             giallo -> Color.YELLOW
-            bianco -> Color.WHITE
+            bianco -> manipulateColor(Color.WHITE, 0.8f)
             croce -> Color.CYAN
         }
     }

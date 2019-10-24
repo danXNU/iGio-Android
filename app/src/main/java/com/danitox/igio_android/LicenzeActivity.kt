@@ -21,12 +21,12 @@ class LicenzeActivity : AppCompatActivity() {
         LicenzaItem(R.drawable.search, "Magnifying Glass by Phil Goodwin"),
         LicenzaItem(R.drawable.weightscale, "Weight Scale by Marco Livolsi"),
         LicenzaItem(R.drawable.star, "Star by Mochamad Frans Kurnia"),
-        LicenzaItem(R.drawable.calendar, "Calendar by Alice Design"),
+        //LicenzaItem(R.drawable.calendar, "Calendar by Alice Design"),
         LicenzaItem(R.drawable.home, "Home by Taqiyyah"),
         LicenzaItem(R.drawable.school_bag, "School Bag by Nociconist"),
         LicenzaItem(R.drawable.social, "Social by Leo"),
-        LicenzaItem(R.drawable.verifiche, "Homework by Made"),
-        LicenzaItem(R.drawable.settings, "Settings by Royyan Wijaya")
+        LicenzaItem(R.drawable.verifiche, "Homework by Made")
+        //LicenzaItem(R.drawable.settings, "Settings by Royyan Wijaya")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

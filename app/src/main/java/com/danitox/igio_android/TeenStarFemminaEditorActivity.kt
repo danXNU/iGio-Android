@@ -1,6 +1,7 @@
 package com.danitox.igio_android
 
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -11,7 +12,9 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import io.realm.Realm
 import kotlinx.android.synthetic.main.tsf_editor_item.view.*
+import kotlinx.android.synthetic.main.tsf_editor_item.view.cicloColorView
 import kotlinx.android.synthetic.main.tsf_list_activity.*
+import kotlinx.android.synthetic.main.tsf_list_item.view.*
 import java.util.*
 
 class TeenStarFemminaEditorActivity: AppCompatActivity() {
@@ -92,11 +95,17 @@ class TSFEditorItem(private val cicloColor: CicloColor, private val isSelected: 
     var clickAction: ((CicloColor) -> Unit)? = null
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.cicloColorView.setBackgroundColor(cicloColor.getViewColor())
+        //viewHolder.itemView.cicloColorView.setBackgroundColor(cicloColor.getViewColor())
         viewHolder.itemView.cicloDescriptionLabel.text = cicloColor.getDescriptionText()
 
+        val shape = GradientDrawable()
+        shape.shape = GradientDrawable.RECTANGLE
+        shape.setColor(cicloColor.getViewColor())
+        shape.cornerRadius = 19f //20f
+        viewHolder.itemView.cicloColorView.background = shape
+
         if (isSelected) {
-            viewHolder.itemView.setBackgroundColor(Color.GREEN)
+            viewHolder.itemView.setBackgroundColor(manipulateColor(Color.GREEN, 0.6f))
         }
 
         viewHolder.itemView.setOnClickListener { clickAction?.invoke(cicloColor) }

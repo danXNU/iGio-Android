@@ -18,7 +18,7 @@
 
     <item
             android:id="@+id/navigation_settings"
-            android:icon="@drawable/settings"
+            android:icon="@drawable/ic_settings_white_24dp"
             android:title="Impostazioni"/>
 
 </menu>

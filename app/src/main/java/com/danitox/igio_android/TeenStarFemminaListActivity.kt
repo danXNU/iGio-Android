@@ -2,6 +2,7 @@ package com.danitox.igio_android
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -200,23 +201,19 @@ class TSFListItem(val date: Date, var item: TeenStarFemmina? = null): Item<ViewH
         val day = cal.get(Calendar.DAY_OF_MONTH)
 
         viewHolder.itemView.dayLabel.text = "$day"
-        viewHolder.itemView.cicloColorView.setBackgroundColor(item?.cicloTable?.cicloColor?.getViewColor() ?: Color.TRANSPARENT)
+
+        val backgroundColor = item?.cicloTable?.cicloColor?.getViewColor()
+        if (backgroundColor != null) {
+            viewHolder.itemView.setBackgroundColor(backgroundColor)
+        } else {
+            viewHolder.itemView.setBackgroundColor(Color.TRANSPARENT)
+        }
 
         viewHolder.itemView.setOnClickListener {
             clickAction?.invoke(date, item)
         }
     }
-
-    /*fun fetchItem() {
-        val realm = Realm.getDefaultInstance()
-        val cal = Calendar.getInstance()
-        cal.time = date
-
-
-
-        item = realm.where(TeenStarFemmina::class.java).between("date", )
-    }*/
-
+    
     override fun getSpanSize(spanCount: Int, position: Int): Int {
         return spanCount / 4
     }
