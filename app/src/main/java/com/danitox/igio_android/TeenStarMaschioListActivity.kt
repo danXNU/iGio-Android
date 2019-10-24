@@ -1,7 +1,6 @@
 package com.danitox.igio_android
 
 import android.content.Intent
-import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -10,21 +9,19 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import io.realm.Realm
 import khronos.toString
-import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.compagnia_activity.tableView
 import kotlinx.android.synthetic.main.teenstar_m_cell.view.*
 import kotlinx.android.synthetic.main.tsm_list.*
-import org.joda.time.DateMidnight
 import org.joda.time.LocalDate
 import org.joda.time.Weeks
-import java.util.*
-import kotlin.math.abs
 
 class TeenStarMaschioListActivity : AppCompatActivity() {
 
@@ -36,6 +33,8 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tsm_list)
+
+        msgLabel.text = "Nessun TeenSTAR. Creane uno premendo sul pulsante +"
 
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         tableView.addItemDecoration(divider)
@@ -54,7 +53,18 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
         fetchEntries()
     }
 
+
+    fun updateMsgLabel() {
+        if (weeks.isEmpty() || weeks.size == 1 && weeks.firstOrNull()?.tables.isNullOrEmpty()) {
+            msgLabel.visibility = VISIBLE
+        } else {
+            msgLabel.visibility = INVISIBLE
+        }
+    }
+
     fun fillTableView() {
+        updateMsgLabel()
+
         val adapter = GroupAdapter<ViewHolder>()
 
         for (i in 0 until this.weeks.size) {
@@ -105,6 +115,7 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
         table.deleteFromRealm()
         realm.commitTransaction()
         //this.weeks.firstOrNull { it.tables.contains(table) }.tables.removeAll { it == table }
+        //val emptyWeeks = weeks.filter {  }
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
@@ -113,7 +124,7 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
             val entry = realm.where(TeenStarMaschio::class.java).equalTo("id", selectedEntryID).findFirst()
             if (entry != null) {
                 remove(entry)
-                fillTableView()
+                fetchEntries()//fillTableView()
                 showRemoveMessage()
             }
             return true

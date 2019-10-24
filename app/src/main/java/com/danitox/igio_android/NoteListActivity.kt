@@ -1,8 +1,7 @@
 package com.danitox.igio_android
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -11,12 +10,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.*
-import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
-import io.realm.Realm
-import khronos.toString
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.tableView
 import kotlinx.android.synthetic.main.note_row.view.*
 
 class NoteListActivity : AppCompatActivity() {
@@ -26,6 +23,8 @@ class NoteListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        msgLabel.text = "Nessuna pagina di diario. Creane una premendo sul pulsante +"
 
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = listAdapter
@@ -61,13 +60,23 @@ class NoteListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         println("onResume!")
+        update()
+    }
+
+    fun update() {
         listAdapter.updateData()
+        if (listAdapter.agent.allNotes.isEmpty()) {
+            msgLabel.visibility = VISIBLE
+        } else {
+            msgLabel.visibility = INVISIBLE
+        }
     }
 
     override fun onContextItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == 121) {
             this.listAdapter.remove(item.groupId)
             showRemoveMessage()
+            update()
             return true
         } else {
             return super.onContextItemSelected(item)
