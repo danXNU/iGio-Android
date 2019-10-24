@@ -11,7 +11,7 @@
             android:id="@+id/waButton" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/gamingButton"
             app:layout_constraintTop_toTopOf="@+id/gamingButton" android:textAlignment="center"
-            android:background="@drawable/wa_logo_native"/>
+            android:text="📱" android:textSize="30sp"/>
     <TextView
             android:text="Chat e Social"
             android:layout_width="60dp"

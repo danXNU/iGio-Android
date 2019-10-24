@@ -78,8 +78,8 @@ enum class TaskType(val rawValue: Int) {
 
     fun emoji(): String? {
         return when(this) {
-            none -> "NULL"
-            whatsapp -> null
+            none -> "❌"
+            whatsapp -> "📱"
             gaming -> "\uD83C\uDFAE"
             amici -> "\uD83D\uDC6B"
             libri -> "\uD83D\uDCDA"
