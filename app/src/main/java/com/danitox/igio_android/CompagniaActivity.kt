@@ -73,6 +73,8 @@ class CompagniaRow(val domanda: VerificaDomanda): Item<ViewHolder>() {
         viewHolder.itemView.domandaLabel.text = domanda.domanda
         viewHolder.itemView.domandaSlider.progress = domanda.risposta
 
+        viewHolder.itemView.currentValueLabel.text = "${viewHolder.itemView.domandaSlider.progress}"
+
         viewHolder.itemView.domandaSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
 
@@ -83,10 +85,12 @@ class CompagniaRow(val domanda: VerificaDomanda): Item<ViewHolder>() {
                 realm.beginTransaction()
                 domanda.risposta = seekBar?.progress ?: 0
                 realm.commitTransaction()
+
+
             }
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
+                viewHolder.itemView.currentValueLabel.text = "${seekBar?.progress ?: 0 }"
             }
         })
     }

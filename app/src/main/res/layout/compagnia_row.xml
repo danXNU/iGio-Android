@@ -7,7 +7,7 @@
 
     <TextView
             android:text="TextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/domandaLabel" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
@@ -17,8 +17,15 @@
             android:layout_width="338dp"
             android:layout_height="48dp"
             android:id="@+id/domandaSlider" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="22dp"
-            android:layout_marginEnd="22dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
             app:layout_constraintTop_toBottomOf="@+id/domandaLabel" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:max="10" android:progress="0"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:max="10" android:progress="0"
+            app:layout_constraintEnd_toStartOf="@+id/currentValueLabel" android:layout_marginEnd="8dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:id="@+id/currentValueLabel" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/domandaSlider" android:textAlignment="viewStart"
+            android:gravity="center" android:layout_marginEnd="8dp"/>
 </android.support.constraint.ConstraintLayout>
