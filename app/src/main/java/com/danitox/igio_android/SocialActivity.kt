@@ -110,7 +110,8 @@ class SocialActivity: Fragment() {
                 baseUrl = "https://instagram.com/$username"
             }
             SitoCategoria.youtube -> {
-                query = "vnd.youtube://user/channel/$username"
+                //query = "vnd.youtube://user/channel/$username"
+                query = "https://www.youtube.com/user/$username"
                 baseUrl = "https://www.youtube.com/user/$username"
             }
             else -> {}
@@ -118,6 +119,9 @@ class SocialActivity: Fragment() {
 
         try {
             val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse(query))
+            if (categoria == SitoCategoria.youtube) {
+                appIntent.setPackage("com.google.android.youtube")
+            }
             this.activity?.startActivity(appIntent)
         } catch (ex: ActivityNotFoundException) {
             val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl))

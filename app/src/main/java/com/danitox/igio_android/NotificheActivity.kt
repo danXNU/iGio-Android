@@ -42,11 +42,14 @@ class NotificheActivity : AppCompatActivity() {
             val isNotificaTyeActive = model.getActiveNotifiche(this).contains(type)
             val newRow = SwitchRow("${type.stringValue()}", isNotificaTyeActive) { isOn ->
                 model.setNotificaTypeActive(type, isOn, this)
-                refresh()
+                //refresh()
             }
             notificheTypeSection.add(newRow)
         }
-        adapter.add(notificheTypeSection)
+        if (model.areNotificheActive(this)) {
+            adapter.add(notificheTypeSection)
+        }
+
 
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = adapter

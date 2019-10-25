@@ -18,6 +18,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.locations_activity.tableView
 import kotlinx.android.synthetic.main.siti_activity.*
 import kotlinx.android.synthetic.main.sito_row.view.*
@@ -52,7 +53,7 @@ class SitiActivity : Fragment() {
         if (isFirstRun) {
             isFirstRun = false
         } else {
-            //fetchLocalWebsites()
+            fetchLocalWebsites()
         }
 
     }
