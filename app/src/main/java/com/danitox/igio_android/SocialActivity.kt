@@ -111,8 +111,8 @@ class SocialActivity: Fragment() {
             }
             SitoCategoria.youtube -> {
                 //query = "vnd.youtube://user/channel/$username"
-                query = "https://www.youtube.com/user/$username"
-                baseUrl = "https://www.youtube.com/user/$username"
+                query = "https://www.youtube.com/channel/$username"
+                baseUrl = "https://www.youtube.com/channel/$username"
             }
             else -> {}
         }
