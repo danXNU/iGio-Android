@@ -1,5 +1,6 @@
 package com.danitox.igio_android
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity

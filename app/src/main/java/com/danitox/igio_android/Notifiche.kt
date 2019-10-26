@@ -1,6 +1,8 @@
 package com.danitox.igio_android
 
 import android.content.Context
+import com.onesignal.OneSignal
+import org.json.JSONObject
 import kotlin.contracts.contract
 
 class Notifiche {
@@ -78,6 +80,8 @@ class Notifiche {
 
         editor.putBoolean("areNotificheActive", value)
         editor.apply()
+
+        this.updateStatus(context)
     }
 
     fun setNotificaTypeActive(type: NotificheType, active: Boolean, context: Context) {
@@ -111,27 +115,40 @@ class Notifiche {
     }
 
 
-    fun userDismissedNotifications(): Boolean {
-        return false
-    }
+    fun subscribeToActiveNotifications(context: Context) {
+        val activeNotifiche = this.getActiveNotifiche(context)
+        val tags = JSONObject()
 
-    fun requestAuthorization() {
+        for (type in NotificheType.values()) {
+            val key = type.tagKey()
 
-    }
+            var value: String
+            if (activeNotifiche.contains(type)) {
+                value = "1"
+            } else { value = "0" }
 
-    fun subscribeToActiveNotifications() {
+            tags.put(key, value)
+        }
 
+        OneSignal.sendTags(tags)
     }
 
     fun unsubscribeToAllNotifications() {
+        val tags = JSONObject()
 
+        for (type in NotificheType.values()) {
+            val key = type.tagKey()
+            tags.put(key, "0")
+        }
+
+        OneSignal.sendTags(tags)
     }
 
-    fun openSettings() {
-
-    }
-
-    fun updateStatus() {
-
+    fun updateStatus(context: Context) {
+        if (areNotificheActive(context)) {
+            this.subscribeToActiveNotifications(context)
+        } else {
+            this.unsubscribeToAllNotifications()
+        }
     }
 }

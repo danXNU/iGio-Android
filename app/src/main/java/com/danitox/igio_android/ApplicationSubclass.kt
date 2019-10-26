@@ -3,6 +3,7 @@ package com.danitox.igio_android
 import android.app.Application
 import android.graphics.Color
 import android.util.Log
+import com.onesignal.OneSignal
 import io.realm.DynamicRealm
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -21,6 +22,11 @@ class ApplicationSubclass : Application() {
         Realm.setDefaultConfiguration(configuration)
 
         Log.d("Realm Path", Realm.getDefaultInstance().path)
+
+        OneSignal.startInit(this)
+            .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+            .unsubscribeWhenNotificationsAreDisabled(true)
+            .init()
     }
 }
 

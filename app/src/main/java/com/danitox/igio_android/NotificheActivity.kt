@@ -21,6 +21,7 @@ class NotificheActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        Notifiche().updateStatus(this)
         refresh()
     }
 
@@ -40,10 +41,7 @@ class NotificheActivity : AppCompatActivity() {
         val notificheTypeSection = Section(ToxHeader("Tipo di notifiche"))
         for (type in Notifiche.NotificheType.values().filter { it != Notifiche.NotificheType.none }) {
             val isNotificaTyeActive = model.getActiveNotifiche(this).contains(type)
-            val newRow = SwitchRow("${type.stringValue()}", isNotificaTyeActive) { isOn ->
-                model.setNotificaTypeActive(type, isOn, this)
-                //refresh()
-            }
+            val newRow = SwitchRow("${type.stringValue()}", isNotificaTyeActive) { notificheRowClicked(type, it) }
             notificheTypeSection.add(newRow)
         }
         if (model.areNotificheActive(this)) {
@@ -53,6 +51,13 @@ class NotificheActivity : AppCompatActivity() {
 
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = adapter
+    }
+
+    fun notificheRowClicked(type: Notifiche.NotificheType, isOn: Boolean) {
+        if (!model.areNotificheActive(this)) { return }
+
+        model.setNotificaTypeActive(type, isOn, this)
+        model.updateStatus(this)
     }
 
 }
