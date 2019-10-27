@@ -22,12 +22,15 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import io.realm.Realm
+import khronos.beginningOfDay
 import khronos.toString
 import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.gio_list_cell.view.*
 import kotlinx.android.synthetic.main.tsm_list.*
 import kotlinx.android.synthetic.main.tsm_list.tableView
+import org.joda.time.Days
 import org.joda.time.LocalDate
+import org.joda.time.ReadablePartial
 import org.joda.time.Weeks
 import java.util.*
 import kotlin.collections.HashMap
@@ -85,7 +88,8 @@ class GioProListActivity : AppCompatActivity() {
             val now = LocalDate()
             val fromDate = LocalDate(week.startOfWeek)
 
-            val weeksCount = Weeks.weeksBetween(fromDate, now).weeks
+            //val weeksCount = Weeks.weeksBetween(fromDate, now).weeks
+            val weeksCount = getWeeksBetween(week.startOfWeek, Date().beginningOfDay)
 
             var title: String = ""
             if (weeksCount == 0) {

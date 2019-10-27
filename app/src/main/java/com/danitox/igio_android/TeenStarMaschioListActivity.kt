@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.teenstar_m_cell.view.*
 import kotlinx.android.synthetic.main.tsm_list.*
 import org.joda.time.LocalDate
 import org.joda.time.Weeks
+import java.util.*
 
 class TeenStarMaschioListActivity : AppCompatActivity() {
 
@@ -74,7 +75,8 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
             val now = LocalDate()
             val fromDate = LocalDate(week.startOfWeek)
 
-            val weeksCount = Weeks.weeksBetween(fromDate, now).weeks
+            //val weeksCount = Weeks.weeksBetween(fromDate, now).weeks
+            val weeksCount = getWeeksBetween(week.startOfWeek, Date())
 
             var title: String = ""
             if (weeksCount == 0) {
