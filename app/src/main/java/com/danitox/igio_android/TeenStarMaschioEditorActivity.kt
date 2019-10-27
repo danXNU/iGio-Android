@@ -100,11 +100,14 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
 
         val adapter = GroupAdapter<ViewHolder>()
         //val dateSection = Section(ToxHeader(currentVolatileTable.date.toString("EEEE - dd/MM/yyyy")))
-        val changeDateRow = DateRow(currentVolatileTable.date.toString("EEEE - dd/MM/yyyy")) {
-            DatePickerDialog(this, dateSetListener,
+        val changeDateRow = DateRow("> ${currentVolatileTable.date.toString("EEEE - dd/MM/yyyy")} <") {
+            val dialog = DatePickerDialog(this, dateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)).show()
+                cal.get(Calendar.DAY_OF_MONTH))
+
+            dialog.datePicker.maxDate = Date().time
+            dialog.show()
         }
 
         //dateSection.add(changeDateRow)

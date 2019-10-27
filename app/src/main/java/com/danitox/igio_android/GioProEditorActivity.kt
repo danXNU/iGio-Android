@@ -16,6 +16,8 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import io.realm.Realm
+import khronos.beginningOfDay
+import khronos.endOfDay
 import khronos.toString
 import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.gpn_edit_row.view.*
@@ -72,13 +74,15 @@ class GioProEditorActivity : AppCompatActivity() {
 
         val adapter = GroupAdapter<ViewHolder>()
         //val dateSection = Section(ToxHeader(gioItem.date.toString("EEEE - dd/MM/yyyy")))
-        val changeDateRow = DateRow(gioItem.date.toString("EEEE - dd/MM/yyyy")) {
-            DatePickerDialog(
+        val changeDateRow = DateRow("> ${gioItem.date.toString("EEEE - dd/MM/yyyy")} <") {
+            val dialog = DatePickerDialog(
                 this, dateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            dialog.datePicker.maxDate = Date().time
+            dialog.show()
         }
 
         //dateSection.add(changeDateRow)

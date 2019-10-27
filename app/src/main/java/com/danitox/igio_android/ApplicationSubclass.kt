@@ -11,6 +11,9 @@ import io.realm.RealmMigration
 import khronos.beginningOfDay
 import khronos.endOfDay
 import java.util.*
+//import jdk.nashorn.internal.objects.NativeDate.getTime
+
+
 
 class ApplicationSubclass : Application() {
 
@@ -70,7 +73,8 @@ fun Date.startOfWeek() : Date {
 fun Date.endOfWeek() : Date {
     val cal = Calendar.getInstance()
     cal.time = this
-    cal.set(Calendar.DAY_OF_WEEK, cal.getActualMaximum(Calendar.DAY_OF_WEEK))
+    //cal.set(Calendar.DAY_OF_WEEK, cal.getActualMaximum(Calendar.DAY_OF_WEEK))
+    cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
     return cal.time.endOfDay
 }
 
@@ -103,4 +107,35 @@ fun manipulateColor(color: Int, factor: Float): Int {
         Math.min(g, 255),
         Math.min(b, 255)
     )
+}
+
+fun getWeeksBetween(a: Date, b: Date): Int {
+    var a = a
+    var b = b
+
+    if (b.before(a)) {
+        return -getWeeksBetween(b, a)
+    }
+    a = resetTime(a)
+    b = resetTime(b)
+
+    val cal = GregorianCalendar()
+    cal.time = a
+    var weeks = 0
+    while (cal.time.before(b)) {
+        // add another week
+        cal.add(Calendar.WEEK_OF_YEAR, 1)
+        weeks++
+    }
+    return weeks
+}
+
+fun resetTime(d: Date): Date {
+    val cal = GregorianCalendar()
+    cal.time = d
+    cal.set(Calendar.HOUR_OF_DAY, 0)
+    cal.set(Calendar.MINUTE, 0)
+    cal.set(Calendar.SECOND, 0)
+    cal.set(Calendar.MILLISECOND, 0)
+    return cal.time
 }

@@ -29,6 +29,8 @@ import kotlinx.android.synthetic.main.tsm_list.*
 import kotlinx.android.synthetic.main.tsm_list.tableView
 import org.joda.time.LocalDate
 import org.joda.time.Weeks
+import java.util.*
+import kotlin.collections.HashMap
 
 class GioProListActivity : AppCompatActivity() {
 
