@@ -15,11 +15,12 @@ class NoteEditorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.note_editor)
 
         val noteID = intent.getStringExtra("noteID")
         this.note = realm.where(Note::class.java).equalTo("id", noteID).findFirst()
 
-        setContentView(R.layout.note_editor)
+
 
         this.editorView.text = Editable.Factory.getInstance().newEditable(this.note?.body)
 
