@@ -23,7 +23,7 @@ class NetworkAgent<Response>(val classType: Class<Response>, val typedValue: Typ
         val client = OkHttpClient()
         client.newCall(httpRequest).enqueue(object: Callback {
             override fun onFailure(call: Call, e: IOException) {
-                responseCompletion(null, "Un cribio di errore nella richiesta: ${e.localizedMessage}")
+                responseCompletion(null, "Errore nella richiesta: ${e.localizedMessage}")
             }
 
             override fun onResponse(call: Call, response: okhttp3.Response) {
