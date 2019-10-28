@@ -127,7 +127,7 @@ fun getWeeksBetween(a: Date, b: Date): Int {
         cal.add(Calendar.WEEK_OF_YEAR, 1)
         weeks++
     }
-    return weeks - 1
+    return weeks //- 1
 }
 
 fun resetTime(d: Date): Date {
