@@ -53,12 +53,10 @@ class SitiLocalizer {
         realm.commitTransaction()
     }
 
-
     fun fetchLocalWebsites(type: SitoCategoria) : List<SitoObject> {
         val realm = Realm.getDefaultInstance()
         return realm.where(SitoWeb::class.java).equalTo("_categoria", type.value).findAll().map { SitoWebHelper().createCodableFromSito(it) }
     }
-
 
     fun getLocations(type: LocationType, saveRecords: Boolean = true, completionHandler: ((List<LocationCodable>?, String?) -> Unit)? = null) {
         val request = ToxNetworkRequest()
@@ -135,7 +133,6 @@ class SitiLocalizer {
         return allLocationsCodable
     }
 
-
     fun removeSites(obj: LocationCodable) {
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
@@ -155,7 +152,6 @@ class SitiLocalizer {
         }
         realm.commitTransaction()
     }
-
 
     fun getAllLocalSelectedLocations() : List<LocationCodable> {
         val realm = Realm.getDefaultInstance()
