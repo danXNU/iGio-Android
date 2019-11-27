@@ -16,7 +16,7 @@ class Notifiche {
 
         fun stringValue() : String {
             return when(this) {
-                eventiMGS -> "Eventi MGS"
+                eventiMGS -> "Eventi MGS ILE"
                 consigliDB -> "Consigli di Don Bosco"
                 sacramenti -> "Promemoria di vita spirituale"
                 angeloCustode -> "Missione dell'angelo custode"
