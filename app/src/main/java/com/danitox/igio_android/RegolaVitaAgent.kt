@@ -21,6 +21,30 @@ open class RegolaVita: RealmObject() {
     var scuolaType: ScuolaType
         get() { return ScuolaType.none.getFrom(_scuolaType) }
         set(value) { _scuolaType = value.value }
+
+    class RiassuntoDomandaIndex(var categoriaIndex: Int, var domandaIndex: Int)
+    val domandeRiassuntoRaw: List<RiassuntoDomandaIndex>
+        get() {
+            return listOf(
+                RiassuntoDomandaIndex(0, 4),
+                RiassuntoDomandaIndex( 1, 9),
+                RiassuntoDomandaIndex( 2, 12),
+                RiassuntoDomandaIndex( 3, 15),
+                RiassuntoDomandaIndex( 4, 18),
+                RiassuntoDomandaIndex( 5, 21)
+            )
+        }
+
+    val domandeRiassunto: List<RegolaDomanda>
+        get() {
+            val realm = Realm.getDefaultInstance()
+            val allObjects : MutableList<RegolaDomanda> = mutableListOf()
+            for (domandaIndex in this.domandeRiassuntoRaw) {
+                val filteredObjects = realm.where(RegolaDomanda::class.java).equalTo("order", domandaIndex.domandaIndex).equalTo("categoria.regola._scuolaType", ScuolaType.triennio.value).findAll()
+                allObjects.addAll(filteredObjects)
+            }
+            return allObjects
+        }
 }
 
 open class RegolaCategoria: RealmObject() {

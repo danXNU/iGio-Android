@@ -117,9 +117,15 @@ class HomeActivity : Fragment() {
         val model = RegolaFetcherModel(this.context!!)
         model.createIfNotPresent()
 
-        val intent = Intent(this.context, RegolaCategorieActivity::class.java)
-        intent.putExtra("type", UserManager().currentUser().ageScuola.value)
-        this.startActivity(intent)
+        if (UserManager().currentUser().ageScuola == ScuolaType.triennio) {
+            val intent = Intent(this.context, RiassuntoActivity::class.java)
+            intent.putExtra("type", UserManager().currentUser().ageScuola.value)
+            this.startActivity(intent)
+        } else {
+            val intent = Intent(this.context, RegolaCategorieActivity::class.java)
+            intent.putExtra("type", UserManager().currentUser().ageScuola.value)
+            this.startActivity(intent)
+        }
     }
 
     fun showVerificaCompagniaController() {
