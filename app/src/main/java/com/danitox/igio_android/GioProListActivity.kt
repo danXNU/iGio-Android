@@ -1,11 +1,8 @@
 package com.danitox.igio_android
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Rect
-import android.graphics.drawable.ScaleDrawable
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -24,14 +21,10 @@ import com.xwray.groupie.ViewHolder
 import io.realm.Realm
 import khronos.beginningOfDay
 import khronos.toString
-import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.gio_list_cell.view.*
 import kotlinx.android.synthetic.main.tsm_list.*
 import kotlinx.android.synthetic.main.tsm_list.tableView
-import org.joda.time.Days
 import org.joda.time.LocalDate
-import org.joda.time.ReadablePartial
-import org.joda.time.Weeks
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -48,7 +41,7 @@ class GioProListActivity : AppCompatActivity() {
 
         msgLabel.text = "Nessun GioProNet. Creane uno premendo sul pulsante + "
 
-        this.add_button.setOnClickListener {
+        this.edit_button.setOnClickListener {
             val newIntent = Intent(this, GioProEditorActivity::class.java)
             this.startActivity(newIntent)
         }
