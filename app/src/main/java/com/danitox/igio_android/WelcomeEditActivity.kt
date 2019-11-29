@@ -30,7 +30,8 @@ class WelcomeEditActivity: AppCompatActivity() {
         tableView.layoutManager = LinearLayoutManager(this)
 
         edit_button.setOnClickListener {
-            
+            SavedValues().setIsFirstLaunch(false, this)
+            finish()
         }
 
         //fillTableView()

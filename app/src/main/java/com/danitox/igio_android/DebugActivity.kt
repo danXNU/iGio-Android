@@ -73,8 +73,7 @@ class DebugActivity : AppCompatActivity() {
 
         val row5 = BasicRow("Mostra WelcomeActivity")
         row5.clickAction = {
-            val intent = Intent(this, WelcomePageActivity::class.java)
-            startActivity(intent)
+            SavedValues().setIsFirstLaunch(true, this)
         }
 
         adapter.add(row1)

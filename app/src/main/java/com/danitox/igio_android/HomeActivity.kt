@@ -52,6 +52,12 @@ class HomeActivity : Fragment() {
     override fun onResume() {
         super.onResume()
         update()
+
+        if (SavedValues().isFirstLaunch(this.context!!)) {
+            val intent = Intent(this.context!!, WelcomePageActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     fun update() {

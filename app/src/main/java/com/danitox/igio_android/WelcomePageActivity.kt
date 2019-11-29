@@ -16,5 +16,15 @@ class WelcomePageActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (SavedValues().isFirstLaunch(this) == false) {
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+
+    }
 
 }
