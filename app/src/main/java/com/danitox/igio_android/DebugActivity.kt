@@ -1,5 +1,6 @@
 package com.danitox.igio_android
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -70,10 +71,17 @@ class DebugActivity : AppCompatActivity() {
             Snackbar.make(this.tableView, "GioProNet resettato", Snackbar.LENGTH_SHORT).show()
         }
 
+        val row5 = BasicRow("Mostra WelcomeActivity")
+        row5.clickAction = {
+            val intent = Intent(this, WelcomePageActivity::class.java)
+            startActivity(intent)
+        }
+
         adapter.add(row1)
         adapter.add(row2)
         adapter.add(row3)
         adapter.add(row4)
+        adapter.add(row5)
 
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = adapter
