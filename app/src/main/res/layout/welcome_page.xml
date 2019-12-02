@@ -1,45 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:id="@+id/welcome_Initial_view"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/welcome_Initial_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <TextView
             android:id="@+id/title_label"
             android:layout_width="0dp"
-            android:layout_height="50dp" android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp" android:layout_marginEnd="8dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:background="#ECE7E7"
-            android:gravity="center" android:text="Benvenuto in iGio!"
-            android:textAlignment="center" android:textColor="#FFF44336"
-            android:textSize="30sp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+            android:gravity="center"
+            android:text="Benvenuto in iGio!"
+            android:textAlignment="center"
+            android:textColor="#FFF44336"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
             android:id="@+id/imageView"
-            android:layout_width="150dp" android:layout_height="156dp"
-            android:layout_marginTop="32dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_label" app:srcCompat="@mipmap/igio_launcher_round"/>
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_label"
+            app:srcCompat="@mipmap/igio_launcher_round" />
+
     <TextView
             android:id="@+id/textView2"
             android:layout_width="0dp"
-            android:layout_height="285dp" android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp" android:layout_marginEnd="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:background="#ECE7E7"
             android:gravity="center"
             android:text="La vita dei giovani affronta oggi una nuova sfida: interagire con un mondo reale e virtuale in cui si addentrano da soli come in un continente sconosciuto (Papa Francesco).\nCon iGio, vi diamo la #bussola"
             android:textAlignment="center"
-            android:textSize="27sp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+            android:textSize="27sp"
+            app:layout_constraintBottom_toTopOf="@+id/startButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     <Button
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:backgroundTint="#F44336"
-            android:text="Inizia" android:textColor="#ECECEC"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#F44336"
+            android:text="Inizia"
+            android:textColor="#ECECEC"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
