@@ -1,5 +1,6 @@
 package com.danitox.igio_android
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -8,6 +9,8 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.compagnia_activity.*
+import kotlinx.android.synthetic.main.compagnia_activity.tableView
+import kotlinx.android.synthetic.main.tsm_list.*
 
 class RiassuntoActivity: AppCompatActivity() {
 
@@ -18,7 +21,7 @@ class RiassuntoActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.compagnia_activity)
+        setContentView(R.layout.riassunto_view)
 
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         tableView.addItemDecoration(divider)
@@ -31,9 +34,20 @@ class RiassuntoActivity: AppCompatActivity() {
         tableView.layoutManager = LinearLayoutManager(this)
 
 
-        fillTableView()
+        edit_button.setOnClickListener {
+            val intent = Intent(this, RegolaCategorieActivity::class.java)
+            intent.putExtra("type", UserManager().currentUser().ageScuola.value)
+            this.startActivity(intent)
+        }
+
+        //fillTableView()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        fillTableView()
+    }
 
     fun fillTableView() {
         val adapter = GroupAdapter<ViewHolder>()

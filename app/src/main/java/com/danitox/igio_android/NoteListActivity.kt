@@ -1,7 +1,6 @@
 package com.danitox.igio_android
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -47,7 +46,7 @@ class NoteListActivity : AppCompatActivity() {
             listAdapter.notifyDataSetChanged()
         }
 
-        this.add_button.setOnClickListener {
+        this.edit_button.setOnClickListener {
             val newNote = this.listAdapter.getNewNote()
 
             val intent = Intent(this, NoteEditorActivity::class.java)

@@ -168,6 +168,21 @@
                     android:value=".HomeActivityTesting"/>
         </activity>
 
+        <activity
+                android:name=".WelcomePageActivity"
+                android:label="iGio"
+                android:launchMode="singleTop">
+        </activity>
+
+        <activity
+                android:name=".WelcomeEditActivity"
+                android:label="Impostazioni"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".WelcomePageActivity"/>
+        </activity>
+
     </application>
 
 </manifest>

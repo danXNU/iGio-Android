@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.compagnia_activity.tableView
 import kotlinx.android.synthetic.main.teenstar_m_cell.view.*
 import kotlinx.android.synthetic.main.tsm_list.*
 import org.joda.time.LocalDate
-import org.joda.time.Weeks
 import java.util.*
 
 class TeenStarMaschioListActivity : AppCompatActivity() {
@@ -42,7 +41,7 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
 
         tableView.layoutManager = LinearLayoutManager(this)
 
-        this.add_button.setOnClickListener {
+        this.edit_button.setOnClickListener {
             val newIntent = Intent(this, TeenStarMaschioEditorActivity::class.java)
             newIntent.putExtra("isNewEntry", true)
             this.startActivity(newIntent)

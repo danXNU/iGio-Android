@@ -14,6 +14,33 @@ class Notifiche {
         sacramenti(4),
         angeloCustode(8);
 
+        fun getFromString(str: String) : NotificheType {
+            return when(str) {
+                eventiMGS.stringValue() -> eventiMGS
+                consigliDB.stringValue() -> consigliDB
+                sacramenti.stringValue() -> sacramenti
+                angeloCustode.stringValue() -> angeloCustode
+                else -> none
+            }
+        }
+
+        fun allBooleanValues(context: Context) : BooleanArray {
+            val activeNotifiche = Notifiche().getActiveNotifiche(context)
+            return booleanArrayOf(
+                activeNotifiche.contains(eventiMGS),
+                activeNotifiche.contains(consigliDB),
+                activeNotifiche.contains(sacramenti),
+                activeNotifiche.contains(angeloCustode)
+            )
+        }
+
+        fun allStrings() : List<String> {
+            return listOf(eventiMGS.stringValue(),
+                consigliDB.stringValue(),
+                sacramenti.stringValue(),
+                angeloCustode.stringValue())
+        }
+
         fun stringValue() : String {
             return when(this) {
                 eventiMGS -> "Eventi MGS ILE"

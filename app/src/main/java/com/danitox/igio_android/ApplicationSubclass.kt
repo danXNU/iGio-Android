@@ -1,6 +1,7 @@
 package com.danitox.igio_android
 
 import android.app.Application
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import com.onesignal.OneSignal
@@ -138,4 +139,20 @@ fun resetTime(d: Date): Date {
     cal.set(Calendar.SECOND, 0)
     cal.set(Calendar.MILLISECOND, 0)
     return cal.time
+}
+
+
+class SavedValues {
+    fun isFirstLaunch(context: Context): Boolean {
+        val preferences = context.getSharedPreferences("iGio", Context.MODE_PRIVATE)
+        return preferences.getBoolean("isFirstLaunch", true)
+    }
+
+    fun setIsFirstLaunch(value: Boolean, context: Context) {
+        val preferences = context.getSharedPreferences("iGio", Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+
+        editor.putBoolean("isFirstLaunch", value)
+        editor.apply()
+    }
 }
