@@ -59,13 +59,13 @@
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/sportButton"
             app:layout_constraintTop_toTopOf="@+id/sportButton" android:textAlignment="center" android:textSize="30sp"/>
     <TextView
-            android:text="Dovere quotidiano"
+            android:id="@+id/libriLabel"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:id="@+id/libriLabel"
-            app:layout_constraintTop_toBottomOf="@+id/libriButton"
-            app:layout_constraintStart_toStartOf="@+id/libriButton"
-            android:textAlignment="center"/>
+            android:text="Dovere quotidiano"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/libriButton" app:layout_constraintTop_toBottomOf="@+id/libriButton"/>
     <Button
             android:text="⚽"
             android:layout_width="60dp"
