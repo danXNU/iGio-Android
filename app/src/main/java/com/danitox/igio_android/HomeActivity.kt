@@ -17,8 +17,13 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.tableView
 import kotlinx.android.synthetic.main.activity_tab_bar.*
+import kotlinx.android.synthetic.main.home_cell.*
 import kotlinx.android.synthetic.main.home_cell.view.*
+import kotlinx.android.synthetic.main.home_cell.view.iconView
+import kotlinx.android.synthetic.main.home_list_view.*
+import kotlinx.android.synthetic.main.list_view.*
 
 class HomeItem(val id: Int, val name: String, val imageID: Int, val color: Int, val allowedAge: Array<ScuolaType>, val allowedGenders: Array<UserGender>)
 
@@ -41,7 +46,7 @@ class HomeActivity : Fragment() {
     var items: List<HomeItem> = listOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.list_view, container, false)
+        return inflater.inflate(R.layout.home_list_view, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,6 +68,11 @@ class HomeActivity : Fragment() {
     fun update() {
         val user = UserManager().currentUser()
         items = helper.allItems.filter { it.allowedAge.contains(user.ageScuola) && it.allowedGenders.contains(user.gender) }
+        if (user.ageScuola == ScuolaType.medie) {
+            logoImage.alpha = 1f
+        } else {
+            logoImage.alpha = 0f
+        }
         fillTableView()
     }
 
