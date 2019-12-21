@@ -23,7 +23,7 @@ class NoteListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        msgLabel.text = "Nessuna pagina di diario. Creane una premendo sul pulsante +"
+        msgLabel.text = "Nessuna pagina di diario."
 
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = listAdapter
@@ -152,7 +152,15 @@ private class NotesAdapter: RecyclerView.Adapter<NotesViewHolder>() {
         val note = agent.allNotes[position]
         holder.view.mainLabel.text = note.title
         holder.view.dateLabel.text = note.getReadbleDate()
-        holder.view.paroleCountLabel.text = note.getBodyWordsCount().toString().plus(" parole")
+
+        val paroleCount = note.getBodyWordsCount()
+        if (paroleCount == 1) {
+            holder.view.paroleCountLabel.text = paroleCount.toString().plus(" parola")
+        } else {
+            holder.view.paroleCountLabel.text = paroleCount.toString().plus(" parole")
+        }
+
+
         holder.noteID = note.id
         holder.clickAction = this.clickAction
     }

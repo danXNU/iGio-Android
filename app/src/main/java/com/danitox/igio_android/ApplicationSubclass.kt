@@ -122,7 +122,7 @@ fun getWeeksBetween(a: Date, b: Date): Int {
 
     val cal = GregorianCalendar(Locale.ITALY)
     cal.time = a
-    var weeks = 0
+    var weeks = -1
     while (cal.time.before(b)) {
         // add another week
         cal.add(Calendar.WEEK_OF_YEAR, 1)
