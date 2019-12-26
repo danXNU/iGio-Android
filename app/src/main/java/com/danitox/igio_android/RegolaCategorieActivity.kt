@@ -24,6 +24,8 @@ class RegolaCategorieActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.compagnia_activity)
 
+        changeTitleForUser()
+
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         tableView.addItemDecoration(divider)
 
@@ -57,6 +59,16 @@ class RegolaCategorieActivity : AppCompatActivity() {
         }
 
         tableView.adapter = adapter
+    }
+
+    private fun changeTitleForUser() {
+        val currentUser = UserManager().currentUser()
+        when (currentUser.ageScuola) {
+            ScuolaType.medie -> title = "Agenda dell'allegria e della santità"
+            ScuolaType.biennio -> title = "Il progetto delle 3S"
+            ScuolaType.triennio -> title = "Regola di vita"
+            else -> title = "Regola di vita"
+        }
     }
 }
 
