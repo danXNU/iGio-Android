@@ -102,7 +102,7 @@ class SocialActivity: Fragment() {
 
         when(categoria) {
             SitoCategoria.facebook -> {
-                query = "fb://profile/$username/wall"
+                query = "fb://page/$username"///wall"
                 baseUrl = "https://www.facebook.com/$username"
             }
             SitoCategoria.instagram -> {
