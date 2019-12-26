@@ -103,18 +103,18 @@ class SettingsActivity : Fragment() {
                 this@SettingsActivity.startActivity(intent)
             }
         }
-        val row8 = BasicRow("Debug").apply {
+        /*val row8 = BasicRow("Debug").apply {
             id = 8
             clickAction = {
                 val intent = Intent(this@SettingsActivity.context, DebugActivity::class.java)
                 this@SettingsActivity.startActivity(intent)
             }
-        }
+        }*/
 
         generalSection.add(row5)
         generalSection.add(row6)
         generalSection.add(row7)
-        generalSection.add(row8)
+        //generalSection.add(row8)
 
         adapter.add(userSection)
         adapter.add(generalSection)

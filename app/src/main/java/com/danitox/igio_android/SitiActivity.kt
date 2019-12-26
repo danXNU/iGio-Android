@@ -101,7 +101,10 @@ class SitiActivity : Fragment() {
     }
 
     fun showError(message: String) {
-        Snackbar.make(this.tableView, message, Snackbar.LENGTH_LONG).show()
+        if (this.tableView != null) {
+            Snackbar.make(this.tableView, message, Snackbar.LENGTH_LONG).show()
+        }
+
     }
 }
 
