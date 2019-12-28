@@ -25,7 +25,7 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.danitox.igio_android"
+        applicationId "com.salesiani_ile.igio_android"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
@@ -33,7 +33,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders = [
-                onesignal_app_id: '43d68fd2-2f47-4cf3-b86f-c7127dfc8084',
+                onesignal_app_id: '12f00e07-ae2d-45a2-9ff0-17cdbedd864b',
                 // Project number pulled from dashboard, local value is ignored.
                 onesignal_google_project_number: 'REMOTE'
         ]

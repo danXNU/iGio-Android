@@ -3,6 +3,7 @@
           package="com.danitox.igio_android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <meta-data android:name="com.onesignal.BadgeCount" android:value="DISABLE" />
 
     <application
             android:name=".ApplicationSubclass"
