@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
@@ -103,8 +104,21 @@ class LocationActivity : AppCompatActivity() {
     }
 
     fun showErrror(message: String) {
-        Snackbar.make(this.tableView, message, Snackbar.LENGTH_LONG).show()
+        if (this.tableView != null) {
+            Snackbar.make(this.tableView, message, Snackbar.LENGTH_LONG).show()
+        }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
 
 class LocationItemView(val location: LocationCodable, val clickAction: ((LocationCodable) -> Unit)? = null): Item<ViewHolder>() {

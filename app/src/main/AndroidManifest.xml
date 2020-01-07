@@ -149,7 +149,7 @@
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".HomeActivityTesting"/>
+                    android:value=".TabBarActivity"/>
         </activity>
         <activity
                 android:name=".DebugActivity"

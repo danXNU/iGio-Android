@@ -136,7 +136,19 @@ class TeenStarMaschioListActivity : AppCompatActivity() {
     }
 
     private fun showRemoveMessage() {
-        Snackbar.make(this.tableView, "Item rimosso con successo!", Snackbar.LENGTH_SHORT).show()
+        if (this.tableView != null) {
+            Snackbar.make(this.tableView, "Item rimosso con successo!", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

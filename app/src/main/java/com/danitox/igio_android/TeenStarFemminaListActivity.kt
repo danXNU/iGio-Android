@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
+import android.view.MenuItem
 import android.view.View
 import android.widget.Adapter
 import android.widget.AdapterView
@@ -186,6 +187,16 @@ class TeenStarFemminaListActivity : AppCompatActivity(), AdapterView.OnItemSelec
         monthSpinner.setSelection(month, true)
         yearSpinner.setSelection(years.indexOf(year), true)
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

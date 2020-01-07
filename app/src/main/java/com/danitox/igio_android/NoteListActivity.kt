@@ -83,6 +83,16 @@ class NoteListActivity : AppCompatActivity() {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun showRemoveMessage() {
         Snackbar.make(this.tableView, "Nota rimossa con successo!", Snackbar.LENGTH_SHORT).show()
     }

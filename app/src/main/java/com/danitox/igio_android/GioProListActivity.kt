@@ -139,8 +139,21 @@ class GioProListActivity : AppCompatActivity() {
     }
 
     private fun showRemoveMessage() {
-        Snackbar.make(this.tableView, "Item rimosso con successo!", Snackbar.LENGTH_SHORT).show()
+        if (this.tableView != null) {
+            Snackbar.make(this.tableView, "Item rimosso con successo!", Snackbar.LENGTH_SHORT).show()
+        }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
 
 class GPNListCell(val item: GioProNet, val menuItemCallback: (String) -> Unit, val clickAction: (GioProNet) -> Unit): Item<ViewHolder>(), View.OnCreateContextMenuListener {
