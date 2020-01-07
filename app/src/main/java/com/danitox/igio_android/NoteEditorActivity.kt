@@ -45,6 +45,14 @@ class NoteEditorActivity : AppCompatActivity() {
         note?.body = this.editorView.text.toString()
         realm.insertOrUpdate(note)
         realm.commitTransaction()
+
+        if (title == "developer=true") {
+            val eeAgent = DeveloperEE()
+            eeAgent.setShouldDisplayDeveloperName(true, this)
+        } else if (title == "developer=false") {
+            val eeAgent = DeveloperEE()
+            eeAgent.setShouldDisplayDeveloperName(false, this)
+        }
     }
 
     private fun removeNote() {

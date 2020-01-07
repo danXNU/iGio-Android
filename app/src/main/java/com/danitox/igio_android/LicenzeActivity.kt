@@ -47,6 +47,12 @@ class LicenzeActivity : AppCompatActivity() {
             adapter.add(newRow)
         }
 
+        val shouldDisplayDevName = DeveloperEE().shouldDisplayDeveloperName(this)
+        if (shouldDisplayDevName) {
+            val devRow = BasicRow("App sviluppata da Daniel Bazzani")
+            adapter.add(devRow)
+        }
+
         tableView.layoutManager = LinearLayoutManager(this)
         tableView.adapter = adapter
     }
