@@ -3,6 +3,7 @@ package com.danitox.igio_android
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.view.MenuItem
 import io.realm.Realm
 import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.regola_risposta_activity.*
@@ -36,5 +37,15 @@ class RegolaRispostaActivity: AppCompatActivity() {
         realm.beginTransaction()
         domandaObject.risposta = newRisposta
         realm.commitTransaction()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

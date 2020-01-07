@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.view.MenuItem
 import android.widget.Toolbar
 import io.realm.Realm
 import kotlinx.android.synthetic.main.note_editor.*
@@ -59,6 +60,17 @@ class NoteEditorActivity : AppCompatActivity() {
         realm.beginTransaction()
         note?.deleteFromRealm()
         realm.commitTransaction()
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

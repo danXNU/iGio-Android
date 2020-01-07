@@ -6,6 +6,7 @@ import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import android.widget.SeekBar
 import com.xwray.groupie.*
 import io.realm.Realm
@@ -63,6 +64,16 @@ class CompagniaActivity: AppCompatActivity() {
         }
 
         tableView.adapter = adapter
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

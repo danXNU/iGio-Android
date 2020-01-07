@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.widget.Button
 import android.widget.DatePicker
@@ -162,6 +163,16 @@ class TeenStarMaschioEditorActivity : AppCompatActivity() {
 
     fun updateEmotionsView() {
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import android.view.View
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -86,6 +87,16 @@ class TeenStarFemminaEditorActivity: AppCompatActivity() {
 
         realm.insertOrUpdate(item)
         realm.commitTransaction()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
