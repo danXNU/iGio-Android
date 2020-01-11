@@ -15,7 +15,7 @@ enum class ScuolaType(val value: Int) {
     var stringValue: String = ""
         get() {
             return when(this) {
-                medie -> "Medie"
+                medie -> "Medie (13+)"
                 biennio -> "Biennio Superiori"
                 triennio -> "Triennio Superiori"
                 else -> ""
