@@ -53,7 +53,6 @@ class DebugActivity : AppCompatActivity() {
 
             val agent = CompagniaAgent(this)
             agent.removeAll()
-            agent.createIfNotPresent()
 
             Snackbar.make(this.tableView, "Percorso formativo resettato", Snackbar.LENGTH_SHORT).show()
 

@@ -1,0 +1,122 @@
+{
+    "domande": [
+        {
+            "str": "Come va a scuola il mio Cliente?",
+            "id": "d02695f0-9d7f-492c-878f-89b0ae7b461f"
+        },
+        {
+            "str": "Quante volte ci ho parlato insieme?",
+            "id": "dbe70f22-7b8f-4507-834e-facfeb62f07a"
+        },
+        {
+            "str": "Quante volte ci ho mangiato insieme?",
+            "id": "e8e33411-2a47-40c5-9665-32e81dbda41e"
+        },
+        {
+            "str": "Qual \u00e8 stato il suo problema maggiore ultimamente?",
+            "id": "cefa3f0a-1c4b-48cc-ad6f-6a22f949b758"
+        },
+        {
+            "str": "Qual \u00e8 la cosa pi\u00f9 bella che ha fatto o che gli \u00e8 successa?",
+            "id": "cc142e31-7c52-4b88-9595-85a95f0a9621"
+        },
+        {
+            "str": "Quante volte ho pregato per lui e/o con lui?",
+            "id": "7a5386a1-5511-4f24-a481-0e9b0d02b525"
+        },
+        {
+            "str": "Cosa potrei di concreto fare per migliorare come Angelo Custode?",
+            "id": "d053b0c7-b76f-41cb-9656-1a41d171e165"
+        },
+        {
+            "str": "Cosa far\u00f2 per il mio Cliente nel prossimo mese?",
+            "id": "5d2f3482-7312-473b-81f1-7fe8f87f8585"
+        }
+    ],
+    "parole": [
+        {
+            "str": "AIUTARE",
+            "id": "4c104a24-c216-4a68-81fd-07101b973862"
+        },
+        {
+            "str": "CORREGGERE",
+            "id": "619ddfd3-2735-443e-979f-4d7a22aeb6cb"
+        },
+        {
+            "str": "INCITARE",
+            "id": "6ee9b1c7-fabd-4a54-887f-e5e0dd65abb0"
+        },
+        {
+            "str": "ASSISTERE",
+            "id": "3bd75e61-5f27-4be3-a01f-1acd7b6a837a"
+        },
+        {
+            "str": "ACCOMPAGNARE",
+            "id": "33c22211-164a-45a5-99e0-18aabdf96a37"
+        },
+        {
+            "str": "COMPRENDERE",
+            "id": "405deefb-d3d9-447d-b7c5-001a3e7aff07"
+        },
+        {
+            "str": "CHIEDERE",
+            "id": "1373596c-0179-4e36-85f5-e1a5b390656d"
+        },
+        {
+            "str": "ACCOGLIERE",
+            "id": "af980f05-67b9-41de-b894-4091fb2dd150"
+        },
+        {
+            "str": "PREGARE",
+            "id": "0a17275f-a841-461c-b0ae-e0b65f34d1f0"
+        },
+        {
+            "str": "CONSIGLIARE",
+            "id": "ea154abd-54bd-43be-a8e8-d5a122b5c428"
+        },
+        {
+            "str": "ISTRUIRE",
+            "id": "7595b0bd-2656-49e3-be7b-67f40ebf4774"
+        },
+        {
+            "str": "PREVENIRE",
+            "id": "877699cd-a52e-4e7a-841d-635142221797"
+        },
+        {
+            "str": "CONSOLARE",
+            "id": "4117fbe8-5292-4a24-8fc0-2b55484e4e70"
+        },
+        {
+            "str": "SORVEGLIARE",
+            "id": "05a88f98-0eb1-42cc-ac26-dff6b407d685"
+        },
+        {
+            "str": "DIRIGERE",
+            "id": "a6c77731-d103-4281-a278-0804ff363f60"
+        },
+        {
+            "str": "ASCOLTARE",
+            "id": "56896d98-3dca-4372-a63f-513cdf987924"
+        },
+        {
+            "str": "CONFRONTARSI",
+            "id": "6855f844-17a9-47b0-bb31-60f5a7fbdcdb"
+        },
+        {
+            "str": "ATTENDERE",
+            "id": "46c99b41-dff0-4118-a1b2-835e1dda6889"
+        },
+        {
+            "str": "PREOCCUPARSI",
+            "id": "ab3c560b-ab0d-4e9a-811d-1d61d5828eaa"
+        },
+        {
+            "str": "RICORDARE",
+            "id": "ae23cd0e-bcfc-426d-9161-b68406dd22c8"
+        },
+        {
+            "str": "CONGEDARE",
+            "id": "3ce5b8b4-92ca-4f8b-920d-be6e92c40498"
+        }
+    ]
+}

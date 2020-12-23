@@ -1,48 +1,89 @@
 {
-    "scuolaType" : 3,
-    "categorie" : [
+    "schoolType": 3,
+    "categorie": [
         {
-            "nome" : "Presenza, interesse e stile",
-            "domande" : [
-                "Ho assunto un atteggiamento in sintonia con lo stile del gruppo, nel rispetto degli spazi e delle persone",
-                "Affronto i problemi e le sfide, in situazioni ordinarie e non, mantenendo l’autocontrollo e chiedendo aiuto e supporto quando è necessario"
+            "name": "Presenza, interesse e stile",
+            "id": "46a839a1-be9f-4095-ba3e-d1f4387f322b",
+            "domande": [
+                {
+                    "id": "1ce3c1b2-58a3-43e8-bd27-9d4777ffbce8",
+                    "str": "Ho assunto un atteggiamento in sintonia con lo stile del gruppo, nel rispetto degli spazi e delle persone"
+                },
+                {
+                    "id": "1fc7b25d-f80a-49df-ac59-4787af796aa1",
+                    "str": "Affronto i problemi e le sfide, in situazioni ordinarie e non, mantenendo l’autocontrollo e chiedendo aiuto e supporto quando è necessario"
+                }
             ]
         },
         {
-            "nome" : "Priorità, organizzazione e confronto",
-            "domande" : [
-                "Uso criteri chiari e trasparenti nello scegliere le priorità da seguire (es. studio, sport, formazione), ne sono consapevole e comunico le mie decisioni ai responsabili tempestivamente",
-                "Sono in grado di scegliere a cosa dedicarmi a partire da motivi profondi e di motivare la mia scelta perseverandomi; non faccio più ricorso a scuse superficiali o futili"
+            "name": "Priorità, organizzazione e confronto",
+            "id": "4cb7c097-08e5-40e4-8c8f-340fed04291d",
+            "domande": [
+                {
+                    "id": "6db104c1-cf8a-42ec-bfc7-11a68c9b7454",
+                    "str": "Uso criteri chiari e trasparenti nello scegliere le priorità da seguire (es. studio, sport, formazione), ne sono consapevole e comunico le mie decisioni ai responsabili tempestivamente"
+                },
+                {
+                    "id": "87ee3f33-16e0-4fbc-baff-bd30be5fd04a",
+                    "str": "Sono in grado di scegliere a cosa dedicarmi a partire da motivi profondi e di motivare la mia scelta perseverandomi; non faccio più ricorso a scuse superficiali o futili"
+                }
             ]
         },
         {
-            "nome" : "Annuncio e formazione personale",
-            "domande" : [
-                "Sono capace di usare le conoscenze e competenze in modo autonomo e creativo; la formazione ricevuta (ritiri, compagnie, buongiorno, IRC, progetti) ha una ricaduta viva nella mia vita",
-                "Nelle scelte quotidiane mi dimostro coerente con le conoscenze acquisite, so essere coerente e assertivo"
+            "name": "Annuncio e formazione personale",
+            "id": "bdf7126d-8707-4edd-82c2-0f7dbfad8c48",
+            "domande": [
+                {
+                    "id": "66eff4f7-0652-4502-9f50-30fe003c07c3",
+                    "str": "Sono capace di usare le conoscenze e competenze in modo autonomo e creativo; la formazione ricevuta (ritiri, compagnie, buongiorno, IRC, progetti) ha una ricaduta viva nella mia vita"
+                },
+                {
+                    "id": "a86ddb99-5d36-415b-8831-34f34849b6d4",
+                    "str": "Nelle scelte quotidiane mi dimostro coerente con le conoscenze acquisite, so essere coerente e assertivo"
+                }
             ]
         },
         {
-            "nome" : "Comunione e spirito di gruppo",
-            "domande" : [
-                "Ho costruito relazioni positive con i membri del gruppo anche al di fuori dai momenti di lavoro formale",
-                "Mi mostro accogliente coi nuovi membri del gruppo e sono capace coinvolgere gli altri"
+            "name": "Comunione e spirito di gruppo",
+            "id": "54c35706-1d3b-4888-8aaf-f342fce99b88",
+            "domande": [
+                {
+                    "id": "25ec4e47-188c-4178-9348-92515d43be9b",
+                    "str": "Ho costruito relazioni positive con i membri del gruppo anche al di fuori dai momenti di lavoro formale"
+                },
+                {
+                    "id": "64426e75-b5f6-4628-88b5-25a0412d267b",
+                    "str": "Mi mostro accogliente coi nuovi membri del gruppo e sono capace coinvolgere gli altri"
+                }
             ]
         },
         {
-            "nome" : "Servizio e attenzione al prossimo",
-            "domande" : [
-                "Ho l’attenzione, la prontezza e la disponibilità di prendere l’iniziativa per andare in aiuto di situazioni o bisogni imprevisti",
-                "Mi informo di mia iniziativa sugli eventuali bisogni del gruppo, dell’ambiente e del territorio"
+            "name": "Servizio e attenzione al prossimo",
+            "id": "fffa9068-60b4-4280-8c7e-0854148edf2d",
+            "domande": [
+                {
+                    "id": "63059f23-06be-4985-a731-9a1e3dd34774",
+                    "str": "Ho l’attenzione, la prontezza e la disponibilità di prendere l’iniziativa per andare in aiuto di situazioni o bisogni imprevisti"
+                },
+                {
+                    "id": "baaefc78-ad9a-4006-b47a-b12afc5f10e5",
+                    "str": "Mi informo di mia iniziativa sugli eventuali bisogni del gruppo, dell’ambiente e del territorio"
+                }
             ]
         },
         {
-            "nome" : "Carisma salesiano",
-            "domande" : [
-                "Mi accorgo e mi preoccupo delle necessità dell’ambiente e delle persone, mostrando un’inclinazione a interessarmi dei giovani più in difficoltà",
-                "Condivido e padroneggio ragionamenti e prospettive tipiche dello stile salesiano; riconosco di avere assunto un modus operandi tipico della scuola frequentata (questo giudizio è una sintesi di tutti i precedenti!)"
+            "name": "Carisma salesiano",
+            "id": "0a3bd81d-67de-44a8-b446-bc8f1ee86b7a",
+            "domande": [
+                {
+                    "id": "a7d7a9c0-c35c-4e41-9aad-a4dd5a26f52f",
+                    "str": "Mi accorgo e mi preoccupo delle necessità dell’ambiente e delle persone, mostrando un’inclinazione a interessarmi dei giovani più in difficoltà"
+                },
+                {
+                    "id": "e0aeeb99-d30d-4568-b14a-ee82fa48b02f",
+                    "str": "Condivido e padroneggio ragionamenti e prospettive tipiche dello stile salesiano; riconosco di avere assunto un modus operandi tipico della scuola frequentata (questo giudizio è una sintesi di tutti i precedenti!)"
+                }
             ]
         }
     ]
 }
-

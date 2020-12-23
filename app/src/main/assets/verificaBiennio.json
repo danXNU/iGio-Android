@@ -1,48 +1,89 @@
 {
-    "scuolaType": 2,
-    "categorie" : [
+    "schoolType": 2,
+    "categorie": [
         {
-            "nome" : "Presenza, interesse e stile",
-            "domande" : [
-                "Sono costante nella partecipazione e puntuale agli incontri, utilizza in modo appropriato le risorse (materiali, attrezzature e strumenti, spazi, strutture)",
-                "Dimostro impegno e interesse per il percorso e le attività proposte; vive volentieri i momenti e le attività assegnate (gioco, condivisione, preghiera, riflessione, laboratori)"
+            "name": "Presenza, interesse e stile",
+            "id": "9ef7ddbc-b434-4908-8c6e-75c31a91f4dc",
+            "domande": [
+                {
+                    "id": "24b7bf5c-efe5-48d8-b4a5-f01858fb0856",
+                    "str": "Sono costante nella partecipazione e puntuale agli incontri, utilizzo in modo appropriato le risorse (materiali, attrezzature e strumenti, spazi, strutture)"
+                },
+                {
+                    "id": "02e8c061-2f6e-489e-88b0-1e4825968f8f",
+                    "str": "Dimostro impegno e interesse per il percorso e le attività proposte; vivo volentieri i momenti e le attività assegnate (gioco, condivisione, preghiera, riflessione, laboratori)"
+                }
             ]
         },
         {
-            "nome" : "Priorità, organizzazione e confronto",
-            "domande" : [
-                "Organizzo lo spazio di lavoro e le attività (es. studio, sport, formazione) pianificando i propri impegni (priorità, tempi) in base alle disposizioni ricevute",
-                "So confrontarmi e interagire con i responsabili dei settori (docenti, formatori, rappresentanti) per ottenere consigli e pareri"
+            "name": "Priorità, organizzazione e confronto",
+            "id": "1fea4d19-8519-4348-96f9-e9ae9b86d68c",
+            "domande": [
+                {
+                    "id": "b20d4c27-0ba9-4570-a5e2-bf5b7556e94b",
+                    "str": "Organizzo lo spazio di lavoro e le attività (es. studio, sport, formazione) pianificando i miei impegni (priorità, tempi) in base alle disposizioni ricevute"
+                },
+                {
+                    "id": "7def6e23-6eae-440f-ba07-cf3fd48d5a28",
+                    "str": "So confrontarmi e interagire con i responsabili dei settori (docenti, formatori, rappresentanti) per ottenere consigli e pareri"
+                }
             ]
         },
         {
-            "nome" : "Annuncio e formazione personale",
-            "domande" : [
-                "Sono capace di usare le conoscenze e competenze in modo autonomo e creativo; la formazione ricevuta (ritiri, compagnie, buongiorno, IRC, progetti) ha una ricaduta viva nella propria vita",
-                "Nelle scelte quotidiane mi dimostro coerente con le conoscenze acquisite, so essere coerente e assertivo"
+            "name": "Annuncio e formazione personale",
+            "id": "e2efdf05-1cb5-49b5-99c8-add23217f19e",
+            "domande": [
+                {
+                    "id": "c57c40ec-2dd8-47ba-a2b2-875913f58723",
+                    "str": "Incremento ed aggiorno le mie conoscenze e competenze; cresco nella preparazione personale"
+                },
+                {
+                    "id": "d624f694-4349-4628-850e-56bc6135bb2e",
+                    "str": "Sono consapevole del percorso formativo in cui sono coinvolto, so verificarne lo sviluppo e chiedere informazioni a riguardo"
+                }
             ]
         },
         {
-            "nome" : "Comunione e spirito di gruppo",
-            "domande" : [
-                "Collaboro con le altre persone del gruppo al conseguimento degli obiettivi, rispettando lo stile e le regole comuni",
-                "So esprimere il proprio contributo nel gruppo, rispettando idee e apporti degli altri membri del team"
+            "name": "Comunione e spirito di gruppo",
+            "id": "7d79e199-8f47-4dae-957a-f790ae2157a5",
+            "domande": [
+                {
+                    "id": "2963bb2c-cdaa-426c-aa42-01d879f0d90d",
+                    "str": "Collaboro con le altre persone del gruppo al conseguimento degli obiettivi, rispettando lo stile e le regole comuni"
+                },
+                {
+                    "id": "6949290f-500c-4801-b09c-28ca360e7cae",
+                    "str": "So esprimere il mio contributo nel gruppo, rispettando idee e apporti degli altri membri del team"
+                }
             ]
         },
         {
-            "nome" : "Servizio e attenzione al prossimo",
-            "domande" : [
-                "Mi mostro disponibile a svolgere lavori e servizi su indicazione dei responsabili",
-                "So accorgermi dei bisogni ordinari dell’ambiente e se ne fa carico"
+            "name": "Servizio e attenzione al prossimo",
+            "id": "6af2c2de-1c4d-4aa5-8175-726be03c9691",
+            "domande": [
+                {
+                    "id": "0cb145a4-0aee-464e-a17f-eceed1200a13",
+                    "str": "Mi mostro disponibile a svolgere lavori e servizi su indicazione dei responsabili"
+                },
+                {
+                    "id": "bb8c9e5b-26b5-4f59-8f45-b33cfa941b67",
+                    "str": "So accorgermi dei bisogni ordinari dell’ambiente e me ne faccio carico"
+                }
             ]
         },
         {
-            "nome" : "Carisma salesiano",
-            "domande" : [
-                "In questa scuola mi sento a mio agio, mi sento “a casa”",
-                "Accetto consegne extra e piccoli compiti di responsabilità verso i più giovani, in continuità con il percorso di formazione ricevuto"
+            "name": "Carisma salesiano",
+            "id": "a19f7cbd-cdd6-4880-bc89-f6702c4b9b93",
+            "domande": [
+                {
+                    "id": "96dd93a3-041f-4723-a4f7-1356be30698a",
+                    "str": "In questa scuola mi sento a mio agio, mi sento “a casa”"
+                },
+                {
+                    "id": "b4d9ad04-43c3-4780-b4e3-a950b72f88fb",
+                    "str": "Accetto consegne extra e piccoli compiti di responsabilità verso i più giovani, in continuità con il percorso di formazione ricevuto"
+                }
             ]
         }
     ]
 }
-

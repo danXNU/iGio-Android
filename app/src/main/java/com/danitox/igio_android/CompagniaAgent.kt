@@ -1,17 +1,15 @@
 package com.danitox.igio_android
 
 import android.content.Context
-import android.content.res.AssetManager
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.annotations.SerializedName
+import com.google.gson.JsonSyntaxException
 import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.annotations.LinkingObjects
 import io.realm.annotations.PrimaryKey
-import okhttp3.internal.notifyAll
+import java.io.File
 import java.util.*
 
 class CompagniaAgent(val context: Context) {
@@ -22,38 +20,53 @@ class CompagniaAgent(val context: Context) {
         triennio("verificaTriennio.json")
     }
 
-    fun createIfNotPresent() {
-        val realm = Realm.getDefaultInstance()
-
-        for (type in ScuolaType.values()) {
-            if (type == ScuolaType.none) { continue }
-            val allRegole = realm.where(VerificaCompagnia::class.java).equalTo("_scuolaType", type.value).findAll()
-            if (allRegole.size < 1) {
-                var fileName : VerificaFileNames = when (type) {
-                    ScuolaType.medie ->  VerificaFileNames.medie
-                    ScuolaType.biennio -> VerificaFileNames.biennio
-                    ScuolaType.triennio -> VerificaFileNames.triennio
-                    else -> VerificaFileNames.medie
-                }
-                createCompagniaModel(fileName)
-            }
+    fun getFileName(type: ScuolaType) : String {
+        return when(type) {
+            ScuolaType.medie -> "verificaMedie"
+            ScuolaType.biennio -> "verificaBiennio"
+            ScuolaType.triennio -> "verificaTriennio"
+           else -> ""
         }
-
     }
 
-    private fun createCompagniaModel(fileName: VerificaFileNames) {
-        val stream = this.context.assets.open(fileName.value)
-        val rawBytes = stream.readBytes()
-        stream.close()
-        val jsonString = String(rawBytes)
-        val gson = GsonBuilder().create()
-        val compagniaFile = gson.fromJson(jsonString, CompagniaFile::class.java)
+    fun getRisposteFile(type: ScuolaType, context: Context) : File {
+        val fileName = "risposte_${this.getFileName(type)}.json"
+        val folder = File(context.filesDir, "Verifica")
+        return File(folder, fileName)
+    }
 
-        val newCompagnia = VerificaCreator().createFrom(compagniaFile)
+    fun convertRealmToJSON() {
         val realm = Realm.getDefaultInstance()
-        realm.beginTransaction()
-        realm.insert(newCompagnia)
-        realm.commitTransaction()
+
+        val appFolder = context.filesDir
+        val verificaFolder = File(appFolder, "Verifica")
+        verificaFolder.mkdir()
+
+        for (type in ScuolaType.values()) {
+            val allRegole = realm.where(VerificaCompagnia::class.java).equalTo(
+                "_scuolaType",
+                type.value
+            ).findAll()
+            if (allRegole.isEmpty()) { continue }
+            val regola = allRegole.first() ?: continue
+
+            val domandeFile = CompagniaDomandeFile().get(type, context)
+            val risposteFile = CompagniaRisposteFile()
+
+
+            domandeFile.categorie.forEachIndexed { indexCat, cat ->
+                cat.domande.forEachIndexed { indexDom, _ ->
+                    val domandaID = domandeFile.categorie[indexCat].domande[indexDom].id
+
+                    risposteFile.risposte[domandaID] = regola.categorie[indexCat]?.domande?.get(
+                        indexDom
+                    )?.risposta ?: 0
+                }
+            }
+
+            risposteFile.save(type, context)
+        }
+
     }
 
     fun getLatestVerifica(type: ScuolaType) : VerificaCompagnia? {
@@ -69,6 +82,70 @@ class CompagniaAgent(val context: Context) {
         realm.commitTransaction()
     }
 
+}
+
+class CompagniaDomandeFile {
+    var schoolType: ScuolaType = ScuolaType.medie
+    var categorie: List<CompagniaCategoriaFile> = listOf()
+
+
+    fun get(type: ScuolaType, context: Context) : CompagniaDomandeFile {
+        val agent = CompagniaAgent(context)
+        val fileName = "${agent.getFileName(type)}.json"
+        val stream = context.assets.open(fileName)
+        val data = String(stream.readBytes())
+        stream.close()
+
+        val gson = GsonBuilder().create()
+        return gson.fromJson(data, CompagniaDomandeFile::class.java)
+    }
+
+
+    class CompagniaCategoriaFile {
+        var id: UUID = UUID.randomUUID()
+        var name: String = ""
+        var domande: List<CompagniaDomanda> = mutableListOf()
+    }
+
+    class CompagniaDomanda {
+        var id = UUID.randomUUID()
+        var str: String = ""
+    }
+
+}
+
+class CompagniaRisposteFile {
+    var risposte: MutableMap<UUID, Int> = mutableMapOf()
+
+    fun save(type: ScuolaType, context: Context) {
+        val gson = GsonBuilder().create()
+        val data = gson.toJson(this)
+
+        val agent = CompagniaAgent(context)
+        val file = agent.getRisposteFile(type, context)
+        file.writeText(data, Charsets.UTF_8)
+    }
+
+    companion object {
+        fun get(type: ScuolaType, context: Context) : CompagniaRisposteFile {
+            val agent = CompagniaAgent(context)
+            val rawFile = agent.getRisposteFile(type, context)
+            if (rawFile.exists() == false) { rawFile.createNewFile() }
+            val data = rawFile.readText(Charsets.UTF_8).toString()
+
+            val gson = GsonBuilder().create()
+            try {
+                val obj = gson.fromJson(data, CompagniaRisposteFile::class.java)
+                if (obj == null) {
+                    return CompagniaRisposteFile()
+                }
+                return obj
+            } catch (exc: JsonSyntaxException) {
+                return CompagniaRisposteFile()
+            }
+
+        }
+    }
 }
 
 open class VerificaCompagnia: RealmObject() {
@@ -97,7 +174,7 @@ open class VerificaDomanda: RealmObject() {
     @LinkingObjects("domande") val categoria : RealmResults<VerificaCategoria>? = null
 }
 
-
+/*
 class CompagniaFile {
 
     @SerializedName("scuolaType") private var _scuolaType: Int = 0
@@ -108,11 +185,6 @@ class CompagniaFile {
             return ScuolaType.none.getFrom(_scuolaType)
         }
         set(value) { _scuolaType = value.value }
-}
-
-class CompagniaCategoriaFile {
-    var nome: String = ""
-    var domande: MutableList<String> = mutableListOf()
 }
 
 class VerificaCreator {
@@ -136,4 +208,4 @@ class VerificaCreator {
         return verifica
     }
 
-}
+}*/

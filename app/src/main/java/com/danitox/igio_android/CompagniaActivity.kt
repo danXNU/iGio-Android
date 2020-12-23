@@ -1,5 +1,6 @@
 package com.danitox.igio_android
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -21,8 +22,8 @@ import kotlin.math.round
 class CompagniaActivity: AppCompatActivity() {
 
     private lateinit var model : CompagniaAgent
-    private var verifica: VerificaCompagnia? = null
-    private var storage : RealmList<VerificaCategoria> = RealmList()
+    private lateinit var domandeFile : CompagniaDomandeFile
+    private var risposteFile: CompagniaRisposteFile? = null
 
     private lateinit var type: ScuolaType
 
@@ -36,10 +37,22 @@ class CompagniaActivity: AppCompatActivity() {
         type = ScuolaType.none.getFrom(intent.getIntExtra("type", 0))
 
         model = CompagniaAgent(this)
-        model.createIfNotPresent()
 
-        verifica = model.getLatestVerifica(type)
-        storage = verifica!!.categorie
+        //if still not converted to json, convert!
+        val preferences = this.getSharedPreferences("iGio", Context.MODE_PRIVATE)
+        val isConvertedToJSON = preferences.getBoolean("isVerificaRealmToJSONConversionDone", false)
+
+        if (isConvertedToJSON == false) {
+            model.convertRealmToJSON()
+            val editor = preferences.edit()
+            editor.putBoolean("isVerificaRealmToJSONConversionDone", true)
+            editor.apply()
+        }
+        //fine conversione
+
+        domandeFile = CompagniaDomandeFile().get(type, this@CompagniaActivity)
+        risposteFile = CompagniaRisposteFile.get(type, this)
+
 
         tableView.layoutManager = LinearLayoutManager(this)
 
@@ -47,17 +60,26 @@ class CompagniaActivity: AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        this.risposteFile?.save(type, this)
+    }
+
     private fun fillTableView() {
         val adapter = GroupAdapter<ViewHolder>()
 
-        for (i in 0 until storage.size) {
-            val categoriaObj = storage[i] ?: continue
+        for (i in 0 until domandeFile.categorie.size) {
+            val categoriaObj = domandeFile.categorie[i]
             val newSection = Section(ToxHeader(categoriaObj.name))
 
             for (x in 0 until categoriaObj.domande.size) {
-                val domanda = categoriaObj.domande[x] ?: continue
+                val domanda = categoriaObj.domande[x]
 
-                val newRow = CompagniaRow(domanda)
+                val newRow = CompagniaRow(domanda, risposteFile?.risposte?.get(domanda.id) ?: 0) {
+                    if (risposteFile != null) {
+                        risposteFile!!.risposte[domanda.id] = it
+                    }
+                }
                 newSection.add(newRow)
             }
             adapter.add(newSection)
@@ -79,11 +101,11 @@ class CompagniaActivity: AppCompatActivity() {
 }
 
 
-class CompagniaRow(val domanda: VerificaDomanda): Item<ViewHolder>() {
+class CompagniaRow(val domanda: CompagniaDomandeFile.CompagniaDomanda, val risposta: Int, val handler: (Int) -> Unit): Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.domandaLabel.text = domanda.domanda
-        viewHolder.itemView.domandaSlider.progress = domanda.risposta
+        viewHolder.itemView.domandaLabel.text = domanda.str
+        viewHolder.itemView.domandaSlider.progress = risposta
 
         viewHolder.itemView.currentValueLabel.text = "${viewHolder.itemView.domandaSlider.progress}"
 
@@ -93,12 +115,7 @@ class CompagniaRow(val domanda: VerificaDomanda): Item<ViewHolder>() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                val realm = domanda.realm
-                realm.beginTransaction()
-                domanda.risposta = seekBar?.progress ?: 0
-                realm.commitTransaction()
-
-
+                handler.invoke(seekBar?.progress ?: 0)
             }
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
