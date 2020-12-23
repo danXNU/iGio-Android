@@ -33,7 +33,7 @@ class HomeItemsHelper {
         HomeItem(1, "TeenSTAR", R.drawable.star, manipulateColor(Color.MAGENTA, 0.7f), ScuolaType.values(), UserGender.values()),
         HomeItem(2, "GioProNet", R.drawable.weightscale, manipulateColor(Color.RED, 0.8f), ScuolaType.values(), UserGender.values()),
         HomeItem(3, "Agenda dell'allegria e della santità", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.medie), UserGender.values()),
-        HomeItem(4, "Il mio percorso formativo", R.drawable.search, manipulateColor(Color.rgb(252,117,40), 0.8f), arrayOf(ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
+        HomeItem(4, "Il mio percorso formativo", R.drawable.search, manipulateColor(Color.rgb(252,117,40), 0.8f), arrayOf(ScuolaType.medie, ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
         HomeItem(5, "Il progetto delle 3S", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.biennio), UserGender.values()),
         HomeItem(6, "Regola di Vita", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.triennio), UserGender.values())
     )
