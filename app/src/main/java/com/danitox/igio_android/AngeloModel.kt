@@ -35,9 +35,11 @@ class AngeloRispostaFile {
     companion object {
         fun get(context: Context): AngeloRispostaFile {
             val folder = File(context.filesDir, "Angelo")
-            val file = File(folder, "risposte_angelo.json")
+            if (folder.exists() == false) { folder.mkdir() }
 
+            val file = File(folder, "risposte_angelo.json")
             if (file.exists() == false) { file.createNewFile() }
+
             val data = file.readText(Charsets.UTF_8).toString()
 
             val gson = GsonBuilder().create()

@@ -35,7 +35,9 @@ class HomeItemsHelper {
         HomeItem(3, "Agenda dell'allegria e della santità", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.medie), UserGender.values()),
         HomeItem(4, "Il mio percorso formativo", R.drawable.search, manipulateColor(Color.rgb(252,117,40), 0.8f), arrayOf(ScuolaType.medie, ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
         HomeItem(5, "Il progetto delle 3S", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.biennio), UserGender.values()),
-        HomeItem(6, "Regola di Vita", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.triennio), UserGender.values())
+        HomeItem(6, "Regola di Vita", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.triennio), UserGender.values()),
+        HomeItem( 7, "Angelo Custode", R.drawable.airplane, manipulateColor(Color.MAGENTA, 0.5f), arrayOf(ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
+        HomeItem( 8, "Angelo Custode", R.drawable.airplane, manipulateColor(Color.MAGENTA, 0.5f), arrayOf(ScuolaType.medie), UserGender.values())
     )
 }
 
@@ -91,6 +93,8 @@ class HomeActivity : Fragment() {
                     4 -> { showVerificaCompagniaController() }
                     5 -> { showRegolaController() }
                     6 -> { showRegolaController() }
+                    7 -> { showAngeloCustode() }
+                    8 -> { showAngeloCustode() }
                     else -> {  }
                 }
             }
@@ -148,6 +152,15 @@ class HomeActivity : Fragment() {
         val intent = Intent(this.context, CompagniaActivity::class.java)
         intent.putExtra("type", UserManager().currentUser().ageScuola.value)
         this.startActivity(intent)
+    }
+
+    fun showAngeloCustode() {
+        if (UserManager().currentUser().ageScuola == ScuolaType.medie) {
+
+        } else {
+            val intent = Intent(this.context, AngeloActivity::class.java)
+            this.startActivity(intent)
+        }
     }
 
 }
