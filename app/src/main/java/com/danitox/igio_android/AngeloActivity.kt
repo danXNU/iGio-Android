@@ -8,11 +8,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
+import android.view.View
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.compagnia_activity.*
+import kotlinx.android.synthetic.main.lcoation_row.view.*
 import kotlinx.android.synthetic.main.regola_domanda_row.view.*
 
 class AngeloActivity: AppCompatActivity() {
@@ -67,11 +69,27 @@ class AngeloActivity: AppCompatActivity() {
             risposteSection.add(row)
         }
 
+
+        val paroleSection = Section(ToxHeader("Flagga i verbi dell’Angelo Custode in cui ti riconosci e in cui ti stai impegnando:"))
+        for (parola in domandeFile.parole) {
+            val isSelcted = risposteFile.paroleChecked[parola.id] ?: false
+            val row = AngeloParolaCell(parola, isSelcted, clickAction = {
+                updateParola(it)
+            })
+            paroleSection.add(row)
+        }
+
         adapter.add(risposteSection)
+        adapter.add(paroleSection)
+
         tableView.adapter = adapter
 
     }
 
+    fun updateParola(parola: AngeloDomandeFile.Item) {
+        val currentValue = this.risposteFile.paroleChecked[parola.id] ?: false
+        this.risposteFile.paroleChecked[parola.id] = !currentValue
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -103,6 +121,34 @@ class AngeloDomandaRow(val domanda: AngeloDomandeFile.Item, val risposta: String
 
     override fun getLayout(): Int {
         return R.layout.regola_domanda_row
+    }
+
+}
+
+class AngeloParolaCell(var parola: AngeloDomandeFile.Item, var isSelected: Boolean, val clickAction: ((AngeloDomandeFile.Item) -> Unit)? = null): Item<ViewHolder>() {
+
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.locationNameLabel.text = parola.str
+
+        showCheck(isSelected, viewHolder)
+
+        viewHolder.itemView.setOnClickListener {
+            clickAction?.invoke(parola)
+            showCheck(!isSelected, viewHolder)
+        }
+
+    }
+
+    fun showCheck(show: Boolean, viewHolder: ViewHolder) {
+        if (show) {
+            viewHolder.itemView.checkImage.visibility = View.VISIBLE
+        } else {
+            viewHolder.itemView.checkImage.visibility = View.INVISIBLE
+        }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.lcoation_row
     }
 
 }
