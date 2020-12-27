@@ -15,6 +15,7 @@ import com.xwray.groupie.Section
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.compagnia_activity.*
 import kotlinx.android.synthetic.main.lcoation_row.view.*
+import kotlinx.android.synthetic.main.preghiera_cell.view.*
 import kotlinx.android.synthetic.main.regola_domanda_row.view.*
 
 class AngeloActivity: AppCompatActivity() {
@@ -79,8 +80,14 @@ class AngeloActivity: AppCompatActivity() {
             paroleSection.add(row)
         }
 
+
+        val preghieraSection = Section(ToxHeader("Preghiera dell'Angelo Custode"))
+        val preghieraRow = PreghieraCell(this.preghiera)
+        preghieraSection.add(preghieraRow)
+
         adapter.add(risposteSection)
         adapter.add(paroleSection)
+        adapter.add(preghieraSection)
 
         tableView.adapter = adapter
 
@@ -151,4 +158,15 @@ class AngeloParolaCell(var parola: AngeloDomandeFile.Item, var isSelected: Boole
         return R.layout.lcoation_row
     }
 
+}
+
+class PreghieraCell(val preghiera: String): Item<ViewHolder>() {
+
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.textView.text = preghiera
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.preghiera_cell
+    }
 }
