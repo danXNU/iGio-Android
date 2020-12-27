@@ -1,6 +1,6 @@
 # iGio-Android
 
-Da completare...
+Questa è stata la mia prima app Android di sempre quindi riconosco che magari non sono state usate le migliori tecniche di sviluppo. Io ho semplicemente preso il codice iOS e lo ho adattato ad Android riscrivendolo in Kotlin. Quindi penso ci sia molto da migliorare in questa codebase per ottimizzare al meglio il tutto. 
 
 
 ## Roadmap per lo sviluppo
@@ -26,5 +26,5 @@ Strutture già convertite in JSON:
 - [ ] TeenSTAR F
 - [ ] GioProNet
 - [ ] Progetto delle 3S (o equivalenti)
-- [ ] Angelo Custode
+- [x] Angelo Custode
 - [ ] Cache dei siti/social delle province/città
