@@ -7,6 +7,7 @@ import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.Section
@@ -40,6 +41,17 @@ class AngeloActivity: AppCompatActivity() {
         fillTableView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        risposteFile = AngeloRispostaFile.get(this)
+        fillTableView()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        risposteFile.save(this)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         risposteFile.save(this)
@@ -51,7 +63,7 @@ class AngeloActivity: AppCompatActivity() {
         val risposteSection = Section(ToxHeader("Domande"))
         for (domanda in domandeFile.domande) {
             val risposta = risposteFile.risposte[domanda.id] ?: ""
-            val row = AngeloDomandaRow(domanda.str, risposta, this)
+            val row = AngeloDomandaRow(domanda, risposta, this)
             risposteSection.add(row)
         }
 
@@ -60,20 +72,31 @@ class AngeloActivity: AppCompatActivity() {
 
     }
 
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
 
-class AngeloDomandaRow(val domanda: String, val risposta: String, val context: Context): Item<ViewHolder>() {
+class AngeloDomandaRow(val domanda: AngeloDomandeFile.Item, val risposta: String, val context: Context): Item<ViewHolder>() {
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.domandaLabel.text = domanda
+        viewHolder.itemView.domandaLabel.text = domanda.str
 
         var tempRisposta : String? = risposta
         if (tempRisposta == null || tempRisposta.isBlank()) { tempRisposta = "Nessuna risposta" }
         viewHolder.itemView.rispostaLabel.text = tempRisposta
 
         viewHolder.itemView.setOnClickListener {
-            val intent = Intent(context, RegolaRispostaActivity::class.java)
-            //intent.putExtra("domandaID", domanda.id)
+            val intent = Intent(context, AngeloEditRispostaActivity::class.java)
+            intent.putExtra("domandaStr", domanda.str)
+            intent.putExtra("domandaID", domanda.id.toString())
             context.startActivity(intent)
         }
     }

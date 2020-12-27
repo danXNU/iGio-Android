@@ -71,7 +71,16 @@
                 android:launchMode="singleTop">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".TabBarActivity"/>
+                    android:value=".HomeActivityTesting"/>
+        </activity>
+
+        <activity
+                android:name=".AngeloEditRispostaActivity"
+                android:label="Risposta"
+                android:launchMode="singleTop">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".AngeloActivity"/>
         </activity>
 
         <activity
