@@ -36,8 +36,7 @@ class HomeItemsHelper {
         HomeItem(4, "Il mio percorso formativo", R.drawable.search, manipulateColor(Color.rgb(252,117,40), 0.8f), arrayOf(ScuolaType.medie, ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
         HomeItem(5, "Il progetto delle 3S", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.biennio), UserGender.values()),
         HomeItem(6, "Regola di Vita", R.drawable.airplane, manipulateColor(Color.GREEN, 0.5f), arrayOf(ScuolaType.triennio), UserGender.values()),
-        HomeItem( 7, "Angelo Custode", R.drawable.airplane, manipulateColor(Color.MAGENTA, 0.5f), arrayOf(ScuolaType.biennio, ScuolaType.triennio), UserGender.values()),
-        HomeItem( 8, "Angelo Custode", R.drawable.airplane, manipulateColor(Color.MAGENTA, 0.5f), arrayOf(ScuolaType.medie), UserGender.values())
+        HomeItem( 7, "Angelo Custode", R.drawable.angel, manipulateColor(Color.rgb(0, 255, 255), 0.5f), ScuolaType.values(), UserGender.values()),
     )
 }
 
@@ -70,11 +69,12 @@ class HomeActivity : Fragment() {
     fun update() {
         val user = UserManager().currentUser()
         items = helper.allItems.filter { it.allowedAge.contains(user.ageScuola) && it.allowedGenders.contains(user.gender) }
-        if (user.ageScuola == ScuolaType.medie) {
+        /*if (user.ageScuola == ScuolaType.medie) {
             logoImage.alpha = 1f
         } else {
             logoImage.alpha = 0f
-        }
+        }*/
+        logoImage.alpha = 0f
         fillTableView()
     }
 
@@ -94,7 +94,6 @@ class HomeActivity : Fragment() {
                     5 -> { showRegolaController() }
                     6 -> { showRegolaController() }
                     7 -> { showAngeloCustode() }
-                    8 -> { showAngeloCustode() }
                     else -> {  }
                 }
             }
@@ -156,7 +155,8 @@ class HomeActivity : Fragment() {
 
     fun showAngeloCustode() {
         if (UserManager().currentUser().ageScuola == ScuolaType.medie) {
-
+            val intent = Intent(this.context, AngeloMedieActivity::class.java)
+            this.startActivity(intent)
         } else {
             val intent = Intent(this.context, AngeloActivity::class.java)
             this.startActivity(intent)
