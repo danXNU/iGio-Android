@@ -67,3 +67,41 @@ class AngeloRispostaFile {
     }
 
 }
+
+class AngeloMedieRisposteFile {
+    var risposte: HashMap<String, Int> = hashMapOf()
+
+    companion object {
+        fun get(context: Context): AngeloMedieRisposteFile {
+            val folder = File(context.filesDir, "Angelo")
+            if (folder.exists() == false) { folder.mkdir() }
+
+            val file = File(folder, "angelo_medie_risposte.json")
+            if (file.exists() == false) { file.createNewFile() }
+
+            val data = file.readText(Charsets.UTF_8).toString()
+
+            val gson = GsonBuilder().create()
+            try {
+                val obj = gson.fromJson(data, AngeloMedieRisposteFile::class.java)
+                if (obj == null) {
+                    return AngeloMedieRisposteFile()
+                }
+                return obj
+            } catch (exc: JsonSyntaxException) {
+                return AngeloMedieRisposteFile()
+            }
+
+        }
+    }
+
+    fun save(context: Context) {
+        val gson = GsonBuilder().create()
+        val data = gson.toJson(this)
+
+        val folder = File(context.filesDir, "Angelo")
+        val file = File(folder, "angelo_medie_risposte.json")
+
+        file.writeText(data)
+    }
+}
